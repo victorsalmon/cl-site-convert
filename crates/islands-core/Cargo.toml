@@ -9,3 +9,11 @@ publish.workspace = true
 # `cdylib` is the Wasm island bundle; `rlib` keeps the crate unit-testable as a
 # normal Rust library.
 crate-type = ["cdylib", "rlib"]
+
+# The emitted bundle's mount-slot identity. `scripts/wasm-size.mjs` reads this to
+# build `dist/pkg/manifest.json`, so an emitter and this crate cannot disagree
+# about what the page must write into `data-component`. A `cdylib` crate without
+# this section is a gate failure, never a silently unimplemented bundle.
+[package.metadata.island]
+component = "IslandsCore"
+

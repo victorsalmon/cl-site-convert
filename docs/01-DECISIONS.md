@@ -392,3 +392,50 @@ handling (`fluent-forms`, `fluent-crm`, `fluent-smtp`, `litespeed-cache`,
 - Machine-level follow-up (not repo-owned): add `%USERPROFILE%\.cargo\bin` to the
   User `PATH` so new shells find the toolchain without the note.
 - Proven by running `pnpm gate` green in a fresh worktree.
+
+## 2026-11-11 — One bundle per island crate, lazily loaded, none on island-free pages
+
+B3.2 makes the bundle strategy mechanical. Contract and evidence:
+`docs/islands-runtime.md`.
+
+- **The mapping is declared, not guessed.** An island crate states its mount
+  identity in its own manifest: `[package.metadata.island] component = "…"`. A
+  `cdylib` crate without it, a name that is not a `data-component` identifier, or
+  two crates claiming one component are all `cannot-evaluate` in the gate. No
+  hand-maintained bundle list exists anywhere, so nothing can silently fall out
+  of step with the crates.
+- **`dist/pkg/manifest.json` is generated and then verified, never trusted.**
+  `scripts/wasm-size.mjs` already built and measured the crates; it now also
+  emits one `<crate>.wasm` per crate, sweeps orphans, writes the manifest, and
+  **re-reads it from disk and re-hashes every emitted file** before passing. A
+  written file is a claim; a re-read and re-hash is evidence. This is what makes
+  "the manifest cannot go stale relative to the crates" true rather than
+  aspirational.
+- **The loader is a plain ES module with zero runtime imports.** No bundler, no
+  framework, no glue to keep in step. A test asserts that property on the source,
+  so a later edit cannot quietly add a module graph to the browser contract.
+- **The zero-island guarantee is structural, not a policy.** `startIslands`
+  collects mount nodes and returns `status: "no-islands"` *above* the manifest
+  resolution and above every network-reaching `await`. An island-free page cannot
+  make a request through the loader even if a bootloader were mis-emitted onto
+  it; and the emitter's `bundlesForHtml` returns `[]` for such a page, so there
+  is nothing to emit. Both halves are tested independently.
+- **Props are parsed before bytes are spent.** A node with malformed
+  `data-props` is a loud error and does not mount, and its bundle is not fetched.
+  `data-props` must be a JSON **object**: an array or a scalar is a build bug, not
+  a value to coerce.
+- **Absent bundle is loud.** A page that mounts a component the manifest does not
+  describe produces a `console.error` naming the component and the known ones,
+  plus `data-island-state="bundle-missing"`. Skipping quietly is indistinguishable
+  from an island that was never meant to be interactive.
+- **`loaded` is an honest state.** Until `wasm-bindgen` lands, a `cdylib` cannot
+  touch the DOM, so a bundle that instantiates and passes the ABI probe but
+  exports no `mount` is marked `loaded`, not faked into `mounted`. The manifest
+  already carries the `modulePath` field the glue will use, so the switch is a
+  data change, not a contract change.
+- **Real-browser verification is deferred to the emitter bead that produces a
+  deployable two-page artifact**, with a written checklist (0 wasm requests and 0
+  `/pkg/` requests on the island-free page; exactly the mounted components'
+  bundles on the other). It is recorded as a checklist rather than claimed,
+  because there is nothing to open in a browser until an emitter exists.
+
