@@ -439,3 +439,55 @@ B3.2 makes the bundle strategy mechanical. Contract and evidence:
   bundles on the other). It is recorded as a checklist rather than claimed,
   because there is nothing to open in a browser until an emitter exists.
 
+
+## 2026-11-10 — Static emitter: cascade from `styleOrder`, one contiguous style block, relative assets
+
+B2.1 produces the first real artifact: 19 pages, 7 linked stylesheets, 116 inline
+blocks, 230 media files, 2.16 MB of HTML. Contract and proofs:
+`docs/static-emitter.md`.
+
+- **`page.styleOrder` is the only cascade authority.** The captured `<link>`
+  tags are removed from the head and the whole chain is re-emitted in
+  `styleOrder` order. Emitting the tags as captured would ship *none* of the
+  inline CSS (the capture deleted those nodes), and ordering by `styles[].order`
+  would ship CSS a page never had. A sequence that does not match `styleOrder`
+  exactly — count, order, origin — fails the build.
+- **One contiguous block, at the first stylesheet link.** The capture removed the
+  inline `<style>` nodes but recorded no positions for them, so reconstructing
+  the interleaving between non-CSS head elements would be invention. Cascade
+  depends on the CSS order, which is preserved exactly; every non-stylesheet head
+  element keeps its bytes and its order relative to the other non-stylesheet
+  elements. Recorded rather than improvised.
+- **Relative references, one depth prefix.** `capture/asset-rewrite-map.json`
+  values already mirror the site's absolute paths, so a rewritten reference is
+  `"../".repeat(depth) + path`: page depth for HTML and inline CSS, the
+  stylesheet's own directory depth for a linked file. Nothing in `dist/site/`
+  knows a host, a root, or a subpath — the same tree serves from Pages, from a
+  preview subpath, or from disk.
+- **Two derived lookups on top of the map, both recorded.** Divi points
+  `@font-face` at `//host/…`, which the map recorded absolutely, so the scheme
+  comes from `site.baseUrl`; `?query`/`#fragment` tails are looked up without the
+  tail and re-attached verbatim. 62 of 65 distinct CSS `url()` values rewrite;
+  the 3 left alone are relative references that already resolve against the
+  stylesheet's emitted (mirrored) path.
+- **A missing `.css` extension is appended in the same directory.** Three
+  captured Google Fonts sheets have no extension, and a static host that sniffs
+  nothing serves those as `application/octet-stream`, which browsers refuse to
+  apply as CSS. The directory does not move, so relative `url(...)` references
+  still resolve.
+- **Deferred CSS is a named gap, not a silent loss.** Divi's
+  `<link rel="preload" as="style" onload="…">` tags are not stylesheet links:
+  they are preserved as captured and still point at the source host, because
+  B1.3 never captured their CSS. Fixing that is a capture change, not an emitter
+  change.
+- **Zero scripts is a consequence, not a promise.** `bundlesForHtml` runs on the
+  emitted HTML with a no-bundles manifest: it returns `[]` for every page in this
+  IR, and a page that mounts anything is refused with a pointer to
+  `--emit islands`. The emitted tree has 0 `<script>` tags by construction.
+- **The parity test is structural, not textual.** For all 19 pages the test
+  re-parses emitted and captured HTML and compares tag names, attribute **order**
+  and class lists, allowing value changes only on `img[src]`, `img[srcset]`,
+  `source[srcset]` and `link[href]`, each of which must resolve to a real file in
+  the tree. Two mutation probes were run against it: an injected `<script>` is
+  refused by the emitter's own guard, and emitting the chain at the end of the
+  head instead of the first link's position fails three tests.
