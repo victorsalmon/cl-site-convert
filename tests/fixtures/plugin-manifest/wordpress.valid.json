@@ -1,0 +1,14 @@
+{
+  "name": "wordpress",
+  "version": "0.1.0",
+  "irRange": "^1.0.0",
+  "emits": ["site-ir", "capability-report"],
+  "hooks": ["capture:start", "capture:page", "capture:end"],
+  "assets": [
+    { "path": "templates/page.html", "kind": "template" },
+    { "path": "fixtures/golden-payload.json", "kind": "fixture", "optional": true }
+  ],
+  "runbook": "docs/runbooks/CREATING_NEW_PLUGINS.md",
+  "entrypoint": "index.mjs",
+  "configSchema": "config.schema.json"
+}

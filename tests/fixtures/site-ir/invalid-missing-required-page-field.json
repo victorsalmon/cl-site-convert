@@ -1,0 +1,21 @@
+{
+  "irVersion": "1.0.0",
+  "site": {
+    "baseUrl": "https://example.ca",
+    "title": "Example",
+    "locale": "en_CA",
+    "permalinks": { "structure": "/%postname%/" }
+  },
+  "pages": [
+    {
+      "url": "/",
+      "title": "No slug here",
+      "status": "publish",
+      "template": "front-page",
+      "dom": { "html": "<div class=\"wrap\"></div>" }
+    }
+  ],
+  "assets": [],
+  "styles": [],
+  "capabilities": { "supported": ["pages"], "unsupported": [] }
+}

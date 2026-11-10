@@ -1,0 +1,20 @@
+{
+  "site": {
+    "baseUrl": "https://example.ca",
+    "title": "Example",
+    "locale": "en_CA",
+    "permalinks": { "structure": "/%postname%/" }
+  },
+  "pages": [
+    {
+      "url": "/",
+      "slug": "home",
+      "status": "publish",
+      "template": "front-page",
+      "dom": { "html": "<div class=\"wrap\"></div>" }
+    }
+  ],
+  "assets": [],
+  "styles": [],
+  "capabilities": { "supported": ["pages"], "unsupported": [] }
+}
