@@ -16,11 +16,14 @@
 //! Markdown is never the IR. [`Page::prose_markdown`] is an optional projection
 //! for search or editing and no emitter may read it.
 //!
-//! v1.1 is **additive**: [`Style::origin`], [`UnsupportedCapability::evidence`]
-//! and [`SiteIr::security_findings`] are all optional, so every v1.0 document is
-//! still a valid v1.1 document. Inline CSS (Divi emits 5-14 `<style>` blocks per
-//! page) needs no `href`, so [`Style::href`] is required only for linked entries;
-//! [`SiteIr::validate`] enforces that, because serde cannot.
+//! v1.1 is **additive**: [`Style::origin`], [`Page::style_order`],
+//! [`UnsupportedCapability::evidence`] and [`SiteIr::security_findings`] are all
+//! optional, so every v1.0 document is still a valid v1.1 document. Inline CSS
+//! (Divi emits 5-14 `<style>` blocks per page) needs no `href`, so
+//! [`Style::href`] is required only for linked entries; [`SiteIr::validate`]
+//! enforces that, because serde cannot. [`Page::style_order`] is the per-page
+//! cascade and [`SiteIr::validate`] also enforces that each of its `sha256`
+//! values resolves to a [`Style`]: that is a cross-reference, not a shape.
 
 use std::collections::BTreeMap;
 use std::fmt;
@@ -166,6 +169,23 @@ impl SiteIr {
             }
         }
 
+        let style_shas: std::collections::BTreeSet<&str> = self
+            .styles
+            .iter()
+            .map(|style| style.sha256.as_str())
+            .collect();
+        for page in &self.pages {
+            for sha in page.style_order.iter().flatten() {
+                // `styleOrder` is a cross-reference the JSON Schema cannot check.
+                if !style_shas.contains(sha.as_str()) {
+                    errors.push(format!(
+                        "page `{}` styleOrder references unknown style sha256 `{}`",
+                        page.url, sha
+                    ));
+                }
+            }
+        }
+
         let contract_ids: std::collections::BTreeSet<&str> =
             self.api_contracts.iter().map(|c| c.id.as_str()).collect();
         for form in &self.forms {
@@ -273,6 +293,15 @@ pub struct Page {
     pub seo: Option<PageSeo>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub islands: Vec<IslandMount>,
+    /// The cascade order for **this** page: `sha256` values resolving to
+    /// [`SiteIr::styles`] entries, first-to-last in captured document position.
+    ///
+    /// This is not [`Style::order`]. `order` is the site-level chain index; it
+    /// does not say what one page loads or in what sequence. Emitters MUST use
+    /// `style_order`. Optional, so a v1.0/v1.1 document without it stays valid;
+    /// absent means the page inherits the site chain in ascending `order`.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub style_order: Option<Vec<String>>,
     /// OPTIONAL prose projection. Never the IR, never an emitter input.
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub prose_markdown: Option<String>,
@@ -824,6 +853,8 @@ mod tests {
         include_str!("../../../tests/fixtures/site-ir/invalid-inline-style-missing-sha256.json");
     const BAD_STYLE_ORIGIN: &str =
         include_str!("../../../tests/fixtures/site-ir/invalid-style-origin.json");
+    const UNKNOWN_STYLE_ORDER_SHA: &str =
+        include_str!("../../../tests/fixtures/site-ir/invalid-style-order-unknown-sha256.json");
 
     fn parse(json: &str) -> Result<SiteIr, serde_json::Error> {
         serde_json::from_str(json)
@@ -1041,5 +1072,75 @@ mod tests {
         ir.styles[0].href = None;
         let errors = ir.validate().expect_err("a linked style needs its href");
         assert!(errors.iter().any(|error| error.contains("href")));
+    }
+
+    // -- v1.1: per-page cascade (`page.styleOrder`) ----------------------------
+
+    #[test]
+    fn page_style_order_parses_in_document_position() {
+        let ir = parse(INLINE_STYLES).expect("the v1.1 fixture must parse");
+        let page = ir.pages.first().expect("one page");
+        let order = page
+            .style_order
+            .as_ref()
+            .expect("the page carries a cascade");
+        assert_eq!(order.len(), 2);
+        assert_eq!(order[0], ir.styles[0].sha256);
+        assert_eq!(order[1], ir.styles[1].sha256);
+        assert!(ir.validate().is_ok(), "{:?}", ir.validate());
+
+        // Round-trip must preserve the per-page array, not re-derive it from the
+        // site chain, and must not invent one for a page that has none.
+        let json = serde_json::to_string(&ir).expect("serialize");
+        assert!(json.contains("\"styleOrder\""));
+        let again = parse(&json).expect("re-parse");
+        assert_eq!(again.pages[0].style_order, page.style_order);
+    }
+
+    #[test]
+    fn page_without_style_order_still_parses_and_validates() {
+        // A v1.0 document predates the field: absent, never defaulted to `[]`,
+        // because an empty array would claim the page loads no CSS at all.
+        let ir = parse(WORDPRESS).expect("a v1.0 document must still parse");
+        assert!(ir.pages.iter().all(|page| page.style_order.is_none()));
+        assert!(ir.validate().is_ok(), "{:?}", ir.validate());
+
+        let json = serde_json::to_string(&ir).expect("serialize");
+        assert!(!json.contains("\"styleOrder\""));
+    }
+
+    #[test]
+    fn validate_catches_unknown_style_order_sha256() {
+        // Schema-valid (a 64-hex string) but referentially broken: only a
+        // cross-reference check can reject it.
+        let ir = parse(UNKNOWN_STYLE_ORDER_SHA).expect("shape is schema-valid");
+        let errors = ir
+            .validate()
+            .expect_err("an unresolved styleOrder sha256 must be rejected");
+        assert!(
+            errors.iter().any(|e| e.contains("/dangling/")),
+            "{errors:?}"
+        );
+        assert!(
+            errors
+                .iter()
+                .any(|e| e.contains("references unknown style sha256")),
+            "the message names the offending reference: {errors:?}"
+        );
+    }
+
+    #[test]
+    fn style_order_can_be_emptied_or_repointed_and_is_rechecked() {
+        let mut ir = parse(INLINE_STYLES).expect("the v1.1 fixture must parse");
+        ir.pages[0].style_order = Some(Vec::new());
+        ir.validate()
+            .expect("an explicitly empty chain is consistent, not dangling");
+
+        ir.pages[0].style_order = Some(vec!["f".repeat(64)]);
+        let errors = ir
+            .validate()
+            .expect_err("the repointed hash does not exist");
+        assert_eq!(errors.len(), 1, "{errors:?}");
+        assert!(errors[0].contains("unknown style sha256"));
     }
 }

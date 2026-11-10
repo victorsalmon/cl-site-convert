@@ -54,19 +54,27 @@ describe("captured assets", () => {
 
   it("keeps the Site IR, the chain and the rewrite map in agreement", () => {
     const mapStyles = new Map(map.styles.map((style) => [style.order, style]));
+    // P1.7: `styles[]` carries the whole 55-entry chain, not the linked subset.
+    expect(ir.styles.length).toBe(chain.styleChain.length);
     for (const style of ir.styles) {
       const entry = mapStyles.get(style.order);
       expect(entry, `style order ${style.order} is missing from the rewrite map`).toBeDefined();
-      expect(entry?.origin).toBe("linked");
+      // Absent `origin` is the v1.0 spelling of `linked`.
+      expect(style.origin ?? "linked").toBe(entry?.origin);
       expect(entry?.sha256).toBe(style.sha256);
       expect(entry?.localPath).toBe(style.localPath);
     }
-    // styles[] is the linked subset of the chain: the linked styles are exactly
-    // the entries that carry an href, and no inline block is given a fake one.
-    expect(ir.styles.length).toBe(chain.styleChain.filter((e) => e.origin === "linked").length);
+    // The linked entries are exactly the ones that carry a real url; no inline
+    // block is given a fake one.
+    expect(ir.styles.filter(isLinkedStyle)).toHaveLength(
+      chain.styleChain.filter((entry) => entry.origin === "linked").length,
+    );
     expect(ir.styles.filter(isLinkedStyle).every((style) => style.href.startsWith("http"))).toBe(
       true,
     );
+    expect(
+      ir.styles.filter((style) => !isLinkedStyle(style)).every((style) => style.href === undefined),
+    ).toBe(true);
 
     const mapAssets = new Map(map.assets.map((asset) => [asset.sourceUrl, asset]));
     for (const asset of ir.assets) {

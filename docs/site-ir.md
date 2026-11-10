@@ -7,12 +7,14 @@ consumes. Canonical shape: `schemas/site-ir.schema.json` (JSON Schema draft
 `irVersion` is `1.x.y`. A breaking change means a new schema file, not a widened
 one — this document describes v1 and nothing else.
 
-**v1.1 is additive.** It adds three optional things — `style.origin`,
-`capabilities.unsupported[].evidence[]` and the top-level `securityFindings[]` —
-and grandfathers the one field it has to relax (`style.href`, now required only
-for linked styles). **Every v1.0 document remains valid, unchanged**, which the
-committed `capture/site-ir.json` proves on every `pnpm validate:ir` run and in
-`tests/site-ir-schema.test.ts`. A v2 shape still means a new schema file.
+**v1.1 is additive.** It adds four optional things — `style.origin`,
+`page.styleOrder`, `capabilities.unsupported[].evidence[]` and the top-level
+`securityFindings[]` — and grandfathers the one field it has to relax
+(`style.href`, now required only for linked styles). **Every v1.0 document
+remains valid, unchanged**, which the committed v1.0 fixture
+(`tests/fixtures/site-ir/wordpress-two-subsites.valid.json`) proves on every
+`pnpm validate:ir` run and in `tests/site-ir-schema.test.ts`. A v2 shape still
+means a new schema file.
 
 ## The two rules that must never be broken
 
@@ -31,15 +33,21 @@ properties, so `pruned` or `cleaned` is a validation error, not a preference.
 That holds for inline CSS exactly as it does for a linked file: it is shipped
 byte-identical, never rewritten or merged.
 
+A fourth follows from that one, and it is the difference between a faithful page
+and a plausible-looking one: **`styles[].order` is the site-level chain, and
+`page.styleOrder` is the page's cascade.** The site chain is one sequence over
+everything the capture ever saw; no page loads all of it. Emitters order the CSS
+they ship a page by `page.styleOrder`, never by `styles[].order`.
+
 ## Fields
 
 | Field | Required | Meaning |
 | :--- | :--- | :--- |
 | `irVersion` | yes | Semver of the IR shape; only `1.x.y` is accepted here. |
 | `site` | yes | `baseUrl`, `title`, `locale` (WP locale, e.g. `en_CA`), `permalinks.structure` (`/%postname%/`). Optional `subsites[]` for multi-site captures (`{id, path, title}`), `description`. |
-| `pages[]` | yes | One entry per routable document. `url` (site-relative, leading `/`), `slug`, `status`, `template` (captured template id, `""` if none), `dom`. Optional `subsite` (references `site.subsites[].id`), `title`, `meta`, `seo`, `islands`, `proseMarkdown`. |
+| `pages[]` | yes | One entry per routable document. `url` (site-relative, leading `/`), `slug`, `status`, `template` (captured template id, `""` if none), `dom`. Optional `subsite` (references `site.subsites[].id`), `title`, `meta`, `seo`, `islands`, `styleOrder` (the page's cascade — see below), `proseMarkdown`. |
 | `assets[]` | yes | Downloaded blobs. `sourceUrl`, `localPath`, `sha256`, `kind` (`image`/`font`/`script`/`document`/`media`/`other`). Optional `bytes`, `contentType`, `referencedBy`. CSS is **not** here. |
-| `styles[]` | yes | The ordered CSS chain: linked stylesheets **and** inline `<style>` blocks in one sequence. `localPath`, `sha256` (hash of the shipped bytes), `order` (0-based). Optional `origin` (`linked`/`inline`, absent ⇒ `linked`), `media`, `subsite`. `href` is required **unless** `origin` is `inline`. Emitters emit in ascending `order`, byte-identical. |
+| `styles[]` | yes | The **site-level** ordered CSS chain: every linked stylesheet **and** every inline `<style>` block the capture ever saw, in one sequence. `localPath`, `sha256` (hash of the shipped bytes), `order` (0-based site chain index). Optional `origin` (`linked`/`inline`, absent ⇒ `linked`), `media`, `subsite`. `href` is required **unless** `origin` is `inline`. `order` is not a page cascade: emitters order a page by `pages[].styleOrder`. |
 | `menus[]` | no | `id`, `name`, `items[]`; items nest via `children[]`. |
 | `taxonomies[]` | no | `name` (WP key: `category`, `post_tag`), `terms[]` (`slug`, `name`, optional `parent`). |
 | `authors[]` | no | `id`, `slug`, `name`, optional `bio`, `avatarPath`. |
@@ -64,8 +72,8 @@ output could not be an honest baseline.
 
 ### Styles: linked and inline (v1.1)
 
-`styles[]` is one ordered chain, not a list of files. Each entry says where its
-CSS came from:
+`styles[]` is one ordered **site-level** chain, not a list of files. Each entry
+says where its CSS came from:
 
 | `origin` | `href` | Meaning |
 | :--- | :--- | :--- |
@@ -73,16 +81,73 @@ CSS came from:
 | `"linked"` | **required** | Same entry, written explicitly. |
 | `"inline"` | **must be omitted** | A `<style>` block from the captured document. It has no url. |
 
-`order` is **document position across both kinds** — a page that ships
-`<link>`, `<style>`, `<link>` produces `order` 0, 1, 2 in that sequence. An
-emitter must not emit all links first and then all inline blocks, or the cascade
-changes and the page drifts.
+`order` is the **site-level chain index**: document position across both kinds,
+so a page that ships `<link>`, `<style>`, `<link>` gives those three entries
+ascending `order`. It is a chain index, not a page cascade — it says nothing
+about which entries one page loads. That is `page.styleOrder`; see below.
 
 `sha256` and `localPath` are required for inline entries too. The CSS must still
 be materialised as bytes with a recorded hash, so "verbatim hand-off" stays
 provable; `origin` only removes the *url* requirement. Divi 4.27.7 emits 5–14
 inline blocks per page (~1.77 MB across 19 pages), so this is the difference
 between a page with its critical CSS and one without.
+
+### Per-page cascade (`page.styleOrder`, v1.1)
+
+Measured: the 19 captured pages have **18 distinct style chains**, from 7 entries
+at `/resources/` to 17 at `/ush/privacy-policy/`. A single site-level sequence
+cannot express that, so each page carries its own ordered cascade:
+
+```jsonc
+{
+  "url": "/resources/",
+  "dom": { "html": "..." },
+  // 7 entries for this page, in captured document order:
+  "styleOrder": ["f605fbff…", "256ed3e2…", "7bdbdaf0…", "…"]
+}
+```
+
+`styleOrder` is an array of `styles[].sha256` values. Position 0 is the first
+stylesheet in that page's captured document; the last entry is the last one. The
+array is the page's chain entries filtered by `pages[]` and sorted by their
+captured `order` — nothing is inferred from the site sequence.
+
+| Field | Says | Use it for |
+| :--- | :--- | :--- |
+| `styles[].order` | Where an entry sits in the **site** chain (0…N), across all pages. | Locating an entry in the capture. Never for emitting a page. |
+| `pages[].styleOrder` | Which entries **this page** loads, in cascade order. | The emitter's `<link>`/`<style>` order. |
+
+The rules:
+
+- **Optional.** A document without it (a v1.0 capture, or any adapter that does not
+  record per-page chains) is still valid. Absent means the page inherits the site
+  chain in ascending `styles[].order` — the only honest reading of a document that
+  has no per-page data.
+- **Never invented.** It is projected from the capture's per-page chain, not
+  sorted, not expanded to the whole site chain, not guessed from the DOM.
+- **Referentially checked.** Every `sha256` must resolve to a `styles[]` entry.
+  JSON Schema cannot express that, so `SiteIr::validate()`,
+  `scripts/validate-ir.mjs` and the committed fixture
+  `invalid-style-order-unknown-sha256.json` enforce it.
+- **Emitters MUST use it.** An emitter that walks `styles[]` in `order` ships CSS
+  the page never had; that is the visual drift this field exists to prevent.
+
+In the captured artifact, `styles[]` holds all **55** entries: 7 linked sheets and
+48 inline blocks deduplicated by `sha256` from 116 raw blocks. That is 54 distinct
+hashes, not 55: the inline `#et-critical-inline-css` at order 38 and the linked
+`et-divi-customizer-global.min.css` at order 51 are the same 977 bytes. No page
+loads both, so a hash still names exactly one entry within any one page.
+
+The projection is reproducible rather than hand-edited:
+
+```powershell
+node scripts/project-style-chain.mjs           # rewrite capture/site-ir.json
+node scripts/project-style-chain.mjs --check   # fail if the artifact drifted
+```
+
+It re-hashes every inline file against the chain's recorded `sha256`/`bytes` and
+refuses to write if one drifted, so the artifact cannot claim bytes it does not
+have.
 
 ### Capability evidence (v1.1)
 
@@ -120,6 +185,7 @@ capability the converter lacks, so it belongs here rather than in
 
 - `page.subsite` ∈ `site.subsites[].id`
 - `page.url` unique; `page.islands[].id` unique per page
+- `page.styleOrder[]` ∈ `styles[].sha256` (the per-page cascade must resolve)
 - `style.order` unique, counted across linked **and** inline entries
 - `form.submitContract.endpointRef` and `behavior.endpointRef` ∈
   `apiContracts[].id`
@@ -138,16 +204,18 @@ never a false pass.
 
 ## Deferred beyond v1.1
 
-v1.1 added only the additive fields above (`style.origin`, `evidence[]`,
-`securityFindings[]`). The rest is still deliberately absent. Leave them out
-rather than half-encoding them:
+v1.1 added only the additive fields above (`style.origin`, `page.styleOrder`,
+`evidence[]`, `securityFindings[]`). The rest is still deliberately absent. Leave
+them out rather than half-encoding them:
 
 - **Page ↔ term assignment** (`page.terms[]`) and generated term-archive routes.
   v1 captures concrete pages only.
 - **Page hierarchy** (`parentUrl`, menu order) — menus carry the shape for now.
 - **Formal wire-shape language** for `apiContracts.requestShape/responseShape`;
   v1 stores free-form JSON Schema-shaped objects.
-- **Per-page stylesheet overrides** and critical-CSS/order hints.
+- **Critical-CSS hints** — which entries are critical, and any reordering or
+  deferral of them. `page.styleOrder` records the order the page *had*; it is not
+  a permission to change it.
 - **Asset rewriting** (`srcset`, responsive variants) — assets are captured files.
 - **Hydration/timing hints** for islands (`idle`/`visible`/`load`), and behavior
   timing.

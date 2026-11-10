@@ -18,7 +18,11 @@
       "dom": {
         "html": "<div class=\"et_pb_section et_pb_section_0\"><h1 class=\"et_pb_module_header\">Example</h1></div>",
         "doctype": "<!DOCTYPE html>"
-      }
+      },
+      "styleOrder": [
+        "0000000000000000000000000000000000000000000000000000000000000001",
+        "0000000000000000000000000000000000000000000000000000000000000002"
+      ]
     }
   ],
   "assets": [],

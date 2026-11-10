@@ -101,15 +101,32 @@ describe("irVersion", () => {
   });
 });
 
-describe("backward compatibility with the committed v1.0 capture", () => {
+describe("backward compatibility (v1.0, and a v1.1 page without a cascade)", () => {
   const capture = JSON.parse(readFileSync(CAPTURE_PATH, "utf8")) as Record<string, unknown>;
 
-  it("is still the v1.0.0 document B1.2 committed", () => {
-    expect(capture["irVersion"]).toBe("1.0.0");
+  it("validates the committed v1.0.0 fixture with no edits", () => {
+    // `wordpress-two-subsites.valid.json` is a v1.0 document: no `style.origin`,
+    // no `page.styleOrder`, no evidence, no security findings.
+    const v10 = readFixture("wordpress-two-subsites.valid.json");
+    expect((v10 as Record<string, unknown>)["irVersion"]).toBe("1.0.0");
+    expect(validate(v10), errorsOf(validate).join("\n")).toBe(true);
   });
 
-  it("validates against the v1.1 schema with no edits", () => {
+  it("declares v1.1 now that it carries inline styles and per-page order", () => {
+    // The artifact was v1.0.0 when B1.2 captured only `dom`; B1.3 wrote the CSS and
+    // P1.7 projected the complete chain, so `origin: "inline"` (a v1.1 field) is
+    // present and the document has to say so.
+    expect(capture["irVersion"]).toBe("1.1.0");
     expect(validate(capture), errorsOf(validate).join("\n")).toBe(true);
+  });
+
+  it("still validates the artifact with every `styleOrder` removed", () => {
+    // Additive means a consumer that predates the field can read the same
+    // document: deleting the cascade cannot invalidate it.
+    const stripped = structuredClone(capture) as { pages: Record<string, unknown>[] };
+    for (const page of stripped.pages) delete page["styleOrder"];
+    expect(stripped.pages.every((page) => page["styleOrder"] === undefined)).toBe(true);
+    expect(validate(stripped), errorsOf(validate).join("\n")).toBe(true);
   });
 
   it("still requires `href` on a style entry that omits `origin`", () => {
@@ -186,6 +203,59 @@ describe("style origin (v1.1)", () => {
     expect(validate(readFixture("inline-styles.valid.json")), errorsOf(validate).join("\n")).toBe(
       true,
     );
+  });
+});
+
+describe("page style order (v1.1)", () => {
+  const SHA_A = "a".repeat(64);
+  const SHA_B = "b".repeat(64);
+
+  /** A minimal document carrying two inline styles and one page. */
+  function documentWithCascade(styleOrder: unknown): Record<string, unknown> {
+    const document = readFixture("minimal.valid.json") as Record<string, unknown>;
+    document["irVersion"] = "1.1.0";
+    document["styles"] = [
+      { origin: "inline", localPath: "styles/0000-a.css", sha256: SHA_A, order: 0 },
+      { origin: "inline", localPath: "styles/0001-b.css", sha256: SHA_B, order: 1 },
+    ];
+    const page = (document["pages"] as Record<string, unknown>[])[0];
+    if (page === undefined) throw new Error("minimal fixture lost its page");
+    if (styleOrder === undefined) delete page["styleOrder"];
+    else page["styleOrder"] = styleOrder;
+    return document;
+  }
+
+  it("accepts a per-page cascade whose order is the page's, not the site chain's", () => {
+    // `styles[].order` ascends 0, 1; this page loads B before A.
+    const document = documentWithCascade([SHA_B, SHA_A]);
+    expect(validate(document), errorsOf(validate).join("\n")).toBe(true);
+  });
+
+  it("accepts a page with no styleOrder at all", () => {
+    // Optional: a v1.0 document, and any v1.1 page whose cascade was not captured.
+    expect(validate(documentWithCascade(undefined))).toBe(true);
+    expect(validate(readFixture("minimal.valid.json"))).toBe(true);
+  });
+
+  it("accepts an explicitly empty cascade", () => {
+    expect(validate(documentWithCascade([]))).toBe(true);
+  });
+
+  it("rejects an entry that is not a sha256", () => {
+    expect(validate(documentWithCascade(["not-a-hash"]))).toBe(false);
+    expect(errorsOf(validate).join(" ")).toContain("pattern");
+  });
+
+  it("rejects a non-string entry", () => {
+    expect(validate(documentWithCascade([42]))).toBe(false);
+    expect(errorsOf(validate).join(" ")).toContain("string");
+  });
+
+  it("cannot police the reference itself: a well-formed unknown hash passes the schema", () => {
+    // Deliberate: JSON Schema has no cross-reference. `scripts/validate-ir.mjs` and
+    // `SiteIr::validate()` reject this, and the committed fixture
+    // `invalid-style-order-unknown-sha256.json` proves it on every gate run.
+    expect(validate(documentWithCascade(["c".repeat(64)]))).toBe(true);
   });
 });
 
