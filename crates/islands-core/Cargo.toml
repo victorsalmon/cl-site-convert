@@ -1,0 +1,11 @@
+[package]
+name = "islands-core"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+publish.workspace = true
+
+[lib]
+# `cdylib` is the Wasm island bundle; `rlib` keeps the crate unit-testable as a
+# normal Rust library.
+crate-type = ["cdylib", "rlib"]
