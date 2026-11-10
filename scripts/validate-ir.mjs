@@ -124,6 +124,9 @@ function referentialProblems(ir) {
   const contractIds = new Set(
     (Array.isArray(ir.apiContracts) ? ir.apiContracts : []).map((c) => c.id),
   );
+  const styleShas = new Set(
+    (Array.isArray(ir.styles) ? ir.styles : []).map((style) => style.sha256),
+  );
 
   const seenUrls = new Set();
   const seenOrders = new Set();
@@ -135,6 +138,14 @@ function referentialProblems(ir) {
 
     if (page.subsite !== undefined && subsites.size > 0 && !subsites.has(page.subsite)) {
       problems.push(`${page.url}: unknown subsite ${page.subsite}`);
+    }
+
+    // `styleOrder` is a cross-reference into `styles[]`: the schema can prove each
+    // entry is a 64-hex string, never that the hash exists.
+    for (const sha256 of page.styleOrder ?? []) {
+      if (!styleShas.has(sha256)) {
+        problems.push(`${page.url}: styleOrder references unknown style sha256 ${sha256}`);
+      }
     }
 
     const islandIds = new Set();

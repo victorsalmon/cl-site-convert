@@ -10,9 +10,10 @@
  *    byte-for-byte. Never re-author it into a component tree.
  *  - `styles` is ordered and verbatim. Never prune, reorder, or "clean" it.
  *
- * v1.1 is **additive**: `style.origin` (linked | inline), `unsupported.evidence[]`
- * and the top-level `securityFindings[]` are all optional, so every v1.0 document
- * is still a valid v1.1 document.
+ * v1.1 is **additive**: `style.origin` (linked | inline), `page.styleOrder`
+ * (per-page cascade), `unsupported.evidence[]` and the top-level
+ * `securityFindings[]` are all optional, so every v1.0 document is still a valid
+ * v1.1 document.
  */
 
 /** Version of the IR shape this file describes. */
@@ -132,6 +133,16 @@ export interface Page {
   template: string;
   subsite?: string;
   dom: DomSkeleton;
+  /**
+   * The cascade order for **this** page: `sha256` values resolving to `styles[]`
+   * entries, first-to-last in captured document position.
+   *
+   * This is not `Style.order`. `styles[].order` is the site-level chain index and
+   * does not tell an emitter what one page loads or in what sequence; emitters
+   * MUST use `styleOrder`. Optional so v1.0/v1.1 documents without it stay valid;
+   * absent means the page inherits the site chain in ascending `styles[].order`.
+   */
+  styleOrder?: string[];
   meta?: PageMeta;
   seo?: PageSeo;
   islands?: IslandMount[];
@@ -153,14 +164,16 @@ export interface Asset {
  * Ordered, verbatim stylesheet entry. There is deliberately no pruning or
  * cleaned variant.
  *
- * `order` is the position in the chain counted across **both** linked and inline
- * entries, in captured document order.
+ * `order` is the position in the **site-level** chain counted across both linked
+ * and inline entries, in captured document order. It is not a page cascade: the
+ * 19 captured pages share 55 chain entries but no page loads all of them, so an
+ * emitter must order a page by `Page.styleOrder`, never by this field.
  */
 interface StyleBase {
   localPath: string;
   /** Hash of the shipped bytes: proves verbatim hand-off. */
   sha256: string;
-  /** 0-based position in the chain; emitters emit ascending and never reorder. */
+  /** 0-based position in the site chain; emitters order pages by `styleOrder`. */
   order: number;
   media?: string;
   subsite?: string;
@@ -382,6 +395,9 @@ export type SiteIrValidationResult = { ok: true; ir: SiteIr } | { ok: false; err
 /**
  * Structural guard used by adapters and emitters at the seam. Returns the value
  * typed only when the shape is present; the JSON Schema does the deep check.
+ *
+ * `page.styleOrder`, when present, must be an array of strings: a `number` or an
+ * object in that position is a shape error, not a referential one.
  */
 export function isSiteIr(value: unknown): value is SiteIr {
   if (typeof value !== "object" || value === null) return false;
@@ -395,5 +411,14 @@ export function isSiteIr(value: unknown): value is SiteIr {
   if (typeof candidate.capabilities !== "object" || candidate.capabilities === null) {
     return false;
   }
+  for (const page of candidate.pages) {
+    if (typeof page !== "object" || page === null) return false;
+    const styleOrder = (page as Partial<Page>).styleOrder;
+    if (styleOrder !== undefined && !isSha256List(styleOrder)) return false;
+  }
   return true;
+}
+
+function isSha256List(value: unknown): value is string[] {
+  return Array.isArray(value) && value.every((entry) => typeof entry === "string");
 }

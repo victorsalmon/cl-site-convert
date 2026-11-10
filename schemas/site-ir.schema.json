@@ -173,6 +173,11 @@
           "$ref": "#/$defs/slug"
         },
         "dom": { "$ref": "#/$defs/domSkeleton" },
+        "styleOrder": {
+          "description": "The cascade order for THIS page: an ordered list of `sha256` values, each resolving to a `styles[]` entry. Position 0 is the first stylesheet in the captured document. `styles[].order` is the site-level chain index and says nothing about a single page; emitters MUST use `styleOrder`. Optional: a v1.0/v1.1 document without it is still valid, and an absent value means the page inherits the site chain in ascending `styles[].order`.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/sha256" }
+        },
         "meta": { "$ref": "#/$defs/pageMeta" },
         "seo": { "$ref": "#/$defs/pageSeo" },
         "islands": {
