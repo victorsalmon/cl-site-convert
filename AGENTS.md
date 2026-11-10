@@ -68,14 +68,34 @@ integrate `worktree.ca`, and dotCanada/S3 have no host-side build).
 
 ## Build & test
 
+### Prerequisites
+
+| Tool | Why | Install |
+| :--- | :--- | :--- |
+| Node 20+ / pnpm 11 | TypeScript pipeline | `pnpm install` |
+| **rustup** | Rust + Wasm toolchain | https://rustup.rs |
+
+`rust-toolchain.toml` pins the exact channel, components and the
+`wasm32-unknown-unknown` target; **rustup installs both automatically**, so no
+manual `rustup target add` is needed. The gate verifies this via
+`scripts/check-toolchain.ps1` and fails with remediation if it is missing.
+
+Security posture: **official distribution only.** No npm package that downloads a
+binary at install time, no third-party wrapper around a toolchain. Tooling is
+pinned so a build is reproducible and a compromise is visible.
+
+### Commands
+
 ```powershell
 pnpm install
-pnpm lint; pnpm test            # TS side
-cargo test                      # Rust side
-cargo build --target wasm32-unknown-unknown -p islands-core
+pnpm gate                                     # the whole gate, fail-closed
+pnpm lint; pnpm typecheck; pnpm test          # TS steps individually
+pnpm validate:ir; pnpm validate:plugins       # contract conformance
+cargo test --workspace                        # Rust
 ```
 
-Rust toolchain is **not yet provisioned** on this machine — see bead B0.6.
+`pnpm gate` is the single source of truth. It must be green before any merge —
+per-lane green does not imply merged green, as the first two lanes proved.
 
 ## Where to look
 

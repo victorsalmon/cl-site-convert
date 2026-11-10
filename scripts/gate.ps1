@@ -79,26 +79,16 @@ try {
     Invoke-NativeStep -Name 'test' -Exe 'pnpm' -Arguments @('run', 'test') | Out-Null
 
     # --- Rust -----------------------------------------------------------------
+    # The toolchain is a documented, provisionable prerequisite: rust-toolchain.toml
+    # pins the exact channel and wasm target, and rustup installs both automatically.
+    # A missing toolchain is therefore a FAIL with remediation, never a silent skip
+    # (cl-common ADR 0012: a gate that cannot pass is a defect).
     $cargo = Get-Command 'cargo' -ErrorAction SilentlyContinue
     if ($null -eq $cargo) {
-        $waiver = 'cargo test (waiver: Rust toolchain not installed on this machine - bead B0.6)'
-        Write-Host ''
-        Write-Host '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' -ForegroundColor Yellow
-        Write-Host '!! SKIPPED WITH WAIVER: cargo test' -ForegroundColor Yellow
-        Write-Host '!! The Rust workspace and crates/islands-core were NOT compiled.' -ForegroundColor Yellow
-        Write-Host '!! Reason: `cargo` is not on PATH (Rust toolchain unprovisioned, B0.6).' -ForegroundColor Yellow
-        Write-Host '!! This step is NOT a pass. Re-run with -RequireCargo to enforce.' -ForegroundColor Yellow
-        Write-Host '!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' -ForegroundColor Yellow
-        Write-Host ''
-
-        if ($RequireCargo) {
-            $failures.Add($waiver)
-        }
-        else {
-            $skips.Add($waiver)
-        }
+        $failures.Add('toolchain: cargo is not on PATH. Install rustup from https://rustup.rs then re-open the shell.')
     }
     else {
+        Invoke-NativeStep -Name 'check-toolchain' -Exe 'pwsh' -Arguments @('-NoProfile', '-File', 'scripts/check-toolchain.ps1') | Out-Null
         Invoke-NativeStep -Name 'cargo test' -Exe 'cargo' -Arguments @('test', '--workspace') | Out-Null
     }
 

@@ -114,12 +114,64 @@ contract.
 depending on a project that is delisted, Elementor-owned and untouched since
 early 2024.
 
+## 2026-11-11 — Toolchain: official only, pinned, no binary-downloading npm packages
+
+- `rustup` from the official distribution; channel **1.99.1** pinned in
+  `rust-toolchain.toml` with `wasm32-unknown-unknown`, `rustfmt`, `clippy`.
+- Deliberately **not** used: npm packages that fetch executables at install time,
+  `wasm-pack` and `trunk` for now. `wasm-pack`/`trunk` are convenience wrappers;
+  when islands land (B3.1) the default path is `cargo build --target
+  wasm32-unknown-unknown` plus a **pinned** `wasm-bindgen-cli` compiled from
+  source with `cargo install --locked`. Fewer moving parts, nothing unverified
+  pulling a binary.
+- `wasm-opt` is **optional**: the size gate (B3.1) is the real enforcement. If
+  adopted, it comes from an official binaryen release with a checksum, never a
+  wrapper package.
+- The cargo waiver is **gone**. The gate now runs `check-toolchain` and
+  `cargo test --workspace` as hard steps. A missing toolchain fails with
+  remediation rather than skipping (ADR 0012).
+
+## 2026-11-11 — Gate defect fixed: line endings
+
+- A fresh worktree failed `prettier --check` because committed LF blobs checked
+  out as CRLF under `core.autocrlf=true`. That is a gate that cannot pass on a
+  clean checkout — a defect, not a baseline.
+- Fixed with `.gitattributes` (`* text=auto eol=lf`, CRLF only for `.ps1`/`.bat`).
+  **Proven** by creating a pristine worktree, installing, and running lint green.
+
+## 2026-11-11 — currentsbk.ca is NOT WordPress
+
+- `currentsbk.ca` is an Eleventy **static** site (deploy clone at
+  `currents-bookkeeping/.sites/currentsbk.ca` contains only `_site`, `.cpanel.yml`,
+  `site-info.md`; **no `wp-content`, no PHP**).
+- Therefore it **cannot be the first conversion target** — a WordPress converter
+  has nothing to convert there.
+- It is retained as the **emitter round-trip fixture**: static HTML → Site IR →
+  static HTML with pixel-diff ≈ 0. That is the cheapest possible proof of the
+  emitter and the parity harness, and it needs no WordPress at all.
+- First **real** conversion target remains `upscalehavens.ca`.
+
+## 2026-11-11 — Webhook chain, final
+
+- Chain: `Form → WP Webhooks → Pabbly → webhook → Google Sheets`.
+- **WP Webhooks is pure glue** and is eliminated: Pabbly accepts inbound webhooks,
+  so the new form island posts straight to Pabbly.
+- **Pabbly is pure glue** and is preserved untouched: it receives our POST and
+  forwards to the Sheets integration. Nothing to migrate.
+- **Historical Fluent Forms submissions are not required.** Sheets is the system
+  of record going forward; no `wp_fluentform_submissions` migration.
+- Open ambiguity: the form plugin has been referred to as both *Fluent Forms* and
+  *WP Forms*. The extractor (B4.1a) must **detect which plugin is present** rather
+  than assume, and the capability detector (B1.5) must report it.
+
 ## 2026-11-11 — Open operator questions (blocking specific beads)
 
-1. Is WP Webhooks used **only** for the form → Pabbly hop, or other triggers too?
-2. Are historical Fluent Forms submissions needed, or is Google Sheets the system
-   of record?
-3. Capture the **exact payload** Pabbly receives (Pabbly request history or WP
-   Webhooks log) → golden fixture.
-4. Does any form have a **file upload** field? Sheets cannot store files; the
-   flow would need object storage (R2/S3) plus a link.
+1. **The exact Pabbly payload** — from Pabbly's "Webhook by Pabbly" request history
+   or the WP Webhooks log. Needed as the golden fixture for B4.1e.
+2. **Does any form have a file-upload field?** Sheets cannot store files; the flow
+   would need object storage (R2/S3) plus a link.
+3. **WPForms or Fluent Forms?** Both names have been used. The extractor detects
+   rather than assumes, but confirming the plugin settles the fixture.
+
+Resolved and no longer open: history migration (not needed), WP Webhooks scope
+(pure glue, eliminated), Pabbly scope (pure glue, preserved).

@@ -1,0 +1,10 @@
+# Pinned toolchain. rustup reads this file automatically, so any machine with
+# rustup gets the exact compiler and wasm target without manual steps.
+#
+# Security posture: only the official Rust distribution. No third-party binary
+# wrappers, no npm packages that download executables at install time.
+[toolchain]
+channel = "1.99.1"
+profile = "minimal"
+components = ["rustfmt", "clippy"]
+targets = ["wasm32-unknown-unknown"]
