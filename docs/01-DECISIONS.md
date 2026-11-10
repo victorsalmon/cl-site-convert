@@ -164,6 +164,49 @@ early 2024.
   *WP Forms*. The extractor (B4.1a) must **detect which plugin is present** rather
   than assume, and the capability detector (B1.5) must report it.
 
+## 2026-11-11 — Target recon: upscalehavens.ca is a 19-page Divi brochure, not a content site
+
+Measured by B1.1 (48 polite serialised requests, 600 ms apart, robots-aware).
+Manifest: `capture/routes.manifest.json`.
+
+| Fact | Value | Consequence |
+| :--- | :--- | :--- |
+| Pages | **19** | Tiny. The whole conversion is small; effort estimate drops sharply |
+| Posts | **0** | No blog. **Markdown prose projection is unnecessary** — drops work from B1.2 |
+| Stack | **WordPress 7.1.4, Divi 4.27.7** | Divi shortcodes render to deep div nesting. Confirms *preserve captured DOM verbatim* is the only viable fidelity strategy; template clustering must group Divi section patterns |
+| Plugins | Fluent Forms, FluentCRM, FluentSMTP, LiteSpeed Cache, **Redirection**, Divi | See below |
+| Sections | `/tmh/`, `/mlm/`, **`/care/`**, **`/ush/`**, **`/resources/`** | Five sections, not the two originally briefed |
+| Sources | REST 19, sitemap 19, union 19 | Zero divergence between machine-readable sources |
+
+Specific traps now recorded:
+
+1. **The form plugin is Fluent Forms** — confirmed by `fluentform/v1` and
+   `/?fluent-form=3`. This resolves the Fluent Forms vs WPForms ambiguity. Not
+   WPForms.
+2. **A form is reachable only by query string** (`/apply` → `/?fluent-form=3`).
+   Route enumeration and the forms extractor must handle query-string routes.
+3. **`slug` is not the route.** The front page's WP slug is `ush`; path must come
+   from `link`.
+4. **Asymmetric naming.** `/mlm/applym/` is Mill Lake Manor's form, while
+   `/mlm/apply/` redirects to *TMH's* form. Never infer a form from a path pattern.
+5. **Redirection plugin is installed** → the 301 map can be **exported from the
+   plugin** rather than reconstructed by crawling. B1.6 should prefer that source.
+6. **LiteSpeed Cache is installed** → capture must not read a stale cached layer,
+   or the golden baseline is poisoned. Prime or bypass deliberately.
+7. **`template` is exposed** (`page-template-blank.php` on the apply/thanks
+   pages) — a real input to island/template decisions.
+8. **REST is unusually open**: `/wp-json/` public, `/wp/v2/users` open (1 user,
+   no names or emails recorded — count only), and 8 non-core namespaces leak the
+   plugin list. Treat the open user endpoint as a **live security finding**, not
+   just a capture convenience.
+9. A `project` CPT exists but is empty. Enumeration derives public `wp/v2` bases
+   from `/types` so a populated CPT cannot be silently missed.
+
+**Live-site bugs found (not conversion problems), filed as `cl-site-convert-sfs`:**
+`/tmh/onboard` 301s to `/mlm/onboard-mlm/` (wrong property); `/mlm/apply` 301s to
+TMH's form though `/mlm/applym/` exists; three pages carry a scheme-less
+`href="chatgpt.com"` producing 404s.
+
 ## 2026-11-11 — Open operator questions (blocking specific beads)
 
 1. **The exact Pabbly payload** — from Pabbly's "Webhook by Pabbly" request history
