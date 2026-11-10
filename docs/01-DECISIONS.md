@@ -537,3 +537,65 @@ evidence: `docs/template-clustering.md`, `src/analysis/cluster.ts`,
   and the registry carries a reason (ADR 0012). A test asserts the committed
   registry is reproduced byte-for-byte from `capture/site-ir.json`, so the
   artifact cannot go stale silently.
+
+## 2026-11-10 - Forms: one Fluent Form, two renders, and the conversational trap
+
+B4.1a measured the form surface instead of assuming it. Contract and evidence:
+`docs/form-extraction.md`, `src/source/forms/`, `capture/forms.json`.
+
+- **Fluent Forms 6.2.17 is confirmed, and it is the only form plugin.** `/tmh/apply/`
+  renders form **3** as a *conversational mount*: a `div.frm-fluent-form` with
+  `data-form_id="3"` and an empty `div.ffc_conv_form` placeholder. There is no
+  `<form>` element and no input in the document; the fields are built by
+  `conversationalForm.js` after load, and the capture strips scripts. This resolves
+  the Fluent Forms vs WP Forms ambiguity by evidence, not by vote.
+- **A captured conversational form keeps its identity and loses its fields**, so
+  the extractor has three outcomes, not two: `extracted`, `fields-unavailable`, and
+  `absent`. Collapsing `fields-unavailable` into `absent` would tell the emitter a
+  page has no form when it has the site's most important one; collapsing it into
+  `extracted` with zero fields would invent one.
+- **`/?fluent-form=3` is a render, not a page.** It exists only by query string, so
+  it cannot be in the 19-page capture. It was fetched once, politely (GET, 600 ms,
+  robots-aware) and recorded; it is extracted as its own form entry whose `page` is
+  the literal route including the query string, and it is deliberately **not** added
+  to `pages[]`, because a page would be emitted as a document and this is a render.
+- **The field attribution is proven, not asserted.** The recorded query render and
+  `/tmh/apply/` serve the same question set: SHA-256 over `form.questions` matches
+  (14 questions), recorded in `tests/fixtures/forms/recordings.json`. Nonces differ
+  per session; questions do not. `/tmh/apply/` is therefore given the field list it
+  does not itself contain, with the provenance in `submit.notes`.
+- **Measured: 15 fields, 12 required, no file-upload field anywhere on the site.**
+  The operator question "does any form have a file upload?" is answered **no**, and
+  the plugin config corroborates it (`file_upload_settings: []`). Google Sheets
+  needs no object storage for this migration.
+- **Nonce values are never recorded.** Hidden fields are listed by name with
+  `valueRecorded: false`; the recorded render replaces every nonce value with
+  `REDACTED` in both spellings the plugin emits. A nonce is session-bound, so a
+  recorded one is useless and is a credential-shaped artefact in git history.
+- **The submission contract is read from the plugin, not guessed.** The
+  conversational app posts Admin AJAX: `POST admin-ajax.php?t=<ms>` with
+  `action=fluentform_submit`, `form_id`, and `data=<urlencoded answers +
+  extra_inputs + isFFConversational=true>`. That is the wire contract the
+  replacement must honour; it is `apiContracts[] id: fluentform-submit`, and both
+  forms point at it from `submitContract.endpointRef` with `sink: pabbly`.
+- **A site search box is not an application form.** All 19 pages carry a Divi
+  `et-search-form` and two carry a second block search; keying on `<form>` would
+  report 22 phantom forms. Search is rejected explicitly and the rejection is
+  recorded per route.
+- **`/mlm/applym/` has no form in the capture** - its `et_pb_code` module is empty,
+  so the MLM form is either injected client-side or was not rendered. Reported as
+  absent with that reason; it is a real gap to resolve before the MLM page ships,
+  not a page with nothing to convert.
+- **`schemas/` was not touched.** Seven facts the IR form shape cannot hold (plugin
+  form id, conditional rules, upload limits, date mask, sub-field parent, multi-route
+  forms, non-honeypot spam) are recorded in `capture/forms.json` `schemaGaps[]`.
+  An unsupported input type (`password`, `time`) is reported and skipped, never
+  coerced to `text`.
+- **The onboard/offboard pages carry no form at all.** Measured across all 19 captured
+  documents: each page has exactly one `<form>` (the Divi search box) except
+  `/tmh/apply/` (the Fluent Forms mount) and `/ush/owner/`+`/ush/privacy-policy/`
+  (two search boxes each). `/tmh/onboard-tmh/`, `/tmh/offboard/` and
+  `/mlm/onboard-mlm/` have **zero** inputs beyond the search field - no Fluent
+  Forms, no Divi contact form, no empty code module, no iframe form. The bead's
+  acceptance criterion assumed those pages held forms; the capture says they do
+  not, so there is nothing to extract there and nothing was invented to satisfy it.

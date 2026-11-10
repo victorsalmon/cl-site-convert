@@ -1,0 +1,800 @@
+{
+  "generatedBy": "capture:forms",
+  "baseUrl": "https://upscalehavens.ca",
+  "capturedAt": "2026-11-10T08:28:54.801Z",
+  "note": "Sidecar: form facts the Site IR v1.1 form shape cannot hold. `capture/site-ir.json` carries only the schema-conformant projection; this file is the evidence behind it. Nonce/hidden security fields are listed by NAME with valueRecorded=false; their values are session-bound and never recorded.",
+  "schemaGaps": [
+    "`form` has no field for the plugin's own form id (Fluent Forms id 3): it is carried in `id`/`title` here and in the sidecar.",
+    "`formField` has no `conditional` field, so visibility rules (`conditional_logics`) are recorded here only.",
+    "`formField.validation` has no `accept`/`maxFileSize`, so upload limits are recorded here only.",
+    "`formField` has no `dateFormat`, so a date input's mask is recorded here only.",
+    "`formField` has no `parentName`, so a sub-field (first_name inside the `names` element) cannot say what it belongs to in the IR.",
+    "`form.page` is a single route: a form rendered on more than one route (and a conversational mount whose fields are only visible on the query-string render) cannot be expressed as one entry."
+  ],
+  "forms": [
+    {
+      "id": "fluent-form-3",
+      "source": "fluent-forms",
+      "pluginFormId": "3",
+      "route": "/tmh/apply/",
+      "fields": [
+        {
+          "name": "first_name",
+          "type": "text",
+          "parentName": "names",
+          "required": true,
+          "label": "First Name",
+          "placeholder": "Enter Your First Name"
+        },
+        {
+          "name": "last_name",
+          "type": "text",
+          "parentName": "names",
+          "required": true,
+          "label": "Last Name",
+          "placeholder": "Enter Your Last Name"
+        },
+        {
+          "name": "input_text_1",
+          "type": "text",
+          "required": true,
+          "label": "Phone Number",
+          "placeholder": "Query Subject"
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "label": "Email",
+          "placeholder": "Email Address"
+        },
+        {
+          "name": "dropdown_1",
+          "type": "select",
+          "required": true,
+          "label": "Which room would you like more information about?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "Vernon - Chrysocolla [$993]",
+              "value": "Vernon - Chrysocolla [$993]"
+            }
+          ]
+        },
+        {
+          "name": "checkbox",
+          "type": "checkbox-group",
+          "required": true,
+          "label": "Are you aware this is a rental of a private room with shared restrooms and kitchen?",
+          "options": [
+            {
+              "label": "Yes, I'm looking for a private room in a shared household.",
+              "value": "Yes, I'm looking for a private room in a shared household."
+            }
+          ]
+        },
+        {
+          "name": "checkbox_1",
+          "type": "checkbox-group",
+          "required": true,
+          "label": "Do you have any pets, and if so what kind?",
+          "options": [
+            {
+              "label": "I will not have any pets in the room.",
+              "value": "I will not have any pets in the room."
+            },
+            {
+              "label": "I will move with 1-2 cats",
+              "value": "I will move with 1-2 cats"
+            },
+            {
+              "label": "I will move with 3+ cats",
+              "value": "I will move with 3+ cats"
+            },
+            {
+              "label": "I will move with 1 dog",
+              "value": "I will move with 1 dog"
+            },
+            {
+              "label": "I will move with 2+ dogs",
+              "value": "I will move with 2+ dogs"
+            },
+            {
+              "label": "I will move with other pets",
+              "value": "I will move with other pets"
+            }
+          ]
+        },
+        {
+          "name": "dropdown_2",
+          "type": "select",
+          "required": true,
+          "label": "Are you moving with someone else or by yourself?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "By myself",
+              "value": "By myself"
+            },
+            {
+              "label": "With one other person",
+              "value": "With one other person"
+            },
+            {
+              "label": "With 2+ people",
+              "value": "With 2+ people"
+            }
+          ]
+        },
+        {
+          "name": "dropdown_3",
+          "type": "select",
+          "required": true,
+          "label": "How long would you want to stay (if it works out)?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "1 Year",
+              "value": "1 Year"
+            },
+            {
+              "label": "9 Months",
+              "value": "9 Months"
+            },
+            {
+              "label": "6 Months",
+              "value": "6 Months"
+            },
+            {
+              "label": "3 Months",
+              "value": "3 Months"
+            }
+          ]
+        },
+        {
+          "name": "datetime",
+          "type": "date",
+          "required": true,
+          "label": "When is the *earliest* you'd want to move in (if you like the place)?",
+          "dateFormat": "d/m/Y"
+        },
+        {
+          "name": "datetime_1",
+          "type": "date",
+          "required": true,
+          "label": "When is the *latest* you'd want to move in (if you like the place)?",
+          "dateFormat": "d/m/Y"
+        },
+        {
+          "name": "dropdown_4",
+          "type": "select",
+          "required": true,
+          "label": "What's your estimated annual income from all sources? (wage equivalents shown only for convenience)",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "10,000 - 19,999 (ex: PWD)",
+              "value": "10,000 - 19,999 (ex: PWD)"
+            },
+            {
+              "label": "20,000 - 33,999 (ex: minimum part time + PWD)",
+              "value": "20,000 - 33,999 (ex: minimum part time + PWD)"
+            },
+            {
+              "label": "34,000 - 39, 999 (ex: minimum-ish full time)",
+              "value": "34,000 - 39, 999 (ex: minimum-ish full time)"
+            },
+            {
+              "label": "40,000 - 49,999 (ex: $20-24/hr+ full time)",
+              "value": "40,000 - 49,999 (ex: $20-24/hr+ full time)"
+            },
+            {
+              "label": "50,000 - 59,999 (ex: $25-29/hr full time)",
+              "value": "50,000 - 59,999 (ex: $25-29/hr full time)"
+            },
+            {
+              "label": "60,000+ ($30+/hr full time)",
+              "value": "60,000+ ($30+/hr full time)"
+            }
+          ]
+        },
+        {
+          "name": "dropdown",
+          "type": "select",
+          "required": false,
+          "label": "Are you able to pay a one month security deposit if needed?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "Yes, if needed",
+              "value": "Yes, if needed"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        {
+          "name": "fbclid",
+          "type": "hidden",
+          "required": false
+        },
+        {
+          "name": "gclid",
+          "type": "hidden",
+          "required": false
+        }
+      ],
+      "hiddenFields": [
+        {
+          "name": "__fluent_form_embded_post_id",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "_fluentform_3_fluentformnonce",
+          "security": true,
+          "valueRecorded": false
+        },
+        {
+          "name": "_wp_http_referer",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "item_3__fluent_sf",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "fbclid",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "gclid",
+          "security": false,
+          "valueRecorded": false
+        }
+      ],
+      "submit": {
+        "action": "https://upscalehavens.ca/wp-admin/admin-ajax.php",
+        "method": "post",
+        "enctype": null,
+        "dataAttributes": {},
+        "extraInputNames": [
+          "__fluent_form_embded_post_id",
+          "_fluentform_3_fluentformnonce",
+          "_wp_http_referer",
+          "item_3__fluent_sf"
+        ],
+        "nonceFieldNames": [
+          "_fluentform_3_fluentformnonce"
+        ],
+        "renderMode": "conversational",
+        "notes": [
+          "action is posted as Admin AJAX with a `?t=<millisecond timestamp>` cache-buster",
+          "body: FormData(action=fluentform_submit, form_id=<id>, data=<urlencoded answers + extra_inputs + isFFConversational=true>)",
+          "fields read from /?fluent-form=3"
+        ],
+        "ajaxUrl": "https://upscalehavens.ca/wp-admin/admin-ajax.php",
+        "restUrl": "https://upscalehavens.ca/wp-json/fluentform/v1",
+        "restNamespace": "fluentform"
+      },
+      "detection": {
+        "source": "fluent-forms",
+        "matched": "fluent-conversational-mount",
+        "evidence": [
+          "class=\"frm-fluent-form\"",
+          "class=\"ffc_conv_form\"",
+          "<div class=\"frm-fluent-form ff_conv_app fluent_form_3 ff_conv_app_frame ff_conv_app_3 ffc_media_hide_mob_no\" data-form_id=\"3\">"
+        ],
+        "formId": "3",
+        "formIdFrom": "data-form_id"
+      },
+      "title": "Apply at Turtle Mountain Home",
+      "validation": {
+        "spam": [
+          "honeypot"
+        ]
+      }
+    },
+    {
+      "id": "fluent-form-3-query",
+      "source": "fluent-forms",
+      "pluginFormId": "3",
+      "route": "/?fluent-form=3",
+      "fields": [
+        {
+          "name": "first_name",
+          "type": "text",
+          "parentName": "names",
+          "required": true,
+          "label": "First Name",
+          "placeholder": "Enter Your First Name"
+        },
+        {
+          "name": "last_name",
+          "type": "text",
+          "parentName": "names",
+          "required": true,
+          "label": "Last Name",
+          "placeholder": "Enter Your Last Name"
+        },
+        {
+          "name": "input_text_1",
+          "type": "text",
+          "required": true,
+          "label": "Phone Number",
+          "placeholder": "Query Subject"
+        },
+        {
+          "name": "email",
+          "type": "email",
+          "required": true,
+          "label": "Email",
+          "placeholder": "Email Address"
+        },
+        {
+          "name": "dropdown_1",
+          "type": "select",
+          "required": true,
+          "label": "Which room would you like more information about?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "Vernon - Chrysocolla [$993]",
+              "value": "Vernon - Chrysocolla [$993]"
+            }
+          ]
+        },
+        {
+          "name": "checkbox",
+          "type": "checkbox-group",
+          "required": true,
+          "label": "Are you aware this is a rental of a private room with shared restrooms and kitchen?",
+          "options": [
+            {
+              "label": "Yes, I'm looking for a private room in a shared household.",
+              "value": "Yes, I'm looking for a private room in a shared household."
+            }
+          ]
+        },
+        {
+          "name": "checkbox_1",
+          "type": "checkbox-group",
+          "required": true,
+          "label": "Do you have any pets, and if so what kind?",
+          "options": [
+            {
+              "label": "I will not have any pets in the room.",
+              "value": "I will not have any pets in the room."
+            },
+            {
+              "label": "I will move with 1-2 cats",
+              "value": "I will move with 1-2 cats"
+            },
+            {
+              "label": "I will move with 3+ cats",
+              "value": "I will move with 3+ cats"
+            },
+            {
+              "label": "I will move with 1 dog",
+              "value": "I will move with 1 dog"
+            },
+            {
+              "label": "I will move with 2+ dogs",
+              "value": "I will move with 2+ dogs"
+            },
+            {
+              "label": "I will move with other pets",
+              "value": "I will move with other pets"
+            }
+          ]
+        },
+        {
+          "name": "dropdown_2",
+          "type": "select",
+          "required": true,
+          "label": "Are you moving with someone else or by yourself?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "By myself",
+              "value": "By myself"
+            },
+            {
+              "label": "With one other person",
+              "value": "With one other person"
+            },
+            {
+              "label": "With 2+ people",
+              "value": "With 2+ people"
+            }
+          ]
+        },
+        {
+          "name": "dropdown_3",
+          "type": "select",
+          "required": true,
+          "label": "How long would you want to stay (if it works out)?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "1 Year",
+              "value": "1 Year"
+            },
+            {
+              "label": "9 Months",
+              "value": "9 Months"
+            },
+            {
+              "label": "6 Months",
+              "value": "6 Months"
+            },
+            {
+              "label": "3 Months",
+              "value": "3 Months"
+            }
+          ]
+        },
+        {
+          "name": "datetime",
+          "type": "date",
+          "required": true,
+          "label": "When is the *earliest* you'd want to move in (if you like the place)?",
+          "dateFormat": "d/m/Y"
+        },
+        {
+          "name": "datetime_1",
+          "type": "date",
+          "required": true,
+          "label": "When is the *latest* you'd want to move in (if you like the place)?",
+          "dateFormat": "d/m/Y"
+        },
+        {
+          "name": "dropdown_4",
+          "type": "select",
+          "required": true,
+          "label": "What's your estimated annual income from all sources? (wage equivalents shown only for convenience)",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "10,000 - 19,999 (ex: PWD)",
+              "value": "10,000 - 19,999 (ex: PWD)"
+            },
+            {
+              "label": "20,000 - 33,999 (ex: minimum part time + PWD)",
+              "value": "20,000 - 33,999 (ex: minimum part time + PWD)"
+            },
+            {
+              "label": "34,000 - 39, 999 (ex: minimum-ish full time)",
+              "value": "34,000 - 39, 999 (ex: minimum-ish full time)"
+            },
+            {
+              "label": "40,000 - 49,999 (ex: $20-24/hr+ full time)",
+              "value": "40,000 - 49,999 (ex: $20-24/hr+ full time)"
+            },
+            {
+              "label": "50,000 - 59,999 (ex: $25-29/hr full time)",
+              "value": "50,000 - 59,999 (ex: $25-29/hr full time)"
+            },
+            {
+              "label": "60,000+ ($30+/hr full time)",
+              "value": "60,000+ ($30+/hr full time)"
+            }
+          ]
+        },
+        {
+          "name": "dropdown",
+          "type": "select",
+          "required": false,
+          "label": "Are you able to pay a one month security deposit if needed?",
+          "placeholder": "- Select -",
+          "options": [
+            {
+              "label": "Yes, if needed",
+              "value": "Yes, if needed"
+            },
+            {
+              "label": "No",
+              "value": "No"
+            }
+          ]
+        },
+        {
+          "name": "fbclid",
+          "type": "hidden",
+          "required": false
+        },
+        {
+          "name": "gclid",
+          "type": "hidden",
+          "required": false
+        }
+      ],
+      "hiddenFields": [
+        {
+          "name": "__fluent_form_embded_post_id",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "_fluentform_3_fluentformnonce",
+          "security": true,
+          "valueRecorded": false
+        },
+        {
+          "name": "_wp_http_referer",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "item_3__fluent_sf",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "fbclid",
+          "security": false,
+          "valueRecorded": false
+        },
+        {
+          "name": "gclid",
+          "security": false,
+          "valueRecorded": false
+        }
+      ],
+      "submit": {
+        "action": "https://upscalehavens.ca/wp-admin/admin-ajax.php",
+        "method": "post",
+        "enctype": null,
+        "dataAttributes": {},
+        "extraInputNames": [
+          "__fluent_form_embded_post_id",
+          "_fluentform_3_fluentformnonce",
+          "_wp_http_referer",
+          "item_3__fluent_sf"
+        ],
+        "nonceFieldNames": [
+          "_fluentform_3_fluentformnonce"
+        ],
+        "renderMode": "conversational",
+        "notes": [
+          "action is posted as Admin AJAX with a `?t=<millisecond timestamp>` cache-buster",
+          "body: FormData(action=fluentform_submit, form_id=<id>, data=<urlencoded answers + extra_inputs + isFFConversational=true>)",
+          "fields read from /?fluent-form=3"
+        ],
+        "ajaxUrl": "https://upscalehavens.ca/wp-admin/admin-ajax.php",
+        "restUrl": "https://upscalehavens.ca/wp-json/fluentform/v1",
+        "restNamespace": "fluentform"
+      },
+      "detection": {
+        "source": "fluent-forms",
+        "matched": "fluent-conversational-mount",
+        "evidence": [
+          "class=\"frm-fluent-form\"",
+          "class=\"ffc_conv_form\"",
+          "<div class=\"frm-fluent-form ff_conv_app ff_conv_app_frame fluent_form_3 ff_conv_app_3 ffc_media_hide_mob_no\" data-form_id=\"3\">"
+        ],
+        "formId": "3",
+        "formIdFrom": "data-form_id"
+      },
+      "title": "Fluent Forms conversational render reachable only by query string; not one of the 19 captured pages.",
+      "validation": {
+        "spam": [
+          "honeypot"
+        ]
+      }
+    }
+  ],
+  "routes": [
+    {
+      "route": "/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/care/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/care/showings/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/care/signal-admin/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/care/sweepy-admin/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/care/ttlock-admin/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/mlm/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/mlm/applym/",
+      "status": "absent",
+      "reason": "no <form> element and no recognised form markup; the page carries an empty Divi code module where the form would be embedded"
+    },
+    {
+      "route": "/mlm/onboard-mlm/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/resources/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/resources/checklists/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/resources/sweepy/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/tmh/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/tmh/apply/",
+      "status": "extracted",
+      "formId": "fluent-form-3",
+      "detection": "fluent-forms (fluent-conversational-mount)"
+    },
+    {
+      "route": "/tmh/offboard/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/tmh/onboard-tmh/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/ush/owner/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/ush/privacy-policy/",
+      "status": "absent",
+      "reason": "site search box (role=search / single ?s= field), not an application form",
+      "rejected": "site-search"
+    },
+    {
+      "route": "/ush/thanks/",
+      "status": "absent",
+      "reason": "no <form> element and no recognised form markup"
+    },
+    {
+      "route": "/?fluent-form=3",
+      "status": "extracted",
+      "formId": "fluent-form-3-query",
+      "detection": "fluent-forms (fluent-conversational-mount)"
+    }
+  ],
+  "fileUpload": {
+    "any": false,
+    "forms": [],
+    "fields": []
+  },
+  "submitEndpoints": [
+    {
+      "id": "fluentform-submit",
+      "method": "POST",
+      "url": "https://upscalehavens.ca/wp-admin/admin-ajax.php",
+      "requestShape": {
+        "method": "post",
+        "renderMode": "conversational",
+        "fields": [
+          {
+            "name": "first_name",
+            "type": "text"
+          },
+          {
+            "name": "last_name",
+            "type": "text"
+          },
+          {
+            "name": "input_text_1",
+            "type": "text"
+          },
+          {
+            "name": "email",
+            "type": "email"
+          },
+          {
+            "name": "dropdown_1",
+            "type": "select"
+          },
+          {
+            "name": "checkbox",
+            "type": "checkbox-group"
+          },
+          {
+            "name": "checkbox_1",
+            "type": "checkbox-group"
+          },
+          {
+            "name": "dropdown_2",
+            "type": "select"
+          },
+          {
+            "name": "dropdown_3",
+            "type": "select"
+          },
+          {
+            "name": "datetime",
+            "type": "date"
+          },
+          {
+            "name": "datetime_1",
+            "type": "date"
+          },
+          {
+            "name": "dropdown_4",
+            "type": "select"
+          },
+          {
+            "name": "dropdown",
+            "type": "select"
+          },
+          {
+            "name": "fbclid",
+            "type": "hidden"
+          },
+          {
+            "name": "gclid",
+            "type": "hidden"
+          }
+        ],
+        "extraInputNames": [
+          "__fluent_form_embded_post_id",
+          "_fluentform_3_fluentformnonce",
+          "_wp_http_referer",
+          "item_3__fluent_sf"
+        ],
+        "nonceFieldNames": [
+          "_fluentform_3_fluentformnonce"
+        ]
+      },
+      "notes": "Captured Fluent Forms submission. Fluent Forms is PHP and does not survive the conversion; this is the wire contract the replacement must honour. Nonce values are session-bound and are deliberately not recorded; every nonce the source requires is a Pages Function concern, not an IR value. Target sink is Pabbly (form island -> Pages Function -> POST -> Pabbly -> Google Sheets). The Pabbly URL is a Function secret and never appears in the IR. action is posted as Admin AJAX with a `?t=<millisecond timestamp>` cache-buster body: FormData(action=fluentform_submit, form_id=<id>, data=<urlencoded answers + extra_inputs + isFFConversational=true>) fields read from /?fluent-form=3"
+    }
+  ]
+}

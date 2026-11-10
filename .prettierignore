@@ -20,10 +20,11 @@ pnpm-lock.yaml
 AGENTS.md
 CLAUDE.md
 
-# Evidence, not source. `tests/fixtures/wp-rest/` holds byte-exact recordings from
-# the live site and `capture/` holds generated manifests; reformatting either would
-# destroy the "this is what the server returned" claim. A test that reads a
-# reformatted recording is testing the formatter.
+# Evidence, not source. `tests/fixtures/wp-rest/` and `tests/fixtures/forms/` hold
+# byte-exact recordings from the live site and `capture/` holds generated manifests;
+# reformatting any of them would destroy the "this is what the server returned"
+# claim. A test that reads a reformatted recording is testing the formatter.
 tests/fixtures/wp-rest/
 tests/fixtures/assets/
+tests/fixtures/forms/
 capture/

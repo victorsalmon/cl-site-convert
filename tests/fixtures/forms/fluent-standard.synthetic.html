@@ -1,0 +1,94 @@
+<!--
+  Synthetic Fluent Forms "standard" markup: a real <form> with every field type
+  Site IR v1.1 can express, plus the controls it cannot (password, time) and the
+  security fields whose VALUES must never be recorded.
+
+  This file is authored, not captured - the live site serves only the
+  conversational shape (see fluent-form-3.query.html). It is built from Fluent
+  Forms 6.2.17's own standard markup conventions so the generic parser is tested
+  against the real plugin's structure: `frm-fluent-form`/`fluent_form_<id>` classes,
+  `data-form_id`, the `_fluentform_<id>_fluentformnonce` hidden input, the
+  `ff_hp` honeypot and the `cf-turnstile` widget.
+
+  The nonce value below is a fixed dummy, not a captured token: a test asserts the
+  extractor never reproduces it.
+-->
+<form data-form_id="9" id="fluentform_9" class="frm-fluent-form fluent_form_9 ff-form-9" data-form_instance="ff_form_instance_9_1" method="POST" action="" enctype="multipart/form-data">
+	<div class="ff-el-group">
+		<div class="ff-el-input--label ff-el-is-required"><label for="ff_9_input_text" class="ff-el-input--label">Full name</label></div>
+		<div class="ff-el-input--content"><input type="text" name="input_text" id="ff_9_input_text" class="ff-el-form-control" placeholder="Enter your full name" maxlength="80" minlength="2" pattern="[A-Za-z .'-]+" title="Letters, spaces, apostrophes and hyphens only" required aria-required="true" data-name="input_text"></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_email">Email</label></div>
+		<div class="ff-el-input--content"><input type="email" name="input_email" id="ff_9_input_email" class="ff-el-form-control" placeholder="you@example.com" required></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_phone">Phone</label></div>
+		<div class="ff-el-input--content"><input type="tel" name="input_phone" id="ff_9_input_phone" placeholder="+1 555 0100" required></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_url">Website</label></div>
+		<div class="ff-el-input--content"><input type="url" name="input_url" id="ff_9_input_url" placeholder="https://example.com"></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_number">Adults in the household</label></div>
+		<div class="ff-el-input--content"><input type="number" name="input_number" id="ff_9_input_number" min="1" max="12" step="1" value="2"></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_date">Move-in date</label></div>
+		<div class="ff-el-input--content"><input type="date" name="input_date" id="ff_9_input_date" required></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_textarea">Anything else we should know?</label></div>
+		<div class="ff-el-input--content"><textarea name="input_textarea" id="ff_9_input_textarea" class="ff-el-form-control" rows="4" placeholder="Tell us about yourself" maxlength="600"></textarea></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_dropdown">Which room?</label></div>
+		<div class="ff-el-input--content">
+			<select name="dropdown" id="ff_9_dropdown" class="ff-el-form-control" required>
+				<option value="">- Select -</option>
+				<option value="room-a">Room A &mdash; $900</option>
+				<option value="room-b">Room B &mdash; $1,100</option>
+			</select>
+		</div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_radio_1">Are you employed?</label></div>
+		<div class="ff-el-input--content">
+			<div class="ff-el-form-check ff-el-form-check-radio"><label class="ff-el-form-check-label" for="ff_9_input_radio_1"><input type="radio" name="input_radio" id="ff_9_input_radio_1" value="Yes" class="ff-el-form-check-input"><span>Yes</span></label></div>
+			<div class="ff-el-form-check ff-el-form-check-radio"><label class="ff-el-form-check-label" for="ff_9_input_radio_2"><input type="radio" name="input_radio" id="ff_9_input_radio_2" value="No" class="ff-el-form-check-input"><span>No</span></label></div>
+		</div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_checkbox_1">Which amenities matter?</label></div>
+		<div class="ff-el-input--content">
+			<div class="ff-el-form-check ff-el-form-check-checkbox"><label class="ff-el-form-check-label" for="ff_9_input_checkbox_1"><input type="checkbox" name="input_checkbox[]" id="ff_9_input_checkbox_1" value="laundry" class="ff-el-form-check-input"><span>In-suite laundry</span></label></div>
+			<div class="ff-el-form-check ff-el-form-check-checkbox"><label class="ff-el-form-check-label" for="ff_9_input_checkbox_2"><input type="checkbox" name="input_checkbox[]" id="ff_9_input_checkbox_2" value="internet" class="ff-el-form-check-input"><span>Gigabit internet</span></label></div>
+		</div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--content"><label class="ff-el-form-check-label" for="ff_9_single_checkbox"><input type="checkbox" name="single_checkbox" id="ff_9_single_checkbox" value="1" class="ff-el-form-check-input"><span>I agree to the house rules</span></label></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_file">Proof of income</label></div>
+		<div class="ff-el-input--content"><input type="file" name="input_file" id="ff_9_input_file" class="ff-el-form-control" accept=".pdf,.jpg,.png" data-max_file_size="3" data-max_file_size_mb="3" data-file_type="pdf,jpg,png" required></div>
+	</div>
+	<div class="ff-el-group" data-conditionals="{&quot;match&quot;:&quot;any&quot;,&quot;conditions&quot;:[{&quot;field&quot;:&quot;input_radio&quot;,&quot;operator&quot;:&quot;==&quot;,&quot;value&quot;:&quot;Yes&quot;}]}">
+		<div class="ff-el-input--label"><label for="ff_9_employer">Employer</label></div>
+		<div class="ff-el-input--content"><input type="text" name="employer" id="ff_9_employer" placeholder="Only if you are employed"></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_password">Portal password</label></div>
+		<div class="ff-el-input--content"><input type="password" name="input_password" id="ff_9_input_password"></div>
+	</div>
+	<div class="ff-el-group">
+		<div class="ff-el-input--label"><label for="ff_9_input_time">Preferred viewing time</label></div>
+		<div class="ff-el-input--content"><input type="time" name="input_time" id="ff_9_input_time"></div>
+	</div>
+	<input type="hidden" name="__fluent_form_embded_post_id" value="42">
+	<input type="hidden" name="_fluentform_9_fluentformnonce" value="dummyvalue1234567890">
+	<input type="hidden" name="_wp_http_referer" value="/apply/">
+	<input type="hidden" id="ff_9_item__fluent_sf" class="ff_hp" name="item_9__fluent_sf" value="">
+	<div class="ff-el-group"><div class="ff-el-input--content"><div class="cf-turnstile" data-sitekey="0x4AAAAAAA-dummy" data-theme="light"></div></div></div>
+	<div class="ff-el-group ff-el-form-actions"><div class="ff-el-input--content"><input type="submit" value="Submit" class="ff-btn ff-btn-submit" id="ff_9_submit"></div></div>
+</form>
