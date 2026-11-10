@@ -1,0 +1,33 @@
+{
+  "irVersion": "1.0.0",
+  "site": {
+    "baseUrl": "https://example.ca",
+    "title": "Example",
+    "locale": "en_CA",
+    "permalinks": { "structure": "/%postname%/" }
+  },
+  "pages": [
+    {
+      "url": "/apply/",
+      "slug": "apply",
+      "status": "publish",
+      "template": "page-apply",
+      "dom": { "html": "<div class=\"wrap\"><form class=\"apply-form\"></form></div>" }
+    }
+  ],
+  "assets": [],
+  "styles": [],
+  "forms": [
+    {
+      "id": "apply",
+      "source": "fluent-forms",
+      "page": "/apply/",
+      "fields": [{ "name": "email", "type": "email" }],
+      "submitContract": { "sink": "pabbly", "endpointRef": "no-such-contract" }
+    }
+  ],
+  "behaviors": [
+    { "page": "/missing-page/", "selector": "form", "kind": "ajax-form" }
+  ],
+  "capabilities": { "supported": ["pages"], "unsupported": [] }
+}

@@ -1,0 +1,583 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cl-site-convert.dev/site-ir-1.0.0.schema.json",
+  "title": "Site IR v1",
+  "description": "The frozen intermediate representation that every source adapter produces and every emitter consumes. `dom` is the fidelity carrier: it is a normalized HTML skeleton whose class names are preserved byte-for-byte. Styles are ordered and verbatim; there is no pruning field and no 'cleaned' variant. Markdown is never the IR.",
+  "type": "object",
+  "required": ["irVersion", "site", "pages", "assets", "styles", "capabilities"],
+  "additionalProperties": false,
+  "properties": {
+    "irVersion": {
+      "description": "Semantic version of this IR shape. Only the 1.x family is accepted by this schema file; a 2.x IR is a new schema.",
+      "type": "string",
+      "pattern": "^1\\.[0-9]+\\.[0-9]+$"
+    },
+    "site": { "$ref": "#/$defs/site" },
+    "pages": {
+      "description": "Every routable document, including 404 and listing pages.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/page" }
+    },
+    "assets": {
+      "description": "Binary/blob payloads referenced by the site. CSS is not here: it lives in `styles` so its order is explicit.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/asset" }
+    },
+    "styles": {
+      "description": "Ordered, verbatim stylesheet chain. The emitter links these in `order`, byte-identical, and never prunes them.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/style" }
+    },
+    "menus": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/menu" }
+    },
+    "taxonomies": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/taxonomy" }
+    },
+    "authors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/author" }
+    },
+    "forms": {
+      "description": "Extracted form definitions. Each form is an event emitter: what survives is `submitContract`.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/form" }
+    },
+    "behaviors": {
+      "description": "Captured client-side interactions that are not expressible as static HTML.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/behavior" }
+    },
+    "apiContracts": {
+      "description": "Wire contracts the emitted site must honour (form submissions, AJAX endpoints).",
+      "type": "array",
+      "items": { "$ref": "#/$defs/apiContract" }
+    },
+    "capabilities": { "$ref": "#/$defs/capabilities" },
+    "redirects": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/redirect" }
+    },
+    "capture": { "$ref": "#/$defs/capture" }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:[-_][a-z0-9]+)*$"
+    },
+    "routePath": {
+      "description": "Site-relative path, always leading slash.",
+      "type": "string",
+      "pattern": "^/(?:[^/].*)?$"
+    },
+    "localPath": {
+      "description": "Artifact-relative path, no leading slash, no traversal.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$"
+    },
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "site": {
+      "type": "object",
+      "required": ["baseUrl", "title", "locale", "permalinks"],
+      "additionalProperties": false,
+      "properties": {
+        "baseUrl": {
+          "type": "string",
+          "pattern": "^https?://[^\\s]+$"
+        },
+        "title": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" },
+        "locale": {
+          "description": "WordPress locale, e.g. `en_CA` or `en`.",
+          "type": "string",
+          "pattern": "^[a-z]{2,3}(?:_[A-Z]{2})?$"
+        },
+        "permalinks": { "$ref": "#/$defs/permalinks" },
+        "subsites": {
+          "description": "Multi-site captures. A single-site capture omits this and `page.subsite`.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/subsite" }
+        }
+      }
+    },
+    "permalinks": {
+      "type": "object",
+      "required": ["structure"],
+      "additionalProperties": false,
+      "properties": {
+        "structure": {
+          "description": "WordPress permalink structure, e.g. `/%postname%/`.",
+          "type": "string",
+          "minLength": 1
+        },
+        "homeUrl": { "type": "string", "pattern": "^https?://[^\\s]+$" },
+        "siteUrl": { "type": "string", "pattern": "^https?://[^\\s]+$" }
+      }
+    },
+    "subsite": {
+      "type": "object",
+      "required": ["id", "path", "title"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "path": {
+          "description": "Path prefix with trailing slash, e.g. `/tmh/`.",
+          "type": "string",
+          "pattern": "^/(?:[^/]+/)*$"
+        },
+        "title": { "type": "string", "minLength": 1 }
+      }
+    },
+    "domSkeleton": {
+      "description": "Normalized HTML skeleton. Class names are preserved byte-for-byte; this is the fidelity carrier and the emitter's input. Never rewrite it into a component tree.",
+      "type": "object",
+      "required": ["html"],
+      "additionalProperties": false,
+      "properties": {
+        "html": { "type": "string", "minLength": 1 },
+        "doctype": {
+          "description": "Full doctype declaration, e.g. `<!DOCTYPE html>`.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "page": {
+      "type": "object",
+      "required": ["url", "slug", "status", "template", "dom"],
+      "additionalProperties": false,
+      "properties": {
+        "url": { "$ref": "#/$defs/routePath" },
+        "slug": { "type": "string", "pattern": "^[^\\s]*$" },
+        "title": { "type": "string" },
+        "status": {
+          "enum": ["publish", "draft", "private", "pending", "future"]
+        },
+        "template": {
+          "description": "Captured WordPress template id. Empty string when the site has no template identity.",
+          "type": "string"
+        },
+        "subsite": {
+          "description": "References `site.subsites[].id`.",
+          "$ref": "#/$defs/slug"
+        },
+        "dom": { "$ref": "#/$defs/domSkeleton" },
+        "meta": { "$ref": "#/$defs/pageMeta" },
+        "seo": { "$ref": "#/$defs/pageSeo" },
+        "islands": {
+          "description": "Mount records only. The IR never encodes Rust component internals.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/islandMount" }
+        },
+        "proseMarkdown": {
+          "description": "OPTIONAL prose projection of the page body, for search or editing. Never the IR and never an emitter input.",
+          "type": "string"
+        }
+      }
+    },
+    "pageMeta": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "description": { "type": "string" },
+        "authorId": { "$ref": "#/$defs/slug" },
+        "publishedAt": { "type": "string", "minLength": 1 },
+        "updatedAt": { "type": "string", "minLength": 1 },
+        "wpId": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "pageSeo": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "canonical": { "type": "string", "pattern": "^https?://[^\\s]+$" },
+        "robots": { "type": "string" },
+        "ogTitle": { "type": "string" },
+        "ogDescription": { "type": "string" },
+        "ogImage": { "type": "string" },
+        "jsonLd": {
+          "type": "array",
+          "items": { "type": "object" }
+        }
+      }
+    },
+    "islandMount": {
+      "type": "object",
+      "required": ["id", "component", "props"],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "description": "Mount slot id, emitted as `id` on the mount element.",
+          "type": "string",
+          "pattern": "^island-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "component": {
+          "description": "Registered component name, PascalCase. The Rust implementation is resolved by the Wasm bundle, not by the IR.",
+          "type": "string",
+          "pattern": "^[A-Z][A-Za-z0-9]*$"
+        },
+        "props": {
+          "description": "Serialized props for the component. Opaque data, deliberately open.",
+          "type": "object"
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "required": ["sourceUrl", "localPath", "sha256", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "sourceUrl": { "type": "string", "pattern": "^https?://[^\\s]+$" },
+        "localPath": { "$ref": "#/$defs/localPath" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "kind": {
+          "enum": ["image", "font", "script", "document", "media", "other"]
+        },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "contentType": { "type": "string" },
+        "referencedBy": {
+          "description": "Page urls that pulled this asset in during capture.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/routePath" }
+        }
+      }
+    },
+    "style": {
+      "type": "object",
+      "required": ["href", "localPath", "sha256", "order"],
+      "additionalProperties": false,
+      "properties": {
+        "href": {
+          "description": "The stylesheet url as captured (absolute or site-relative).",
+          "type": "string",
+          "minLength": 1
+        },
+        "localPath": { "$ref": "#/$defs/localPath" },
+        "sha256": {
+          "description": "Hash of the shipped bytes. Proves verbatim hand-off.",
+          "$ref": "#/$defs/sha256"
+        },
+        "order": {
+          "description": "0-based cascade order. Emitters link in ascending order and never reorder.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "media": { "type": "string" },
+        "subsite": { "$ref": "#/$defs/slug" }
+      }
+    },
+    "menu": {
+      "type": "object",
+      "required": ["id", "name", "items"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "name": { "type": "string", "minLength": 1 },
+        "location": { "type": "string" },
+        "items": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/menuItem" }
+        }
+      }
+    },
+    "menuItem": {
+      "type": "object",
+      "required": ["label", "href"],
+      "additionalProperties": false,
+      "properties": {
+        "label": { "type": "string", "minLength": 1 },
+        "href": { "type": "string", "minLength": 1 },
+        "target": { "type": "string" },
+        "children": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/menuItem" }
+        }
+      }
+    },
+    "taxonomy": {
+      "type": "object",
+      "required": ["name", "terms"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "WordPress taxonomy key, e.g. `category` or `post_tag`.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9_-]*$"
+        },
+        "label": { "type": "string" },
+        "hierarchical": { "type": "boolean" },
+        "terms": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/term" }
+        }
+      }
+    },
+    "term": {
+      "type": "object",
+      "required": ["slug", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "type": "string", "minLength": 1 },
+        "parent": { "$ref": "#/$defs/slug" }
+      }
+    },
+    "author": {
+      "type": "object",
+      "required": ["id", "slug", "name"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "slug": { "$ref": "#/$defs/slug" },
+        "name": { "type": "string", "minLength": 1 },
+        "bio": { "type": "string" },
+        "avatarPath": { "$ref": "#/$defs/localPath" }
+      }
+    },
+    "form": {
+      "type": "object",
+      "required": ["id", "source", "fields", "submitContract"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "source": {
+          "description": "Captured form plugin, e.g. `fluent-forms`.",
+          "type": "string",
+          "minLength": 1
+        },
+        "title": { "type": "string" },
+        "page": { "$ref": "#/$defs/routePath" },
+        "fields": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/formField" }
+        },
+        "validation": {
+          "type": "object",
+          "description": "Form-level rules that are not per-field.",
+          "additionalProperties": false,
+          "properties": {
+            "requiredMessage": { "type": "string" },
+            "successMessage": { "type": "string" },
+            "errorMessage": { "type": "string" },
+            "spam": {
+              "type": "array",
+              "items": { "enum": ["honeypot", "turnstile"] }
+            }
+          }
+        },
+        "submitContract": { "$ref": "#/$defs/submitContract" }
+      }
+    },
+    "formField": {
+      "type": "object",
+      "required": ["name", "type"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "description": "Submitted field name. Preserved exactly: the sink envelope depends on it.",
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_][A-Za-z0-9_.\\[\\]-]*$"
+        },
+        "type": {
+          "enum": [
+            "text",
+            "email",
+            "tel",
+            "url",
+            "number",
+            "textarea",
+            "select",
+            "radio",
+            "checkbox",
+            "checkbox-group",
+            "file",
+            "date",
+            "hidden",
+            "honeypot",
+            "turnstile"
+          ]
+        },
+        "label": { "type": "string" },
+        "placeholder": { "type": "string" },
+        "required": { "type": "boolean" },
+        "multiple": { "type": "boolean" },
+        "defaultValue": { "type": "string" },
+        "options": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "value"],
+            "additionalProperties": false,
+            "properties": {
+              "label": { "type": "string" },
+              "value": { "type": "string" }
+            }
+          }
+        },
+        "validation": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "pattern": { "type": "string" },
+            "min": { "type": "number" },
+            "max": { "type": "number" },
+            "minLength": { "type": "integer", "minimum": 0 },
+            "maxLength": { "type": "integer", "minimum": 0 },
+            "message": { "type": "string" }
+          }
+        }
+      }
+    },
+    "submitContract": {
+      "type": "object",
+      "required": ["sink", "endpointRef"],
+      "additionalProperties": false,
+      "properties": {
+        "sink": { "enum": ["webhook", "pabbly", "email-ses", "sheets-direct"] },
+        "endpointRef": {
+          "description": "References `apiContracts[].id` — the wire contract that must survive.",
+          "$ref": "#/$defs/slug"
+        },
+        "honeypot": { "type": "boolean" },
+        "turnstile": { "type": "boolean" }
+      }
+    },
+    "behavior": {
+      "type": "object",
+      "required": ["page", "selector", "kind"],
+      "additionalProperties": false,
+      "properties": {
+        "page": { "$ref": "#/$defs/routePath" },
+        "selector": {
+          "description": "CSS selector inside that page's `dom`.",
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "toggle",
+            "tabs",
+            "accordion",
+            "slider",
+            "modal",
+            "ajax-form",
+            "scroll",
+            "copy",
+            "other"
+          ]
+        },
+        "endpointRef": { "$ref": "#/$defs/slug" },
+        "islandId": {
+          "description": "References an `islandMount.id` on that page.",
+          "type": "string",
+          "pattern": "^island-[a-z0-9]+(?:-[a-z0-9]+)*$"
+        },
+        "options": {
+          "type": "object",
+          "description": "Opaque, behaviour-specific settings."
+        }
+      }
+    },
+    "apiContract": {
+      "type": "object",
+      "required": ["id", "method", "url"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "method": {
+          "enum": ["GET", "POST", "PUT", "PATCH", "DELETE"]
+        },
+        "url": { "type": "string", "minLength": 1 },
+        "requestShape": {
+          "description": "Free-form wire shape description. A formal shape language is deferred to v1.1.",
+          "type": "object"
+        },
+        "responseShape": {
+          "type": "object"
+        },
+        "headers": {
+          "type": "object",
+          "additionalProperties": { "type": "string" }
+        },
+        "notes": { "type": "string" }
+      }
+    },
+    "capabilities": {
+      "description": "What the capture could and could not represent. `unsupported` exists so an adapter fails loudly instead of silently degrading.",
+      "type": "object",
+      "required": ["supported", "unsupported"],
+      "additionalProperties": false,
+      "properties": {
+        "supported": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "unsupported": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/unsupportedCapability" }
+        }
+      }
+    },
+    "unsupportedCapability": {
+      "type": "object",
+      "required": ["capability"],
+      "additionalProperties": false,
+      "properties": {
+        "capability": {
+          "description": "Stable capability key, e.g. `wpml`, `membership`, `booking`, `ecommerce`, `php-runtime`.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "detail": { "type": "string" },
+        "blocking": {
+          "description": "True when the site cannot be converted faithfully until this is resolved.",
+          "type": "boolean"
+        },
+        "where": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/routePath" }
+        }
+      }
+    },
+    "redirect": {
+      "type": "object",
+      "required": ["from", "to", "code"],
+      "additionalProperties": false,
+      "properties": {
+        "from": { "$ref": "#/$defs/routePath" },
+        "to": {
+          "description": "Site-relative path or absolute url.",
+          "type": "string",
+          "pattern": "^(?:/|https?://)"
+        },
+        "code": {
+          "description": "Permanent or temporary redirect status. Only real redirect codes are allowed.",
+          "enum": [301, 302, 307, 308]
+        }
+      }
+    },
+    "capture": {
+      "description": "Provenance of this IR. Optional, but recommended so two captures can be diffed.",
+      "type": "object",
+      "required": ["sourceAdapter", "capturedAt"],
+      "additionalProperties": false,
+      "properties": {
+        "sourceAdapter": {
+          "description": "Adapter id, e.g. `wp-rest`, `simply-static`, `wxr`.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "capturedAt": { "type": "string", "minLength": 10 },
+        "toolVersion": { "type": "string" },
+        "notes": { "type": "string" }
+      }
+    }
+  }
+}

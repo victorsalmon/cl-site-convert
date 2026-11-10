@@ -1,0 +1,33 @@
+{
+  "irVersion": "1.0.0",
+  "site": {
+    "baseUrl": "https://example.ca",
+    "title": "Example",
+    "locale": "en_CA",
+    "permalinks": { "structure": "/%postname%/" }
+  },
+  "pages": [
+    {
+      "url": "/",
+      "slug": "home",
+      "status": "publish",
+      "template": "front-page",
+      "dom": { "html": "<div class=\"wrap\"></div>" },
+      "componentTree": {
+        "kind": "Fragment",
+        "children": [{ "kind": "Hero" }]
+      }
+    }
+  ],
+  "assets": [],
+  "styles": [
+    {
+      "href": "https://example.ca/style.css",
+      "localPath": "assets/styles/style.css",
+      "sha256": "0f1e2d3c4b5a69788796a5b4c3d2e1f00f1e2d3c4b5a69788796a5b4c3d2e1f0",
+      "order": 0,
+      "pruned": true
+    }
+  ],
+  "capabilities": { "supported": ["pages"], "unsupported": [] }
+}

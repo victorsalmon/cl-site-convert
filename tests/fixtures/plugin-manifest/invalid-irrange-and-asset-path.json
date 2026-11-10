@@ -1,0 +1,9 @@
+{
+  "name": "wordpress",
+  "version": "0.1.0",
+  "irRange": "latest",
+  "emits": ["site-ir"],
+  "hooks": ["capture:start"],
+  "assets": [{ "path": "../escape.html", "kind": "template" }],
+  "runbook": "docs/runbooks/CREATING_NEW_PLUGINS.md"
+}

@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cl-site-convert.dev/plugin-manifest-1.0.0.schema.json",
+  "title": "Plugin Manifest v1",
+  "description": "The contract a plugin declares so the pipeline can load it without knowing its internals. A plugin is a source adapter, an emitter, a sink, or a deployer; `emits` says which.",
+  "type": "object",
+  "required": [
+    "name",
+    "version",
+    "irRange",
+    "emits",
+    "hooks",
+    "assets",
+    "runbook"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "description": "Plugin id, unique per repository.",
+      "type": "string",
+      "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$"
+    },
+    "version": {
+      "description": "Plugin version (semver).",
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$"
+    },
+    "irRange": {
+      "description": "Semver range of Site IR versions this plugin accepts or produces, e.g. `^1.0.0`.",
+      "type": "string",
+      "pattern": "^(?:[\\^~]|[<>]=?|=)?\\s*(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:\\s+[<>=].*)?$"
+    },
+    "emits": {
+      "description": "Artifact kinds this plugin produces. A source adapter emits `site-ir`; an emitter emits a site artifact; a deployer emits a deployment.",
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "site-ir",
+          "static-html",
+          "islands-wasm",
+          "api-functions",
+          "deployment",
+          "capability-report"
+        ]
+      }
+    },
+    "sinks": {
+      "description": "Submission targets this plugin can emit or consume. Required only for form-sink plugins.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": ["webhook", "pabbly", "email-ses", "sheets-direct"]
+      }
+    },
+    "hooks": {
+      "description": "Lifecycle hooks the pipeline will call, in `phase:name` form.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^(capture|emit|deploy|sink):[a-z][a-z0-9-]*$"
+      }
+    },
+    "assets": {
+      "description": "Files the plugin ships beside its code (templates, golden payloads, migration SQL). Paths are plugin-relative.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path"],
+        "additionalProperties": false,
+        "properties": {
+          "path": {
+            "type": "string",
+            "minLength": 1,
+            "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$"
+          },
+          "kind": {
+            "enum": ["template", "fixture", "config", "data", "wasm", "other"]
+          },
+          "optional": { "type": "boolean" }
+        }
+      }
+    },
+    "runbook": {
+      "description": "Path to this plugin's operator runbook, markdown.",
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\.\\.).*\\.md$"
+    },
+    "configSchema": {
+      "description": "Plugin-relative path to the JSON Schema for its own configuration.",
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\.\\.).*\\.json$"
+    },
+    "entrypoint": {
+      "description": "Plugin-relative path to the module the pipeline imports.",
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$"
+    }
+  }
+}

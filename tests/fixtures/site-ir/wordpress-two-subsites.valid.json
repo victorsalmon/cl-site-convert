@@ -1,0 +1,295 @@
+{
+  "irVersion": "1.0.0",
+  "capture": {
+    "sourceAdapter": "wp-rest",
+    "capturedAt": "2026-11-10T18:04:00Z",
+    "toolVersion": "0.1.0",
+    "notes": "Two-property capture: /tmh/ and /mlm/, plus the apply form."
+  },
+  "site": {
+    "baseUrl": "https://upscalehavens.ca",
+    "title": "Upscale Havens",
+    "description": "Furnished rentals in British Columbia.",
+    "locale": "en_CA",
+    "permalinks": {
+      "structure": "/%postname%/",
+      "homeUrl": "https://upscalehavens.ca",
+      "siteUrl": "https://upscalehavens.ca"
+    },
+    "subsites": [
+      { "id": "tmh", "path": "/tmh/", "title": "The Maple House" },
+      { "id": "mlm", "path": "/mlm/", "title": "Maple Lane Manor" }
+    ]
+  },
+  "pages": [
+    {
+      "url": "/",
+      "slug": "home",
+      "title": "Upscale Havens",
+      "status": "publish",
+      "template": "front-page",
+      "dom": {
+        "doctype": "<!DOCTYPE html>",
+        "html": "<body class=\"home page-template-front-page\"><header class=\"site-header\"><nav class=\"main-nav\"><ul class=\"menu\"><li class=\"menu-item\"><a href=\"/tmh/\">The Maple House</a></li><li class=\"menu-item\"><a href=\"/mlm/\">Maple Lane Manor</a></li></ul></nav></header><main class=\"site-main\"><section class=\"hero hero--full\"><div class=\"hero__inner\"><h1 class=\"hero__title\">Furnished rentals</h1></div></section></main><footer class=\"site-footer\"><p class=\"copyright\">&copy; 2026 Upscale Havens</p></footer></body>"
+      },
+      "meta": {
+        "description": "Furnished rentals in British Columbia.",
+        "publishedAt": "2024-02-01T09:00:00Z",
+        "updatedAt": "2026-10-28T16:12:00Z",
+        "wpId": 12
+      },
+      "seo": {
+        "canonical": "https://upscalehavens.ca/",
+        "robots": "index,follow",
+        "ogTitle": "Upscale Havens",
+        "ogImage": "https://upscalehavens.ca/wp-content/uploads/hero-1600.jpg",
+        "jsonLd": [{ "@context": "https://schema.org", "@type": "Organization", "name": "Upscale Havens" }]
+      }
+    },
+    {
+      "url": "/tmh/",
+      "slug": "tmh",
+      "title": "The Maple House",
+      "status": "publish",
+      "template": "page-property",
+      "subsite": "tmh",
+      "dom": {
+        "doctype": "<!DOCTYPE html>",
+        "html": "<body class=\"page-template-page-property tmh\"><header class=\"site-header tmh-header\"><nav class=\"main-nav\"><ul class=\"menu\"><li class=\"menu-item current-menu-item\"><a href=\"/tmh/\">The Maple House</a></li><li class=\"menu-item\"><a href=\"/tmh/apply/\">Apply</a></li></ul></nav></header><main class=\"site-main\"><div class=\"wp-block-columns property-grid\"><div class=\"wp-block-column property-grid__col\"><figure class=\"wp-block-image size-large\"><img class=\"wp-image-204\" src=\"/assets/uploads/tmh-living-1024.jpg\" alt=\"Living room\"></figure></div><div class=\"wp-block-column property-grid__col\"><p class=\"property-lede\">A four-bedroom home in Kelowna.</p></div></div></main></body>"
+      },
+      "meta": {
+        "description": "A four-bedroom furnished home in Kelowna.",
+        "updatedAt": "2026-10-30T11:20:00Z",
+        "wpId": 204
+      },
+      "seo": {
+        "canonical": "https://upscalehavens.ca/tmh/",
+        "robots": "index,follow"
+      }
+    },
+    {
+      "url": "/mlm/",
+      "slug": "mlm",
+      "title": "Maple Lane Manor",
+      "status": "publish",
+      "template": "page-property",
+      "subsite": "mlm",
+      "dom": {
+        "doctype": "<!DOCTYPE html>",
+        "html": "<body class=\"page-template-page-property mlm\"><header class=\"site-header mlm-header\"><nav class=\"main-nav\"><ul class=\"menu\"><li class=\"menu-item current-menu-item\"><a href=\"/mlm/\">Maple Lane Manor</a></li></ul></nav></header><main class=\"site-main\"><div class=\"property-gallery gallery--masonry\"><img class=\"gallery__item\" src=\"/assets/uploads/mlm-exterior-1024.jpg\" alt=\"Exterior\"></div></main></body>"
+      },
+      "meta": {
+        "description": "A six-bedroom furnished manor in Vernon.",
+        "wpId": 208
+      }
+    },
+    {
+      "url": "/tmh/apply/",
+      "slug": "apply",
+      "title": "Apply — The Maple House",
+      "status": "publish",
+      "template": "page-apply",
+      "subsite": "tmh",
+      "dom": {
+        "doctype": "<!DOCTYPE html>",
+        "html": "<body class=\"page-template-page-apply tmh\"><main class=\"site-main\"><div class=\"entry-content\"><h1 class=\"entry-title\">Apply for The Maple House</h1><div id=\"island-apply-form\" data-component=\"ApplyForm\" data-props=\"{&quot;formId&quot;:&quot;tmh-apply&quot;}\"><form class=\"fluentform ff-default\"><div class=\"ff-el-group\"><input class=\"ff-el-input--text\" type=\"text\" name=\"names[first]\"></div></form></div></div></main></body>"
+      },
+      "islands": [
+        {
+          "id": "island-apply-form",
+          "component": "ApplyForm",
+          "props": { "formId": "tmh-apply", "subsite": "tmh" }
+        }
+      ],
+      "meta": {
+        "updatedAt": "2026-10-28T16:12:00Z",
+        "wpId": 301
+      },
+      "proseMarkdown": "Apply for The Maple House. Complete the application form and we will reply within two business days."
+    }
+  ],
+  "assets": [
+    {
+      "sourceUrl": "https://upscalehavens.ca/wp-content/uploads/tmh-living-1024.jpg",
+      "localPath": "assets/uploads/tmh-living-1024.jpg",
+      "sha256": "3f6a1c1b0d5e8f7a2c4b6d8e0f1a3c5b7d9e1f3a5c7b9d1e3f5a7c9b1d3e5f7a",
+      "kind": "image",
+      "bytes": 184320,
+      "contentType": "image/jpeg",
+      "referencedBy": ["/tmh/"]
+    },
+    {
+      "sourceUrl": "https://upscalehavens.ca/wp-content/uploads/mlm-exterior-1024.jpg",
+      "localPath": "assets/uploads/mlm-exterior-1024.jpg",
+      "sha256": "9b8c7d6e5f4a3b2c1d0e9f8a7b6c5d4e3f2a1b0c9d8e7f6a5b4c3d2e1f0a9b8c",
+      "kind": "image",
+      "bytes": 201011,
+      "contentType": "image/jpeg",
+      "referencedBy": ["/mlm/"]
+    },
+    {
+      "sourceUrl": "https://upscalehavens.ca/wp-content/themes/uh/dist/theme.js",
+      "localPath": "assets/theme.js",
+      "sha256": "1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809",
+      "kind": "script",
+      "bytes": 4210,
+      "contentType": "text/javascript"
+    }
+  ],
+  "styles": [
+    {
+      "href": "https://upscalehavens.ca/wp-content/themes/uh/style.css",
+      "localPath": "assets/styles/uh-theme.css",
+      "sha256": "0f1e2d3c4b5a69788796a5b4c3d2e1f00f1e2d3c4b5a69788796a5b4c3d2e1f0",
+      "order": 0
+    },
+    {
+      "href": "https://upscalehavens.ca/wp-content/plugins/wp-block-library/block-library.css",
+      "localPath": "assets/styles/block-library.css",
+      "sha256": "abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789",
+      "order": 1
+    },
+    {
+      "href": "https://upscalehavens.ca/wp-content/uploads/simply-static/generated-1.css",
+      "localPath": "assets/styles/generated-1.css",
+      "sha256": "5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d",
+      "order": 2,
+      "media": "all",
+      "subsite": "tmh"
+    }
+  ],
+  "menus": [
+    {
+      "id": "primary",
+      "name": "Primary",
+      "location": "primary",
+      "items": [
+        { "label": "Home", "href": "/" },
+        { "label": "The Maple House", "href": "/tmh/" },
+        { "label": "Maple Lane Manor", "href": "/mlm/" },
+        {
+          "label": "Apply",
+          "href": "/tmh/apply/",
+          "children": [
+            { "label": "Onboarding", "href": "/tmh/onboard-tmh/" },
+            { "label": "Offboarding", "href": "/tmh/offboard/" }
+          ]
+        }
+      ]
+    }
+  ],
+  "taxonomies": [
+    {
+      "name": "category",
+      "label": "Categories",
+      "hierarchical": true,
+      "terms": [
+        { "slug": "uncategorized", "name": "Uncategorized" },
+        { "slug": "property", "name": "Property" },
+        { "slug": "kelowna", "name": "Kelowna", "parent": "property" }
+      ]
+    }
+  ],
+  "authors": [
+    {
+      "id": "victor",
+      "slug": "victor",
+      "name": "Victor Salmon",
+      "bio": "Property manager.",
+      "avatarPath": "assets/uploads/avatar-victor.jpg"
+    }
+  ],
+  "forms": [
+    {
+      "id": "tmh-apply",
+      "source": "fluent-forms",
+      "title": "Apply — The Maple House",
+      "page": "/tmh/apply/",
+      "fields": [
+        { "name": "names[first]", "type": "text", "label": "First name", "required": true, "validation": { "maxLength": 80 } },
+        { "name": "names[last]", "type": "text", "label": "Last name", "required": true },
+        { "name": "email", "type": "email", "label": "Email", "required": true },
+        { "name": "phone", "type": "tel", "label": "Phone" },
+        {
+          "name": "property",
+          "type": "select",
+          "label": "Property",
+          "required": true,
+          "options": [
+            { "label": "The Maple House", "value": "tmh" },
+            { "label": "Maple Lane Manor", "value": "mlm" }
+          ]
+        },
+        { "name": "move_in_date", "type": "date", "label": "Desired move-in date" },
+        { "name": "message", "type": "textarea", "label": "Anything we should know?" },
+        { "name": "uh_hp", "type": "honeypot", "label": "Leave this field empty" }
+      ],
+      "validation": {
+        "requiredMessage": "This field is required.",
+        "successMessage": "Thanks — we received your application.",
+        "errorMessage": "Something went wrong. Please try again.",
+        "spam": ["honeypot"]
+      },
+      "submitContract": {
+        "sink": "pabbly",
+        "endpointRef": "pabbly-lead-inbound",
+        "honeypot": true,
+        "turnstile": false
+      }
+    }
+  ],
+  "behaviors": [
+    {
+      "page": "/tmh/apply/",
+      "selector": "#island-apply-form form.fluentform",
+      "kind": "ajax-form",
+      "endpointRef": "pabbly-lead-inbound",
+      "islandId": "island-apply-form"
+    },
+    {
+      "page": "/tmh/apply/",
+      "selector": ".property-grid__col figure",
+      "kind": "modal",
+      "options": { "closeOnBackdrop": true }
+    }
+  ],
+  "apiContracts": [
+    {
+      "id": "pabbly-lead-inbound",
+      "method": "POST",
+      "url": "https://connect.pabbly.com/workflow/sendwebhookdata/IjU3NjYwNT",
+      "requestShape": {
+        "type": "object",
+        "required": ["names[first]", "names[last]", "email", "property"],
+        "properties": {
+          "names[first]": { "type": "string" },
+          "names[last]": { "type": "string" },
+          "email": { "type": "string" },
+          "phone": { "type": "string" },
+          "property": { "type": "string" },
+          "move_in_date": { "type": "string" },
+          "message": { "type": "string" }
+        }
+      },
+      "responseShape": { "type": "object", "properties": { "success": { "type": "boolean" } } },
+      "headers": { "Content-Type": "application/json" },
+      "notes": "Replicates the WP Webhooks envelope; the credential lives in a Pages Function secret."
+    }
+  ],
+  "capabilities": {
+    "supported": ["pages", "posts", "menus", "taxonomies", "forms", "redirects", "shortcodes-resolved"],
+    "unsupported": [
+      {
+        "capability": "wp-webhooks",
+        "detail": "PHP plugin replaced by a Pages Function that posts the same envelope to Pabbly.",
+        "blocking": false,
+        "where": ["/tmh/apply/"]
+      }
+    ]
+  },
+  "redirects": [
+    { "from": "/tmh/home/", "to": "/tmh/", "code": 301 },
+    { "from": "/mlm", "to": "/mlm/", "code": 308 },
+    { "from": "/apply", "to": "/tmh/apply/", "code": 301 }
+  ]
+}
