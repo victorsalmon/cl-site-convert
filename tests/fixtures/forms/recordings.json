@@ -1,0 +1,31 @@
+{
+  "baseUrl": "https://upscalehavens.ca",
+  "capturedAt": "2026-11-10T08:28:54.801Z",
+  "minIntervalMs": 600,
+  "userAgent": "cl-site-convert/0.1 (route enumeration; polite; +https://github.com/clocklobster/cl-site-convert)",
+  "requests": 3,
+  "note": "Stored renders are byte-identical to the response except that every session-token value is replaced with REDACTED (names and structure kept). `questionsSha256` is over `form.questions` only, so it is stable across sessions and comparable between renders.",
+  "renders": [
+    {
+      "route": "/?fluent-form=3",
+      "path": "tests/fixtures/forms/fluent-form-3.query.html",
+      "formId": "fluent-form-3-query",
+      "pluginFormId": "3",
+      "note": "Fluent Forms conversational render reachable only by query string; not one of the 19 captured pages.",
+      "httpStatus": 200,
+      "bytes": 30736,
+      "sha256": "1600b6cd3242f220606b7aaf3f331f49b1142b55ecb78031c6c761c747323b55",
+      "configVarName": "fluent_forms_global_var",
+      "questionsSha256": "dc330bb16dea738919395961e1608711d1612dc32df2d96aec0c504abcbf311f",
+      "questionCount": 14
+    }
+  ],
+  "comparison": {
+    "mountRoute": "/tmh/apply/",
+    "mountConfigVarName": "fluent_forms_global_var_1",
+    "mountQuestionsSha256": "dc330bb16dea738919395961e1608711d1612dc32df2d96aec0c504abcbf311f",
+    "questions": 14,
+    "identical": true,
+    "observedAt": "2026-11-10T08:28:54.801Z"
+  }
+}

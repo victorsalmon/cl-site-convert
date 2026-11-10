@@ -1,0 +1,20 @@
+<!--
+  Negative fixture: a captured-shaped page with no application form at all.
+
+  The assertion it exists to protect is "no form markup means no form IR" - not an
+  empty form, not a form with zero fields. An extractor that returned
+  `{ fields: [] }` here would emit a submission contract for a page that has none.
+
+  The `<title>` and body text are deliberately form-adjacent ("Apply", "Fill out the
+  form") so a heuristic that keys on words instead of markup would fail this test.
+-->
+<html lang="en-US">
+<head><title>Apply | Example</title></head>
+<body>
+	<div class="entry-content">
+		<h1>Apply</h1>
+		<p>Fill out the form to get more info. We will email you the application form.</p>
+		<!-- <form action="/apply/"><input type="text" name="email"></form> -->
+	</div>
+</body>
+</html>
