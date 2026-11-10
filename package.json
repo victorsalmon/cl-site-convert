@@ -31,6 +31,7 @@
     "capture:seo": "pnpm run build && node dist/source/seo/capture.js",
     "capture:forms": "pnpm run build && node dist/source/forms/cli.js",
     "validate:seo": "node scripts/validate-seo.mjs",
+    "validate:parity": "pnpm run emit:static && node dist/verify/parity/cli.js",
     "analyze:templates": "pnpm run build && node dist/analysis/cli.js",
     "gate": "pwsh -NoProfile -File scripts/gate.ps1"
   },
