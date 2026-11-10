@@ -1,0 +1,9 @@
+# Workspace roots. The repository root package is always a member; plugin
+# packages (each converter lives under plugins/<vendor>/) are picked up here as
+# they gain a package.json.
+packages:
+  - "plugins/*"
+
+# esbuild ships a native binary via a postinstall script; vitest needs it.
+allowBuilds:
+  esbuild: true

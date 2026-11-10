@@ -1,0 +1,21 @@
+# Prettier only owns the surfaces this repo authors as code/config. Docs, schemas
+# and crates have their own owners and formats.
+node_modules/
+dist/
+coverage/
+target/
+.worktrees/
+.beads/
+.agents/
+.claude/
+.codex/
+.cursor/
+docs/
+schemas/
+plugins/
+crates/
+pnpm-lock.yaml
+
+# Owned by other agents / source-of-truth docs; Prettier must not rewrite them.
+AGENTS.md
+CLAUDE.md
