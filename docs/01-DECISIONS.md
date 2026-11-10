@@ -207,6 +207,85 @@ Specific traps now recorded:
 TMH's form though `/mlm/applym/` exists; three pages carry a scheme-less
 `href="chatgpt.com"` producing 404s.
 
+## 2026-11-11 — Capture results and the per-page cascade gap
+
+B1.2 + B1.3 captured the real target. Numbers, because they are the project's
+real perimeter:
+
+| | |
+| :--- | :--- |
+| Pages | 19/19, 0 failed |
+| Raw HTML | 2,320,052 B → 371,838 B `dom.html` (**83.9% was script/style/comment**) |
+| Linked stylesheets | 7 (145,655 B), document order preserved |
+| Inline `<style>` blocks | **116 total → 48 unique** (1,797,263 B → 923,437 B; 48.6% dedup) |
+| Media / fonts | 230 files (182 image, 48 font) — 48,931,147 B |
+| `capture/assets` total | **50,000,239 B** committed |
+
+**Round-trip fidelity invariant is proven, not asserted:** for each of three real
+pages, prune-as-a-tree must deep-equal the captured DOM on tag, attribute order,
+every class value and every text node, plus serialize→parse. 36 tests, 100+ class
+pairs per page, zero whitespace drift. A runtime guard refuses to emit when a
+surviving element's class list is not an ordered subsequence of the capture.
+
+### The blocking finding: the IR cannot express per-page cascade order
+
+Measured: the 19 pages have **18 distinct style chains**, ranging 7 entries
+(`/resources/`) to 17 (`/ush/privacy-policy/`). The IR's `styles[].order` is a
+single site-level sequence, so it **cannot** represent per-page order. Projecting
+the global chain would produce wrong cascade on most pages — a silent fidelity bug
+that no current gate would catch until pixel-diff.
+
+- Therefore `capture/site-ir.json` deliberately keeps **only the 7 linked styles**;
+  inline blocks live in `capture/style-chain.json` with `order` + `pages[]`.
+- Nothing was fabricated to make the IR look complete. Minted `P1.7`: add
+  `pages[].styleOrder` (ordered sha256 refs) and make the emitter consume it.
+
+### CSS byte-integrity, and the one place line endings nearly broke it
+
+`capture/assets/** -text` was added to `.gitattributes`. Without it the repo-wide
+`*.css eol=lf` rule would rewrite line endings on checkout and **silently
+invalidate every CSS hash**. Proven green on a pristine detached worktree.
+285/285 file hashes verified from disk; 19/19 pages cross-check against the B1.2
+record on byte length *and* every inline element hash.
+
+### LiteSpeed cache: the baseline is cache-served
+
+19/19 pages returned `x-litespeed-cache: hit`. Bypass is **not** possible from the
+client (`Cache-Control: no-cache` returned byte-identical HTML, still `hit`); a
+purge or `LSCWP_CTRL` call would be a mutating request against production, so it
+was not attempted. Freshness is instead **evidenced**: the embedded cache stamp is
+compared with REST `modified`, and all 19 are cache-newer-than-content.
+The Simply Static export (deliverable 2) becomes the independent cross-check.
+
+## 2026-11-11 — PII in captured artefacts: keep as-is (operator decision)
+
+The IR contains the published contact address `victorsalmon@hotmail.com`
+(`/mlm/`, `/mlm/onboard-mlm/`), three business addresses and four `tel:` links.
+**Operator approved keeping them**, because all are already public on the live
+site and redaction would make the IR a less faithful baseline, adding parity-gate
+allowlist entries. No nonces, secrets or API keys are present (scanned: 0).
+
+## 2026-11-11 — Google Fonts: rewrite at emit, never at capture
+
+Captured CSS is verbatim and therefore still points at `fonts.gstatic.com`
+absolutely. Decision:
+
+- **Capture stays byte-identical.** Do not rewrite during capture.
+- **The emitter applies the recorded `asset-rewrite-map.json`**, which is a
+  deterministic, diffable transform — so the emitted CSS byte-hash differs from the
+  captured hash *only* by URL substitution, and the transform is proven by a test
+  that diffs the two and asserts every change is a URL swap.
+- Rationale: removes a third-party request (privacy **and** performance), which is
+  the point of the project. "Verbatim" means the *capture* is verbatim, not that no
+  emitter may localise a URL.
+
+## 2026-11-11 — Two assets are broken on the live site
+
+`real-estate-09-1024x648-1-400x284.jpg` and `real-estate-09-1024x648-1.jpg` both
+404. Classified as `brokenReferences` + a non-blocking `broken-asset-reference`
+capability rather than capture failures — the live page is broken identically, so
+parity is unaffected. Appended to defect bead `cl-site-convert-sfs`.
+
 ## 2026-11-11 — Open operator questions (blocking specific beads)
 
 1. **The exact Pabbly payload** — from Pabbly's "Webhook by Pabbly" request history
