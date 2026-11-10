@@ -19,3 +19,10 @@ pnpm-lock.yaml
 # Owned by other agents / source-of-truth docs; Prettier must not rewrite them.
 AGENTS.md
 CLAUDE.md
+
+# Evidence, not source. `tests/fixtures/wp-rest/` holds byte-exact recordings from
+# the live site and `capture/` holds generated manifests; reformatting either would
+# destroy the "this is what the server returned" claim. A test that reads a
+# reformatted recording is testing the formatter.
+tests/fixtures/wp-rest/
+capture/

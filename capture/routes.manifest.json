@@ -1,0 +1,750 @@
+{
+  "manifestVersion": "1",
+  "generatedAt": "2026-11-10T05:27:56.830Z",
+  "baseUrl": "https://upscalehavens.ca",
+  "tool": {
+    "name": "cl-site-convert",
+    "version": "0.1.0",
+    "userAgent": "cl-site-convert/0.1 (route enumeration; polite; +https://github.com/clocklobster/cl-site-convert)",
+    "minIntervalMs": 600,
+    "requests": 48
+  },
+  "rest": {
+    "available": true,
+    "rootStatus": 200,
+    "siteName": "Upscale Havens Leasing and Tenant Coordination",
+    "description": "Intentional homes for friendly roommates who like nice things",
+    "namespaces": [
+      "oembed/1.0",
+      "fluent-smtp",
+      "fluentform/v1",
+      "litespeed/v1",
+      "litespeed/v3",
+      "redirection/v1",
+      "fluent-crm/v1",
+      "fluent-crm/v2",
+      "divi/v1",
+      "wp/v2",
+      "wp-site-health/v1",
+      "wp-block-editor/v1",
+      "wp-abilities/v1"
+    ],
+    "pluginNamespaces": [
+      "fluent-smtp",
+      "fluentform/v1",
+      "litespeed/v1",
+      "litespeed/v3",
+      "redirection/v1",
+      "fluent-crm/v1",
+      "fluent-crm/v2",
+      "divi/v1"
+    ],
+    "leaksPluginList": true,
+    "wpVersion": "7.1.4",
+    "wpVersionSource": "generator-meta",
+    "showOnFront": "page",
+    "pageOnFront": 539,
+    "pluginsEndpointStatus": 401,
+    "usersEndpointOpen": true,
+    "userCount": 1,
+    "collections": [
+      {
+        "name": "pages",
+        "total": 19,
+        "fetched": 19,
+        "pages": 1
+      },
+      {
+        "name": "posts",
+        "total": 0,
+        "fetched": 0,
+        "pages": 1
+      },
+      {
+        "name": "project",
+        "total": 0,
+        "fetched": 0,
+        "pages": 1
+      },
+      {
+        "name": "fcrm-dummy",
+        "total": 0,
+        "fetched": 0,
+        "pages": 1
+      }
+    ],
+    "reasons": []
+  },
+  "sitemap": {
+    "attempts": [
+      {
+        "url": "https://upscalehavens.ca/wp-sitemap.xml",
+        "status": 200,
+        "kind": "index"
+      },
+      {
+        "url": "https://upscalehavens.ca/wp-sitemap-posts-page-1.xml",
+        "status": 200,
+        "kind": "urlset"
+      },
+      {
+        "url": "https://upscalehavens.ca/sitemap.xml",
+        "status": 301,
+        "kind": "redirect"
+      },
+      {
+        "url": "https://upscalehavens.ca/sitemap_index.xml",
+        "status": 404,
+        "kind": "http-error"
+      }
+    ],
+    "documents": [
+      {
+        "url": "https://upscalehavens.ca/wp-sitemap-posts-page-1.xml",
+        "urls": 19
+      }
+    ],
+    "robotsDeclared": [
+      "https://upscalehavens.ca/wp-sitemap.xml"
+    ],
+    "urlCount": 19,
+    "reasons": []
+  },
+  "taxonomies": {
+    "categories": {
+      "count": 1,
+      "terms": [
+        {
+          "slug": "uncategorized",
+          "name": "Uncategorized",
+          "count": 0
+        }
+      ]
+    },
+    "tags": {
+      "count": 0,
+      "terms": []
+    },
+    "types": [
+      {
+        "slug": "post",
+        "restBase": "posts",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "page",
+        "restBase": "pages",
+        "restNamespace": "wp/v2",
+        "hierarchical": true
+      },
+      {
+        "slug": "attachment",
+        "restBase": "media",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "nav_menu_item",
+        "restBase": "menu-items",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "wp_block",
+        "restBase": "blocks",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "wp_template",
+        "restBase": "templates",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "wp_template_part",
+        "restBase": "template-parts",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "wp_global_styles",
+        "restBase": "global-styles",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "wp_navigation",
+        "restBase": "navigation",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "wp_font_family",
+        "restBase": "font-families",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "wp_font_face",
+        "restBase": "font-families/(?P<font_family_id>[\\d]+)/font-faces",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "project",
+        "restBase": "project",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      },
+      {
+        "slug": "fcrm-dummy",
+        "restBase": "fcrm-dummy",
+        "restNamespace": "wp/v2",
+        "hierarchical": false
+      }
+    ]
+  },
+  "reconciliation": {
+    "wpRest": 19,
+    "sitemap": 19,
+    "union": 19,
+    "both": 19,
+    "restOnly": [],
+    "sitemapOnly": []
+  },
+  "counts": {
+    "total": 19,
+    "byType": {
+      "page": 19,
+      "post": 0,
+      "other": 0
+    },
+    "bySource": {
+      "both": 19,
+      "wp-rest": 0,
+      "sitemap": 0
+    },
+    "byStatus": {
+      "publish": 19
+    }
+  },
+  "discovery": {
+    "robots": {
+      "status": 200,
+      "unreadable": false,
+      "disallow": [
+        "/wp-admin/"
+      ],
+      "allow": [
+        "/wp-admin/admin-ajax.php"
+      ]
+    },
+    "linkHarvest": {
+      "pagesScanned": 19,
+      "distinctInternalPaths": 24,
+      "notInManifest": [
+        "/apply",
+        "/mlm/applym/chatgpt.com",
+        "/mlm/bylaws",
+        "/mlm/join-signal",
+        "/mlm/onboard",
+        "/mlm/onboard-mlm/chatgpt.com",
+        "/mlm/orientation",
+        "/tmh/bylaws",
+        "/tmh/join-signal",
+        "/tmh/onboard",
+        "/tmh/onboard-tmh/chatgpt.com",
+        "/tmh/onboard/",
+        "/tmh/orientation",
+        "/ush/moving-checklist"
+      ],
+      "probes": [
+        {
+          "path": "/apply",
+          "status": 301,
+          "location": "https://upscalehavens.ca/?fluent-form=3",
+          "external": false
+        },
+        {
+          "path": "/mlm/applym/chatgpt.com",
+          "status": 404,
+          "location": null,
+          "external": false
+        },
+        {
+          "path": "/mlm/bylaws",
+          "status": 301,
+          "location": "https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing",
+          "external": true
+        },
+        {
+          "path": "/mlm/join-signal",
+          "status": 301,
+          "location": "https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu",
+          "external": true
+        },
+        {
+          "path": "/mlm/onboard",
+          "status": 301,
+          "location": "https://upscalehavens.ca/mlm/onboard-mlm/",
+          "external": false
+        },
+        {
+          "path": "/mlm/onboard-mlm/chatgpt.com",
+          "status": 404,
+          "location": null,
+          "external": false
+        },
+        {
+          "path": "/mlm/orientation",
+          "status": 301,
+          "location": "https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1",
+          "external": true
+        },
+        {
+          "path": "/tmh/bylaws",
+          "status": 301,
+          "location": "https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing",
+          "external": true
+        },
+        {
+          "path": "/tmh/join-signal",
+          "status": 301,
+          "location": "https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9",
+          "external": true
+        },
+        {
+          "path": "/tmh/onboard",
+          "status": 301,
+          "location": "https://upscalehavens.ca/mlm/onboard-mlm/",
+          "external": false
+        },
+        {
+          "path": "/tmh/onboard-tmh/chatgpt.com",
+          "status": 404,
+          "location": null,
+          "external": false
+        },
+        {
+          "path": "/tmh/onboard/",
+          "status": 301,
+          "location": "https://upscalehavens.ca/mlm/onboard-mlm/",
+          "external": false
+        },
+        {
+          "path": "/tmh/orientation",
+          "status": 301,
+          "location": "https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu",
+          "external": true
+        },
+        {
+          "path": "/ush/moving-checklist",
+          "status": 301,
+          "location": "https://upscalehavens.ca/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf",
+          "external": false
+        }
+      ]
+    },
+    "redirects": [
+      {
+        "from": "/apply",
+        "to": "https://upscalehavens.ca/?fluent-form=3",
+        "code": 301
+      },
+      {
+        "from": "/mlm/bylaws",
+        "to": "https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing",
+        "code": 301
+      },
+      {
+        "from": "/mlm/join-signal",
+        "to": "https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu",
+        "code": 301
+      },
+      {
+        "from": "/mlm/onboard",
+        "to": "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "code": 301
+      },
+      {
+        "from": "/mlm/orientation",
+        "to": "https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1",
+        "code": 301
+      },
+      {
+        "from": "/tmh/bylaws",
+        "to": "https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing",
+        "code": 301
+      },
+      {
+        "from": "/tmh/join-signal",
+        "to": "https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9",
+        "code": 301
+      },
+      {
+        "from": "/tmh/onboard",
+        "to": "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "code": 301
+      },
+      {
+        "from": "/tmh/onboard/",
+        "to": "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "code": 301
+      },
+      {
+        "from": "/tmh/orientation",
+        "to": "https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu",
+        "code": 301
+      },
+      {
+        "from": "/ush/moving-checklist",
+        "to": "https://upscalehavens.ca/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf",
+        "code": 301
+      }
+    ],
+    "skipped": []
+  },
+  "routes": [
+    {
+      "url": "https://upscalehavens.ca/",
+      "path": "/",
+      "slug": "ush",
+      "status": "publish",
+      "type": "page",
+      "parent": null,
+      "parentId": 0,
+      "modified": "2025-11-27T02:07:02",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/care/",
+      "path": "/care/",
+      "slug": "care",
+      "status": "publish",
+      "type": "page",
+      "parent": null,
+      "parentId": 0,
+      "modified": "2026-02-03T09:31:13",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/care/showings/",
+      "path": "/care/showings/",
+      "slug": "showings",
+      "status": "publish",
+      "type": "page",
+      "parent": "/care/",
+      "parentId": 557,
+      "modified": "2025-08-20T11:36:43",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/care/signal-admin/",
+      "path": "/care/signal-admin/",
+      "slug": "signal-admin",
+      "status": "publish",
+      "type": "page",
+      "parent": "/care/",
+      "parentId": 557,
+      "modified": "2025-10-17T12:47:55",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/care/sweepy-admin/",
+      "path": "/care/sweepy-admin/",
+      "slug": "sweepy-admin",
+      "status": "publish",
+      "type": "page",
+      "parent": "/care/",
+      "parentId": 557,
+      "modified": "2025-08-20T11:39:37",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/care/ttlock-admin/",
+      "path": "/care/ttlock-admin/",
+      "slug": "ttlock-admin",
+      "status": "publish",
+      "type": "page",
+      "parent": "/care/",
+      "parentId": 557,
+      "modified": "2026-05-06T22:32:41",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/mlm/",
+      "path": "/mlm/",
+      "slug": "mlm",
+      "status": "publish",
+      "type": "page",
+      "parent": null,
+      "parentId": 0,
+      "modified": "2025-09-03T15:34:49",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/mlm/applym/",
+      "path": "/mlm/applym/",
+      "slug": "applym",
+      "status": "publish",
+      "type": "page",
+      "parent": "/mlm/",
+      "parentId": 548,
+      "modified": "2025-06-04T15:26:25",
+      "template": "page-template-blank.php",
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/mlm/onboard-mlm/",
+      "path": "/mlm/onboard-mlm/",
+      "slug": "onboard-mlm",
+      "status": "publish",
+      "type": "page",
+      "parent": "/mlm/",
+      "parentId": 548,
+      "modified": "2026-05-06T22:34:14",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/resources/",
+      "path": "/resources/",
+      "slug": "resources",
+      "status": "publish",
+      "type": "page",
+      "parent": null,
+      "parentId": 0,
+      "modified": "2025-06-26T10:50:41",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/resources/checklists/",
+      "path": "/resources/checklists/",
+      "slug": "checklists",
+      "status": "publish",
+      "type": "page",
+      "parent": "/resources/",
+      "parentId": 622,
+      "modified": "2025-11-13T01:55:56",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/resources/sweepy/",
+      "path": "/resources/sweepy/",
+      "slug": "sweepy",
+      "status": "publish",
+      "type": "page",
+      "parent": "/resources/",
+      "parentId": 622,
+      "modified": "2025-08-20T11:41:23",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/tmh/",
+      "path": "/tmh/",
+      "slug": "tmh",
+      "status": "publish",
+      "type": "page",
+      "parent": null,
+      "parentId": 0,
+      "modified": "2025-08-20T12:06:57",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/tmh/apply/",
+      "path": "/tmh/apply/",
+      "slug": "apply",
+      "status": "publish",
+      "type": "page",
+      "parent": "/tmh/",
+      "parentId": 72,
+      "modified": "2025-10-14T16:49:58",
+      "template": "page-template-blank.php",
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/tmh/offboard/",
+      "path": "/tmh/offboard/",
+      "slug": "offboard",
+      "status": "publish",
+      "type": "page",
+      "parent": "/tmh/",
+      "parentId": 72,
+      "modified": "2025-12-10T13:35:04",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/tmh/onboard-tmh/",
+      "path": "/tmh/onboard-tmh/",
+      "slug": "onboard-tmh",
+      "status": "publish",
+      "type": "page",
+      "parent": "/tmh/",
+      "parentId": 72,
+      "modified": "2025-10-14T16:50:06",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/ush/owner/",
+      "path": "/ush/owner/",
+      "slug": "owner",
+      "status": "publish",
+      "type": "page",
+      "parent": "/",
+      "parentId": 539,
+      "modified": "2025-08-20T11:34:38",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/ush/privacy-policy/",
+      "path": "/ush/privacy-policy/",
+      "slug": "privacy-policy",
+      "status": "publish",
+      "type": "page",
+      "parent": "/",
+      "parentId": 539,
+      "modified": "2025-06-04T15:32:04",
+      "template": null,
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    },
+    {
+      "url": "https://upscalehavens.ca/ush/thanks/",
+      "path": "/ush/thanks/",
+      "slug": "thanks",
+      "status": "publish",
+      "type": "page",
+      "parent": "/",
+      "parentId": 539,
+      "modified": "2025-07-24T19:52:38",
+      "template": "page-template-blank.php",
+      "source": "both",
+      "http": {
+        "status": 200,
+        "location": null,
+        "contentType": "text/html; charset=UTF-8"
+      }
+    }
+  ],
+  "notes": [
+    "redirect /apply -> 301 https://upscalehavens.ca/?fluent-form=3",
+    "broken link: /mlm/applym/chatgpt.com 404s (linked from the site, in no source)",
+    "redirect /mlm/bylaws -> 301 https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing",
+    "redirect /mlm/join-signal -> 301 https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu",
+    "redirect /mlm/onboard -> 301 https://upscalehavens.ca/mlm/onboard-mlm/",
+    "broken link: /mlm/onboard-mlm/chatgpt.com 404s (linked from the site, in no source)",
+    "redirect /mlm/orientation -> 301 https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1",
+    "redirect /tmh/bylaws -> 301 https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing",
+    "redirect /tmh/join-signal -> 301 https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9",
+    "redirect /tmh/onboard -> 301 https://upscalehavens.ca/mlm/onboard-mlm/",
+    "broken link: /tmh/onboard-tmh/chatgpt.com 404s (linked from the site, in no source)",
+    "redirect /tmh/onboard/ -> 301 https://upscalehavens.ca/mlm/onboard-mlm/",
+    "redirect /tmh/orientation -> 301 https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu",
+    "redirect /ush/moving-checklist -> 301 https://upscalehavens.ca/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf"
+  ]
+}

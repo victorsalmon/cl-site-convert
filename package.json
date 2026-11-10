@@ -19,6 +19,7 @@
     "validate:plugins": "pnpm run build && node scripts/validate-plugins.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
+    "capture:routes": "node dist/source/wp-rest/routes.js",
     "gate": "pwsh -NoProfile -File scripts/gate.ps1"
   },
   "devDependencies": {
