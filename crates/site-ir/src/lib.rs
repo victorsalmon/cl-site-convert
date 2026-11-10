@@ -783,7 +783,11 @@ mod tests {
         // Styles are ordered and verbatim: three sheets, orders 0..2 preserved.
         assert_eq!(again.styles.len(), 3);
         assert_eq!(
-            again.styles.iter().map(|style| style.order).collect::<Vec<_>>(),
+            again
+                .styles
+                .iter()
+                .map(|style| style.order)
+                .collect::<Vec<_>>(),
             vec![0, 1, 2]
         );
         assert_eq!(again.redirects[0].code.get(), 301);

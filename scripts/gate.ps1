@@ -101,6 +101,8 @@ try {
     }
     else {
         Invoke-NativeStep -Name 'check-toolchain' -Exe 'pwsh' -Arguments @('-NoProfile', '-File', 'scripts/check-toolchain.ps1') | Out-Null
+        Invoke-NativeStep -Name 'cargo fmt' -Exe 'cargo' -Arguments @('fmt', '--all', '--check') | Out-Null
+        Invoke-NativeStep -Name 'cargo clippy' -Exe 'cargo' -Arguments @('clippy', '--all-targets', '--', '-D', 'warnings') | Out-Null
         Invoke-NativeStep -Name 'cargo test' -Exe 'cargo' -Arguments @('test', '--workspace') | Out-Null
     }
 
