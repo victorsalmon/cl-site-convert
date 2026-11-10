@@ -1,0 +1,3 @@
+/* app stylesheet, verbatim */
+@font-face{font-family:Inter;src:url(fonts/inter.woff2?dcdb1ef8) format("woff2")}
+.app{display:flex;gap:1rem}

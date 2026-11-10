@@ -1,0 +1,49 @@
+{
+  "https://example.test/robots.txt": {
+    "file": "robots.txt",
+    "contentType": "text/plain"
+  },
+  "https://example.test/": {
+    "file": "page-home.html",
+    "contentType": "text/html; charset=UTF-8"
+  },
+  "https://example.test/care/": {
+    "file": "page-care.html",
+    "contentType": "text/html; charset=UTF-8"
+  },
+  "https://example.test/broken/": {
+    "file": "page-broken.html",
+    "contentType": "text/html; charset=UTF-8"
+  },
+  "https://example.test/wp-content/themes/t/style.css?ver=1.2.3": {
+    "file": "styles/theme.css",
+    "contentType": "text/css"
+  },
+  "https://example.test/wp-content/themes/t/app.css?ver=2.0.0": {
+    "file": "styles/app.css",
+    "contentType": "text/css"
+  },
+  "https://example.test/wp-content/uploads/logo.png": {
+    "file": "media/logo.png",
+    "contentType": "image/png"
+  },
+  "https://example.test/wp-content/uploads/logo-300x300.png": {
+    "file": "media/logo-300x300.png",
+    "contentType": "image/png"
+  },
+  "https://example.test/wp-content/uploads/bg.png": {
+    "file": "media/bg.png",
+    "contentType": "image/png"
+  },
+  "https://example.test/wp-content/themes/uploads/bg.png": {
+    "file": "media/bg.png",
+    "contentType": "image/png"
+  },
+  "https://example.test/wp-content/themes/t/fonts/inter.woff2?dcdb1ef8": {
+    "file": "media/inter.woff2",
+    "contentType": "font/woff2"
+  },
+  "https://example.test/wp-content/uploads/missing.png": {
+    "status": 404
+  }
+}

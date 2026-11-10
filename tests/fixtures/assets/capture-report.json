@@ -1,0 +1,126 @@
+{
+  "generatedAt": "2026-11-10T00:00:00.000Z",
+  "baseUrl": "https://example.test",
+  "tool": {
+    "name": "cl-site-convert",
+    "version": "0.1.0",
+    "minIntervalMs": 600,
+    "requests": 3
+  },
+  "totals": {
+    "pages": 3,
+    "requested": 3,
+    "failed": 0,
+    "inputBytes": 1402,
+    "domBytes": 1402,
+    "strippedBytes": 0
+  },
+  "cache": {
+    "hits": 3,
+    "misses": 0,
+    "bypassAttempted": false,
+    "bypassNote": "fixture"
+  },
+  "pages": [
+    {
+      "url": "/",
+      "status": 200,
+      "bytes": 666,
+      "domBytes": 666,
+      "stripped": [
+        {
+          "kind": "style",
+          "detail": "global-styles-inline-css",
+          "bytes": 77,
+          "sha256": "18ce3a84d181a7d19fa89ca50ccaac2f1135c9540907727a48dfa5802001fab9"
+        },
+        {
+          "kind": "style",
+          "detail": "et-critical-inline-css",
+          "bytes": 68,
+          "sha256": "2e56eb3e64f351412c4d318ccac3991a477555a194aa018660d48f4192241314"
+        }
+      ],
+      "strippedSummary": "2 style",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": null,
+        "cacheControl": null,
+        "stamp": null,
+        "freshness": "unknown"
+      },
+      "restModified": null,
+      "stylesheetRefs": [],
+      "notes": [],
+      "file": "page-home.html"
+    },
+    {
+      "url": "/care/",
+      "status": 200,
+      "bytes": 507,
+      "domBytes": 507,
+      "stripped": [
+        {
+          "kind": "style",
+          "detail": "global-styles-inline-css",
+          "bytes": 77,
+          "sha256": "18ce3a84d181a7d19fa89ca50ccaac2f1135c9540907727a48dfa5802001fab9"
+        },
+        {
+          "kind": "style",
+          "detail": "et-critical-inline-css",
+          "bytes": 68,
+          "sha256": "1fd717210da8bea3dfd14757b7f454742874de530b6a84fff1d0617ce1bb3841"
+        }
+      ],
+      "strippedSummary": "2 style",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": null,
+        "cacheControl": null,
+        "stamp": null,
+        "freshness": "unknown"
+      },
+      "restModified": null,
+      "stylesheetRefs": [],
+      "notes": [],
+      "file": "page-care.html"
+    },
+    {
+      "url": "/broken/",
+      "status": 200,
+      "bytes": 229,
+      "domBytes": 229,
+      "stripped": [
+        {
+          "kind": "style",
+          "detail": "global-styles-inline-css",
+          "bytes": 59,
+          "sha256": "d34a63226e577da80cd54bdecccc5bbfcfa02e39d2cedab91697cc6f90853d7c"
+        }
+      ],
+      "strippedSummary": "1 style",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": null,
+        "cacheControl": null,
+        "stamp": null,
+        "freshness": "unknown"
+      },
+      "restModified": null,
+      "stylesheetRefs": [],
+      "notes": [],
+      "file": "page-broken.html"
+    }
+  ],
+  "stylesheets": [],
+  "contactScan": {
+    "emails": [],
+    "telLinks": [],
+    "note": "fixture"
+  },
+  "notes": []
+}

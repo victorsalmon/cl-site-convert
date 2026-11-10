@@ -1,0 +1,850 @@
+{
+  "generatedAt": "2026-11-10T06:49:06.481Z",
+  "baseUrl": "https://upscalehavens.ca",
+  "styleChain": [
+    {
+      "order": 0,
+      "origin": "inline",
+      "sha256": "f605fbffb84bf07fbda0f520826e1be33730791f8e981cc4faafbb3dd836744c",
+      "bytes": 10488,
+      "capturePath": "capture/assets/styles/inline/f605fbffb84bf07fbda0f520826e1be33730791f8e981cc4faafbb3dd836744c.css",
+      "localPath": "assets/inline/f605fbffb84bf07fbda0f520826e1be33730791f8e981cc4faafbb3dd836744c.css",
+      "pages": [
+        "/",
+        "/care/",
+        "/care/showings/",
+        "/care/signal-admin/",
+        "/care/sweepy-admin/",
+        "/care/ttlock-admin/",
+        "/mlm/",
+        "/mlm/applym/",
+        "/mlm/onboard-mlm/",
+        "/resources/",
+        "/resources/checklists/",
+        "/resources/sweepy/",
+        "/tmh/",
+        "/tmh/apply/",
+        "/tmh/offboard/",
+        "/tmh/onboard-tmh/",
+        "/ush/thanks/"
+      ],
+      "sourceElementSha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b",
+      "detail": "#global-styles-inline-css"
+    },
+    {
+      "order": 1,
+      "origin": "inline",
+      "sha256": "b04f0ba1fb7ab36fa4f8bf2165eb5dca46cf6cba88f4351f85df1268598114ef",
+      "bytes": 4274,
+      "capturePath": "capture/assets/styles/inline/b04f0ba1fb7ab36fa4f8bf2165eb5dca46cf6cba88f4351f85df1268598114ef.css",
+      "localPath": "assets/inline/b04f0ba1fb7ab36fa4f8bf2165eb5dca46cf6cba88f4351f85df1268598114ef.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "f1753943d3d0ed5d9425439cc5859ef1e530b3f305a81498becaeb4b7f309a92",
+      "detail": "#wp-block-library-inline-css"
+    },
+    {
+      "order": 2,
+      "origin": "inline",
+      "sha256": "170086968fba5a92409014b1b0f6ae663a92a19a660970f8a2b932947cdd3e98",
+      "bytes": 1250,
+      "capturePath": "capture/assets/styles/inline/170086968fba5a92409014b1b0f6ae663a92a19a660970f8a2b932947cdd3e98.css",
+      "localPath": "assets/inline/170086968fba5a92409014b1b0f6ae663a92a19a660970f8a2b932947cdd3e98.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "5257333ed6bdba9d98682663f3179803383766c724953687dcfa422484debfb3",
+      "detail": "#wp-block-heading-inline-css"
+    },
+    {
+      "order": 3,
+      "origin": "inline",
+      "sha256": "1c39b3fa46160e3b4fdba4e8331dc80578f81e3a42fd73849d224d544b03f915",
+      "bytes": 1377,
+      "capturePath": "capture/assets/styles/inline/1c39b3fa46160e3b4fdba4e8331dc80578f81e3a42fd73849d224d544b03f915.css",
+      "localPath": "assets/inline/1c39b3fa46160e3b4fdba4e8331dc80578f81e3a42fd73849d224d544b03f915.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "c50af6afecc2e600c82c0e735701ddd83af63a3d163a458e2f810aebdba278c8",
+      "detail": "#wp-block-latest-comments-inline-css"
+    },
+    {
+      "order": 4,
+      "origin": "inline",
+      "sha256": "8cc95055e7bb724e8353b1cee80284b629d0c3d4f2ac4b226aed9e7db8a8dd6e",
+      "bytes": 2319,
+      "capturePath": "capture/assets/styles/inline/8cc95055e7bb724e8353b1cee80284b629d0c3d4f2ac4b226aed9e7db8a8dd6e.css",
+      "localPath": "assets/inline/8cc95055e7bb724e8353b1cee80284b629d0c3d4f2ac4b226aed9e7db8a8dd6e.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "305a62c6bb7f38a5fec0c88139879e4d8f2d3f53aefce2a1e33af739f33804bf",
+      "detail": "#wp-block-latest-posts-inline-css"
+    },
+    {
+      "order": 5,
+      "origin": "inline",
+      "sha256": "0818fb43312ed7bda92b158b168b6d268b985b495c8bfa6b147244a47512deac",
+      "bytes": 742,
+      "capturePath": "capture/assets/styles/inline/0818fb43312ed7bda92b158b168b6d268b985b495c8bfa6b147244a47512deac.css",
+      "localPath": "assets/inline/0818fb43312ed7bda92b158b168b6d268b985b495c8bfa6b147244a47512deac.css",
+      "pages": [
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "0506ea7ab86498baaa9ce95748b9fefb9c107a6e64a81fe6c8a19f7856c9d622",
+      "detail": "#wp-block-paragraph-inline-css"
+    },
+    {
+      "order": 6,
+      "origin": "inline",
+      "sha256": "b8adfead4497d93f28ca3c24eb82fc3172d1ab4cd5fc10ad4a5dafa1b84077d8",
+      "bytes": 2524,
+      "capturePath": "capture/assets/styles/inline/b8adfead4497d93f28ca3c24eb82fc3172d1ab4cd5fc10ad4a5dafa1b84077d8.css",
+      "localPath": "assets/inline/b8adfead4497d93f28ca3c24eb82fc3172d1ab4cd5fc10ad4a5dafa1b84077d8.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "3730ab141a431c5c352c2c6174cc35875a734cf927f96d33711e3471fbd2d3cc",
+      "detail": "#wp-block-search-inline-css"
+    },
+    {
+      "order": 7,
+      "origin": "inline",
+      "sha256": "5a3cbec0954bef2033c7812cde7b748542b59064f849d2057dd021f0fcf55e73",
+      "bytes": 210,
+      "capturePath": "capture/assets/styles/inline/5a3cbec0954bef2033c7812cde7b748542b59064f849d2057dd021f0fcf55e73.css",
+      "localPath": "assets/inline/5a3cbec0954bef2033c7812cde7b748542b59064f849d2057dd021f0fcf55e73.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "a1bd4964bf197d750af828304c7ec85e2d6fe25f4dcf6a6c142bfde4dcac54c5",
+      "detail": "#wp-block-search-theme-inline-css"
+    },
+    {
+      "order": 8,
+      "origin": "inline",
+      "sha256": "e0b26407d2b8e49734d718f594c35c0084071ba3431892f21838f9a164d3b39d",
+      "bytes": 200,
+      "capturePath": "capture/assets/styles/inline/e0b26407d2b8e49734d718f594c35c0084071ba3431892f21838f9a164d3b39d.css",
+      "localPath": "assets/inline/e0b26407d2b8e49734d718f594c35c0084071ba3431892f21838f9a164d3b39d.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "8a575e88e6f7f835d4fe769ab05ba8cc84cfca5a1089ef1c09e29f6186857e84",
+      "detail": "#wp-block-group-inline-css"
+    },
+    {
+      "order": 9,
+      "origin": "inline",
+      "sha256": "e48588cc016ab13931d8ef74b7194e78d75cbbf517bc3e820cd775d2b443224d",
+      "bytes": 145,
+      "capturePath": "capture/assets/styles/inline/e48588cc016ab13931d8ef74b7194e78d75cbbf517bc3e820cd775d2b443224d.css",
+      "localPath": "assets/inline/e48588cc016ab13931d8ef74b7194e78d75cbbf517bc3e820cd775d2b443224d.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "7c90cfc7a56f643a47e9692cbbf832eb3c498af8cfe87857d6a33fcfad668f9d",
+      "detail": "#wp-block-group-theme-inline-css"
+    },
+    {
+      "order": 10,
+      "origin": "inline",
+      "sha256": "ee31c04374393311b9e17cf04f7e90e091829965644ba1d0e53a1f80d7a0a296",
+      "bytes": 10607,
+      "capturePath": "capture/assets/styles/inline/ee31c04374393311b9e17cf04f7e90e091829965644ba1d0e53a1f80d7a0a296.css",
+      "localPath": "assets/inline/ee31c04374393311b9e17cf04f7e90e091829965644ba1d0e53a1f80d7a0a296.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "eb4a84e8681ff2bb8681ee7fe42949c6ba912da7de39fae60bc1e71812656332",
+      "detail": "#global-styles-inline-css"
+    },
+    {
+      "order": 11,
+      "origin": "linked",
+      "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+      "sha256": "256ed3e2e4346704db5b3026fa8082ba68e734d50904ccfad3bfdbfbbe763131",
+      "bytes": 2695,
+      "capturePath": "capture/assets/styles/external/fonts.googleapis.com/css-6722c894",
+      "localPath": "external/fonts.googleapis.com/css-6722c894",
+      "pages": [
+        "/",
+        "/care/",
+        "/care/showings/",
+        "/care/signal-admin/",
+        "/care/sweepy-admin/",
+        "/care/ttlock-admin/",
+        "/mlm/",
+        "/mlm/applym/",
+        "/mlm/onboard-mlm/",
+        "/resources/",
+        "/resources/checklists/",
+        "/resources/sweepy/",
+        "/tmh/",
+        "/tmh/apply/",
+        "/tmh/offboard/",
+        "/tmh/onboard-tmh/",
+        "/ush/owner/",
+        "/ush/privacy-policy/",
+        "/ush/thanks/"
+      ],
+      "media": "all"
+    },
+    {
+      "order": 12,
+      "origin": "inline",
+      "sha256": "7bdbdaf0cfb12605bff64e4890958852b5a4d4372dd4607310175b4f000205a1",
+      "bytes": 26733,
+      "capturePath": "capture/assets/styles/inline/7bdbdaf0cfb12605bff64e4890958852b5a4d4372dd4607310175b4f000205a1.css",
+      "localPath": "assets/inline/7bdbdaf0cfb12605bff64e4890958852b5a4d4372dd4607310175b4f000205a1.css",
+      "pages": [
+        "/",
+        "/care/",
+        "/care/showings/",
+        "/care/signal-admin/",
+        "/care/sweepy-admin/",
+        "/care/ttlock-admin/",
+        "/mlm/",
+        "/mlm/applym/",
+        "/mlm/onboard-mlm/",
+        "/resources/",
+        "/resources/checklists/",
+        "/resources/sweepy/",
+        "/tmh/",
+        "/tmh/apply/",
+        "/tmh/offboard/",
+        "/tmh/onboard-tmh/",
+        "/ush/owner/",
+        "/ush/privacy-policy/",
+        "/ush/thanks/"
+      ],
+      "sourceElementSha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2",
+      "detail": "#divi-style-inline-inline-css"
+    },
+    {
+      "order": 13,
+      "origin": "inline",
+      "sha256": "43664da6590084ec8e4a5efd681721340bace8ad0bffe8bd4711a3aac7127938",
+      "bytes": 45662,
+      "capturePath": "capture/assets/styles/inline/43664da6590084ec8e4a5efd681721340bace8ad0bffe8bd4711a3aac7127938.css",
+      "localPath": "assets/inline/43664da6590084ec8e4a5efd681721340bace8ad0bffe8bd4711a3aac7127938.css",
+      "pages": [
+        "/"
+      ],
+      "sourceElementSha256": "9b7753d9b859bcccc1fb7a6967abbf9308d68298f71c69b514d701e24ce4bfa3",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 14,
+      "origin": "inline",
+      "sha256": "507f385cf7de6331286727d82216882e7c099836aafe3688c2b590b18250ec3d",
+      "bytes": 60568,
+      "capturePath": "capture/assets/styles/inline/507f385cf7de6331286727d82216882e7c099836aafe3688c2b590b18250ec3d.css",
+      "localPath": "assets/inline/507f385cf7de6331286727d82216882e7c099836aafe3688c2b590b18250ec3d.css",
+      "pages": [
+        "/care/"
+      ],
+      "sourceElementSha256": "dd1fa8a904d1f60975175f32010f69d07483eb4599d8962ba7f00ef52c89a466",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 15,
+      "origin": "inline",
+      "sha256": "d78f7301c865949eb826c07bcb56101e046ef88f16151b0f5bc319722505f451",
+      "bytes": 43451,
+      "capturePath": "capture/assets/styles/inline/d78f7301c865949eb826c07bcb56101e046ef88f16151b0f5bc319722505f451.css",
+      "localPath": "assets/inline/d78f7301c865949eb826c07bcb56101e046ef88f16151b0f5bc319722505f451.css",
+      "pages": [
+        "/care/showings/"
+      ],
+      "sourceElementSha256": "3dc1580056963579584c7b93a7976b3a39ce012256e567fc7ffe4e5cc8e148d2",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 16,
+      "origin": "inline",
+      "sha256": "2dd1767c94ac963db80ad9bec05ad77ce7199dcb615e8c5839e259a92ea63c97",
+      "bytes": 43291,
+      "capturePath": "capture/assets/styles/inline/2dd1767c94ac963db80ad9bec05ad77ce7199dcb615e8c5839e259a92ea63c97.css",
+      "localPath": "assets/inline/2dd1767c94ac963db80ad9bec05ad77ce7199dcb615e8c5839e259a92ea63c97.css",
+      "pages": [
+        "/care/signal-admin/",
+        "/care/sweepy-admin/",
+        "/care/ttlock-admin/"
+      ],
+      "sourceElementSha256": "19cdadae30ea101ba01f28f492e0ee27e3d0f253bca102ba075f7309b7e8b1ab",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 17,
+      "origin": "inline",
+      "sha256": "ed66d4dd6f459673a6d69454216b807f4d2a9f054d58c1708f447dd1ba770a6a",
+      "bytes": 67310,
+      "capturePath": "capture/assets/styles/inline/ed66d4dd6f459673a6d69454216b807f4d2a9f054d58c1708f447dd1ba770a6a.css",
+      "localPath": "assets/inline/ed66d4dd6f459673a6d69454216b807f4d2a9f054d58c1708f447dd1ba770a6a.css",
+      "pages": [
+        "/mlm/"
+      ],
+      "sourceElementSha256": "a986e0cb7268b22a7668b5b48757d025c7a9560e54db5f403cb2583e22b680ef",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 18,
+      "origin": "inline",
+      "sha256": "8bb1dd4c9038325c191d5c85019e48bdba65b629358d97ed67f0d31fd35dd485",
+      "bytes": 60695,
+      "capturePath": "capture/assets/styles/inline/8bb1dd4c9038325c191d5c85019e48bdba65b629358d97ed67f0d31fd35dd485.css",
+      "localPath": "assets/inline/8bb1dd4c9038325c191d5c85019e48bdba65b629358d97ed67f0d31fd35dd485.css",
+      "pages": [
+        "/mlm/applym/"
+      ],
+      "sourceElementSha256": "7fee98c6553b87d0f132b8d0c01f3ad8c1ce4292ecb6fac910116d8642954ae6",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 19,
+      "origin": "inline",
+      "sha256": "8f00f87d18285f08ade9be8e815db2ea74321f92111115d7143c262489cd9944",
+      "bytes": 46696,
+      "capturePath": "capture/assets/styles/inline/8f00f87d18285f08ade9be8e815db2ea74321f92111115d7143c262489cd9944.css",
+      "localPath": "assets/inline/8f00f87d18285f08ade9be8e815db2ea74321f92111115d7143c262489cd9944.css",
+      "pages": [
+        "/mlm/onboard-mlm/",
+        "/tmh/onboard-tmh/"
+      ],
+      "sourceElementSha256": "0b4085834fb8f03d4b84d66c7c3d487657c461688d9e71be1711a8082ec4ccc7",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 20,
+      "origin": "inline",
+      "sha256": "a696599f05bf7f1ff0490634506f9116eb6fee5121fea8f85737000a4081e513",
+      "bytes": 40336,
+      "capturePath": "capture/assets/styles/inline/a696599f05bf7f1ff0490634506f9116eb6fee5121fea8f85737000a4081e513.css",
+      "localPath": "assets/inline/a696599f05bf7f1ff0490634506f9116eb6fee5121fea8f85737000a4081e513.css",
+      "pages": [
+        "/resources/"
+      ],
+      "sourceElementSha256": "b2dcbbdb8b82b4095cbeb784d08929e3e45c0c81b541bb989aa2dca60a130f24",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 21,
+      "origin": "inline",
+      "sha256": "b099880166135726d63a39a60b09113537fc27bfd4f3ebc5bd54eaa467fc0f55",
+      "bytes": 43377,
+      "capturePath": "capture/assets/styles/inline/b099880166135726d63a39a60b09113537fc27bfd4f3ebc5bd54eaa467fc0f55.css",
+      "localPath": "assets/inline/b099880166135726d63a39a60b09113537fc27bfd4f3ebc5bd54eaa467fc0f55.css",
+      "pages": [
+        "/resources/checklists/"
+      ],
+      "sourceElementSha256": "c4d83e56c2e17b2f705fc191b50baa69dd7b5ee7fdd41f05324a510a7a46b3c7",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 22,
+      "origin": "inline",
+      "sha256": "96b77fa8dbbdb47d2c2965474e5de7faac398034f83424974fd4ff7d205a85fc",
+      "bytes": 43451,
+      "capturePath": "capture/assets/styles/inline/96b77fa8dbbdb47d2c2965474e5de7faac398034f83424974fd4ff7d205a85fc.css",
+      "localPath": "assets/inline/96b77fa8dbbdb47d2c2965474e5de7faac398034f83424974fd4ff7d205a85fc.css",
+      "pages": [
+        "/resources/sweepy/"
+      ],
+      "sourceElementSha256": "9b86efd3f2dc54ae8dd4f46c3f4f211736c83b1dd6e53c85249d0279b1b6813a",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 23,
+      "origin": "inline",
+      "sha256": "8dedcbd0d4c77563f5dc4fde1be6ea2a119b93e33a9ade287994c985b1d959e4",
+      "bytes": 65206,
+      "capturePath": "capture/assets/styles/inline/8dedcbd0d4c77563f5dc4fde1be6ea2a119b93e33a9ade287994c985b1d959e4.css",
+      "localPath": "assets/inline/8dedcbd0d4c77563f5dc4fde1be6ea2a119b93e33a9ade287994c985b1d959e4.css",
+      "pages": [
+        "/tmh/"
+      ],
+      "sourceElementSha256": "24b514afb5f62cd8f429866480e0351dfb2268f17eefc6ef8122b7a1751a6756",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 24,
+      "origin": "inline",
+      "sha256": "2f2e3fda00c1e2507984f3b77829d7420026f0048662246f75596abcb3409a13",
+      "bytes": 60309,
+      "capturePath": "capture/assets/styles/inline/2f2e3fda00c1e2507984f3b77829d7420026f0048662246f75596abcb3409a13.css",
+      "localPath": "assets/inline/2f2e3fda00c1e2507984f3b77829d7420026f0048662246f75596abcb3409a13.css",
+      "pages": [
+        "/tmh/apply/"
+      ],
+      "sourceElementSha256": "89011ef0a542fba467c7e79233483e917bcbbc17ca7a94509935f85221ceb3d7",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 25,
+      "origin": "inline",
+      "sha256": "f5b472db41529cd9aadf315f478ba2cba4e14216898b1379862eed63b9878797",
+      "bytes": 41477,
+      "capturePath": "capture/assets/styles/inline/f5b472db41529cd9aadf315f478ba2cba4e14216898b1379862eed63b9878797.css",
+      "localPath": "assets/inline/f5b472db41529cd9aadf315f478ba2cba4e14216898b1379862eed63b9878797.css",
+      "pages": [
+        "/tmh/offboard/"
+      ],
+      "sourceElementSha256": "5664800cb4d18a683c5087bbb6d2dca4043c225ce7e9bc5d3e399b4f69160d9f",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 26,
+      "origin": "inline",
+      "sha256": "330f9bf687fe90f5d74690b1ed049e978caadba3a192aadf10ca20a6ce020c08",
+      "bytes": 48642,
+      "capturePath": "capture/assets/styles/inline/330f9bf687fe90f5d74690b1ed049e978caadba3a192aadf10ca20a6ce020c08.css",
+      "localPath": "assets/inline/330f9bf687fe90f5d74690b1ed049e978caadba3a192aadf10ca20a6ce020c08.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "db97945a6d496857d6ab00b6c2cc41ce767fca65bea073796fd6d9c3bb78a36e",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 27,
+      "origin": "inline",
+      "sha256": "8119dbcd0d21474819d8d58d163ef5d943af9d45e07b333d1f115118ad3b17ef",
+      "bytes": 19223,
+      "capturePath": "capture/assets/styles/inline/8119dbcd0d21474819d8d58d163ef5d943af9d45e07b333d1f115118ad3b17ef.css",
+      "localPath": "assets/inline/8119dbcd0d21474819d8d58d163ef5d943af9d45e07b333d1f115118ad3b17ef.css",
+      "pages": [
+        "/ush/thanks/"
+      ],
+      "sourceElementSha256": "14abf0f09084c9ba46b13a90fbbf2b06acca35c875ce4b048b76e151022fdf91",
+      "detail": "#divi-dynamic-critical-inline-css"
+    },
+    {
+      "order": 28,
+      "origin": "linked",
+      "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+      "sha256": "4d96bc826974b35ac087267284ff6e79a27078474c46b45e46b53279ac61adc1",
+      "bytes": 7760,
+      "capturePath": "capture/assets/styles/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css",
+      "localPath": "wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css",
+      "pages": [
+        "/",
+        "/care/",
+        "/care/showings/",
+        "/care/signal-admin/",
+        "/care/sweepy-admin/",
+        "/care/ttlock-admin/",
+        "/mlm/",
+        "/mlm/applym/",
+        "/mlm/onboard-mlm/",
+        "/resources/",
+        "/resources/checklists/",
+        "/resources/sweepy/",
+        "/tmh/",
+        "/tmh/apply/",
+        "/tmh/offboard/",
+        "/tmh/onboard-tmh/",
+        "/ush/owner/",
+        "/ush/privacy-policy/",
+        "/ush/thanks/"
+      ],
+      "media": "all"
+    },
+    {
+      "order": 29,
+      "origin": "linked",
+      "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+      "sha256": "8cb7b34b3cccb00768370858969ed788f548c7e088f13bdee554f199d59ae050",
+      "bytes": 1724,
+      "capturePath": "capture/assets/styles/external/fonts.googleapis.com/css-adb67555",
+      "localPath": "external/fonts.googleapis.com/css-adb67555",
+      "pages": [
+        "/",
+        "/care/signal-admin/",
+        "/care/sweepy-admin/",
+        "/care/ttlock-admin/",
+        "/resources/checklists/",
+        "/resources/sweepy/"
+      ],
+      "media": "all"
+    },
+    {
+      "order": 30,
+      "origin": "linked",
+      "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+      "sha256": "900a4a77d8a0e2540cd1c3d691f0c5d5df0d9530d9279716b5e17e82ee9f0e44",
+      "bytes": 3812,
+      "capturePath": "capture/assets/styles/external/fonts.googleapis.com/css-5a179510",
+      "localPath": "external/fonts.googleapis.com/css-5a179510",
+      "pages": [
+        "/care/",
+        "/care/showings/",
+        "/mlm/",
+        "/mlm/applym/",
+        "/mlm/onboard-mlm/",
+        "/tmh/",
+        "/tmh/apply/",
+        "/tmh/offboard/",
+        "/tmh/onboard-tmh/",
+        "/ush/thanks/"
+      ],
+      "media": "all"
+    },
+    {
+      "order": 31,
+      "origin": "inline",
+      "sha256": "d68751c81194975b9297b9b343f9d1a7ad9a841c659bfda35d8eb6a44f284a6d",
+      "bytes": 55,
+      "capturePath": "capture/assets/styles/inline/d68751c81194975b9297b9b343f9d1a7ad9a841c659bfda35d8eb6a44f284a6d.css",
+      "localPath": "assets/inline/d68751c81194975b9297b9b343f9d1a7ad9a841c659bfda35d8eb6a44f284a6d.css",
+      "pages": [
+        "/",
+        "/care/",
+        "/care/showings/",
+        "/care/signal-admin/",
+        "/care/sweepy-admin/",
+        "/care/ttlock-admin/",
+        "/mlm/",
+        "/mlm/applym/",
+        "/mlm/onboard-mlm/",
+        "/resources/",
+        "/resources/checklists/",
+        "/resources/sweepy/",
+        "/tmh/",
+        "/tmh/apply/",
+        "/tmh/offboard/",
+        "/tmh/onboard-tmh/",
+        "/ush/owner/",
+        "/ush/privacy-policy/",
+        "/ush/thanks/"
+      ],
+      "sourceElementSha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79",
+      "detail": "#custom-background-css"
+    },
+    {
+      "order": 32,
+      "origin": "inline",
+      "sha256": "4dc8ccc7676c8b393ad33426c2b9231c5be8fd25bbea4cbfc11130747166dfb2",
+      "bytes": 9551,
+      "capturePath": "capture/assets/styles/inline/4dc8ccc7676c8b393ad33426c2b9231c5be8fd25bbea4cbfc11130747166dfb2.css",
+      "localPath": "assets/inline/4dc8ccc7676c8b393ad33426c2b9231c5be8fd25bbea4cbfc11130747166dfb2.css",
+      "pages": [
+        "/"
+      ],
+      "sourceElementSha256": "750527cebb30e7a7ddb2dee53493dde31b8b8a0f816ba1a5a914b0343ecd5abb",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 33,
+      "origin": "inline",
+      "sha256": "b6d978721e9877a898870201c96b570a684f37b46b6dd361076b7289983496f8",
+      "bytes": 10693,
+      "capturePath": "capture/assets/styles/inline/b6d978721e9877a898870201c96b570a684f37b46b6dd361076b7289983496f8.css",
+      "localPath": "assets/inline/b6d978721e9877a898870201c96b570a684f37b46b6dd361076b7289983496f8.css",
+      "pages": [
+        "/care/"
+      ],
+      "sourceElementSha256": "6bfb7fc43cbe515e62481cdde71abd2ebf7c57d998c92ab1773378f05b8cbd9e",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 34,
+      "origin": "inline",
+      "sha256": "d053ae7836427619ebee5cfe257904ff5b7cc0dfb07c9a421dc375467ad9aed8",
+      "bytes": 7071,
+      "capturePath": "capture/assets/styles/inline/d053ae7836427619ebee5cfe257904ff5b7cc0dfb07c9a421dc375467ad9aed8.css",
+      "localPath": "assets/inline/d053ae7836427619ebee5cfe257904ff5b7cc0dfb07c9a421dc375467ad9aed8.css",
+      "pages": [
+        "/care/showings/"
+      ],
+      "sourceElementSha256": "8996a0c1c73a03e2f1b274a5aea612ef57ef11b1e4675ed37ee3b0f99627424d",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 35,
+      "origin": "inline",
+      "sha256": "a4cc828906505eec08d8b3a9a6b5386afdd79ca8f6cf4dc390fbce927537fc9f",
+      "bytes": 4620,
+      "capturePath": "capture/assets/styles/inline/a4cc828906505eec08d8b3a9a6b5386afdd79ca8f6cf4dc390fbce927537fc9f.css",
+      "localPath": "assets/inline/a4cc828906505eec08d8b3a9a6b5386afdd79ca8f6cf4dc390fbce927537fc9f.css",
+      "pages": [
+        "/care/signal-admin/"
+      ],
+      "sourceElementSha256": "a68716585914c47dbaa09293ebc8b164f11f88bff4432915ed3fe2d9830b4954",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 36,
+      "origin": "inline",
+      "sha256": "5b68d265741988af7f920b1bcf8811322a0da05e1fa4b87317da494c8bb31b4a",
+      "bytes": 6232,
+      "capturePath": "capture/assets/styles/inline/5b68d265741988af7f920b1bcf8811322a0da05e1fa4b87317da494c8bb31b4a.css",
+      "localPath": "assets/inline/5b68d265741988af7f920b1bcf8811322a0da05e1fa4b87317da494c8bb31b4a.css",
+      "pages": [
+        "/care/sweepy-admin/"
+      ],
+      "sourceElementSha256": "70c37618061b2378d5671a54a1aab5636f24ed196d70accb2e908ce3e9c47994",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 37,
+      "origin": "inline",
+      "sha256": "4d14eefd2a553cc0ada756d4a58fb5ff307c25b586b280ab4b90e3b8d9202878",
+      "bytes": 5819,
+      "capturePath": "capture/assets/styles/inline/4d14eefd2a553cc0ada756d4a58fb5ff307c25b586b280ab4b90e3b8d9202878.css",
+      "localPath": "assets/inline/4d14eefd2a553cc0ada756d4a58fb5ff307c25b586b280ab4b90e3b8d9202878.css",
+      "pages": [
+        "/care/ttlock-admin/"
+      ],
+      "sourceElementSha256": "9102c48fc84af3d78f5caeb325eb938fd686f656a3012f3b3730592110ef74c3",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 38,
+      "origin": "inline",
+      "sha256": "f97068229377fd175151720fadfe5e56d21853dce9f68a5226b77acac70afb45",
+      "bytes": 977,
+      "capturePath": "capture/assets/styles/inline/f97068229377fd175151720fadfe5e56d21853dce9f68a5226b77acac70afb45.css",
+      "localPath": "assets/inline/f97068229377fd175151720fadfe5e56d21853dce9f68a5226b77acac70afb45.css",
+      "pages": [
+        "/mlm/",
+        "/tmh/"
+      ],
+      "sourceElementSha256": "a5fb1af574a7bf362b27731de239e8e63fdebdc192e63a835eaf815c6a491edb",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 39,
+      "origin": "inline",
+      "sha256": "22b94318b71e0366efc36a15807d967f73812d4e724fe19cdd19916392ff62e1",
+      "bytes": 9953,
+      "capturePath": "capture/assets/styles/inline/22b94318b71e0366efc36a15807d967f73812d4e724fe19cdd19916392ff62e1.css",
+      "localPath": "assets/inline/22b94318b71e0366efc36a15807d967f73812d4e724fe19cdd19916392ff62e1.css",
+      "pages": [
+        "/mlm/applym/"
+      ],
+      "sourceElementSha256": "36b97a4d98ef24f2ff6083762c745099c82c6f5ae36f8423b125533e0cd9e996",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 40,
+      "origin": "inline",
+      "sha256": "e12857eb95007f2943891d0d6bfc3117905b82bff0bca1130b6d55d2b6589675",
+      "bytes": 4306,
+      "capturePath": "capture/assets/styles/inline/e12857eb95007f2943891d0d6bfc3117905b82bff0bca1130b6d55d2b6589675.css",
+      "localPath": "assets/inline/e12857eb95007f2943891d0d6bfc3117905b82bff0bca1130b6d55d2b6589675.css",
+      "pages": [
+        "/mlm/applym/"
+      ],
+      "sourceElementSha256": "f10b4ae7e5730db9201cb71b6d289a0159197d0b23f624fa88566d603bde4ae0",
+      "detail": "#wp-block-library-inline-css"
+    },
+    {
+      "order": 41,
+      "origin": "inline",
+      "sha256": "661913b5cc648cdf125a93605e160ce05aae9c76048634c007aec4b0ebfe7266",
+      "bytes": 15939,
+      "capturePath": "capture/assets/styles/inline/661913b5cc648cdf125a93605e160ce05aae9c76048634c007aec4b0ebfe7266.css",
+      "localPath": "assets/inline/661913b5cc648cdf125a93605e160ce05aae9c76048634c007aec4b0ebfe7266.css",
+      "pages": [
+        "/mlm/onboard-mlm/",
+        "/tmh/onboard-tmh/"
+      ],
+      "sourceElementSha256": "48a900c0293b08605043ca6befcd0a8dd7da5acefc878f5e7b7abc30075dede8",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 42,
+      "origin": "inline",
+      "sha256": "22b9e84e08f2050a3439f6d4fe54245d0f2a31f5f128cacc29851b422fdb2e44",
+      "bytes": 3069,
+      "capturePath": "capture/assets/styles/inline/22b9e84e08f2050a3439f6d4fe54245d0f2a31f5f128cacc29851b422fdb2e44.css",
+      "localPath": "assets/inline/22b9e84e08f2050a3439f6d4fe54245d0f2a31f5f128cacc29851b422fdb2e44.css",
+      "pages": [
+        "/resources/"
+      ],
+      "sourceElementSha256": "1176775cb10accf498b5189c1359093a0a1c8644ee968e0b5e66e8a3974d536e",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 43,
+      "origin": "inline",
+      "sha256": "c1ed69f0eb9f7e7888e1b73069d94130a7646e55295b0f09408da85b107de825",
+      "bytes": 8386,
+      "capturePath": "capture/assets/styles/inline/c1ed69f0eb9f7e7888e1b73069d94130a7646e55295b0f09408da85b107de825.css",
+      "localPath": "assets/inline/c1ed69f0eb9f7e7888e1b73069d94130a7646e55295b0f09408da85b107de825.css",
+      "pages": [
+        "/resources/checklists/"
+      ],
+      "sourceElementSha256": "3d087d3fb32d8506c262ca63978de32008be5cc7fcbd6d59eaf481f8c2f2df80",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 44,
+      "origin": "inline",
+      "sha256": "8dd637df7f7ced871c05b5bf11b9c41bdd1a034946448a6be94be247878877ec",
+      "bytes": 6188,
+      "capturePath": "capture/assets/styles/inline/8dd637df7f7ced871c05b5bf11b9c41bdd1a034946448a6be94be247878877ec.css",
+      "localPath": "assets/inline/8dd637df7f7ced871c05b5bf11b9c41bdd1a034946448a6be94be247878877ec.css",
+      "pages": [
+        "/resources/sweepy/"
+      ],
+      "sourceElementSha256": "11bcb5d3e1a45ad245647f01f076539423f214730fc23cbe4f0f429fa0e13d1c",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 45,
+      "origin": "inline",
+      "sha256": "52f997f22216c6d46df0f61f68e18f8b7207ed0e4e53f6ea27e5925a78663a60",
+      "bytes": 8884,
+      "capturePath": "capture/assets/styles/inline/52f997f22216c6d46df0f61f68e18f8b7207ed0e4e53f6ea27e5925a78663a60.css",
+      "localPath": "assets/inline/52f997f22216c6d46df0f61f68e18f8b7207ed0e4e53f6ea27e5925a78663a60.css",
+      "pages": [
+        "/tmh/apply/"
+      ],
+      "sourceElementSha256": "3101d5676abeb326d87d1e1f78642b1662c968f3c0ceb64007f0b8b9e8cc342d",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 46,
+      "origin": "linked",
+      "href": "https://upscalehavens.ca/wp-content/plugins/fluentform/assets/libs/flatpickr/flatpickr.min.css?ver=4.6.9",
+      "sha256": "4573c0cb11d5c8c2f16f44d808cd8e5b947819691c0ded368dd620c99a78d4e5",
+      "bytes": 16081,
+      "capturePath": "capture/assets/styles/wp-content/plugins/fluentform/assets/libs/flatpickr/flatpickr.min.css",
+      "localPath": "wp-content/plugins/fluentform/assets/libs/flatpickr/flatpickr.min.css",
+      "pages": [
+        "/tmh/apply/"
+      ],
+      "media": "all"
+    },
+    {
+      "order": 47,
+      "origin": "linked",
+      "href": "https://upscalehavens.ca/wp-content/plugins/fluentform/app/Services/FluentConversational/public/css/conversationalForm.css?ver=6.2.17",
+      "sha256": "a1edf55469598ccf12fb71e106f3cff695cc02c0c08032f30bf108ad71773ca5",
+      "bytes": 112606,
+      "capturePath": "capture/assets/styles/wp-content/plugins/fluentform/app/Services/FluentConversational/public/css/conversationalForm.css",
+      "localPath": "wp-content/plugins/fluentform/app/Services/FluentConversational/public/css/conversationalForm.css",
+      "pages": [
+        "/tmh/apply/"
+      ],
+      "media": "all"
+    },
+    {
+      "order": 48,
+      "origin": "inline",
+      "sha256": "a901b6ee888e649805ed799fc44632fef3f051117c1aa0b1f679662d498475ff",
+      "bytes": 4306,
+      "capturePath": "capture/assets/styles/inline/a901b6ee888e649805ed799fc44632fef3f051117c1aa0b1f679662d498475ff.css",
+      "localPath": "assets/inline/a901b6ee888e649805ed799fc44632fef3f051117c1aa0b1f679662d498475ff.css",
+      "pages": [
+        "/tmh/apply/"
+      ],
+      "sourceElementSha256": "3bd0d168d3efe66c6854d06d8da0a90988596e54f2240b2584ce1c9f3975996b",
+      "detail": "#wp-block-library-inline-css"
+    },
+    {
+      "order": 49,
+      "origin": "inline",
+      "sha256": "6dfe3510bf241c3da0e9215cee009daa1f8b587a87031bb433c3f35ec5121cc8",
+      "bytes": 6139,
+      "capturePath": "capture/assets/styles/inline/6dfe3510bf241c3da0e9215cee009daa1f8b587a87031bb433c3f35ec5121cc8.css",
+      "localPath": "assets/inline/6dfe3510bf241c3da0e9215cee009daa1f8b587a87031bb433c3f35ec5121cc8.css",
+      "pages": [
+        "/tmh/apply/"
+      ],
+      "sourceElementSha256": "c6e6502b05ad2be8b35524a7919d6e070cc140ed8a4691b7856288a50e672387",
+      "detail": "<style>"
+    },
+    {
+      "order": 50,
+      "origin": "inline",
+      "sha256": "eaed2604e50161ac7e315fc8b1c04b1e864026b1b6ac9706a8da58cd64ea46b5",
+      "bytes": 7973,
+      "capturePath": "capture/assets/styles/inline/eaed2604e50161ac7e315fc8b1c04b1e864026b1b6ac9706a8da58cd64ea46b5.css",
+      "localPath": "assets/inline/eaed2604e50161ac7e315fc8b1c04b1e864026b1b6ac9706a8da58cd64ea46b5.css",
+      "pages": [
+        "/tmh/offboard/"
+      ],
+      "sourceElementSha256": "d634089632d40aba2c50e22c1e4b0da1e95f64d89fc82f329e82d16e90965599",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 51,
+      "origin": "linked",
+      "href": "https://upscalehavens.ca/wp-content/et-cache/global/et-divi-customizer-global.min.css?ver=1786007200",
+      "sha256": "f97068229377fd175151720fadfe5e56d21853dce9f68a5226b77acac70afb45",
+      "bytes": 977,
+      "capturePath": "capture/assets/styles/wp-content/et-cache/global/et-divi-customizer-global.min.css",
+      "localPath": "wp-content/et-cache/global/et-divi-customizer-global.min.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ]
+    },
+    {
+      "order": 52,
+      "origin": "inline",
+      "sha256": "123f6d73ed3d3a010e7c007648be2c464ba02e567ca45d9ff9a60a55df140689",
+      "bytes": 2092,
+      "capturePath": "capture/assets/styles/inline/123f6d73ed3d3a010e7c007648be2c464ba02e567ca45d9ff9a60a55df140689.css",
+      "localPath": "assets/inline/123f6d73ed3d3a010e7c007648be2c464ba02e567ca45d9ff9a60a55df140689.css",
+      "pages": [
+        "/ush/owner/",
+        "/ush/privacy-policy/"
+      ],
+      "sourceElementSha256": "d2338a9226a578cf2c7f5f33b4d933b1b4fb6363611edfce415e5879e8192107",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 53,
+      "origin": "inline",
+      "sha256": "cf43b1edd61be20646b3c967a54a6dd59c6b1ee7c118bccc9096cbd904397619",
+      "bytes": 6315,
+      "capturePath": "capture/assets/styles/inline/cf43b1edd61be20646b3c967a54a6dd59c6b1ee7c118bccc9096cbd904397619.css",
+      "localPath": "assets/inline/cf43b1edd61be20646b3c967a54a6dd59c6b1ee7c118bccc9096cbd904397619.css",
+      "pages": [
+        "/ush/thanks/"
+      ],
+      "sourceElementSha256": "25a3e35145d6c0c2d8a1382c6956d2b347614fbaec91395e9f03768b7ac99854",
+      "detail": "#et-critical-inline-css"
+    },
+    {
+      "order": 54,
+      "origin": "inline",
+      "sha256": "dcfec94a31ba71e134725d9a65507fee5fc3b06362e084892b7033b3094f3f19",
+      "bytes": 4306,
+      "capturePath": "capture/assets/styles/inline/dcfec94a31ba71e134725d9a65507fee5fc3b06362e084892b7033b3094f3f19.css",
+      "localPath": "assets/inline/dcfec94a31ba71e134725d9a65507fee5fc3b06362e084892b7033b3094f3f19.css",
+      "pages": [
+        "/ush/thanks/"
+      ],
+      "sourceElementSha256": "56682bca1725fada2e3d4595f0ffac2b72429222dc4b90024d9e598860948f3f",
+      "detail": "#wp-block-library-inline-css"
+    }
+  ],
+  "totals": {
+    "linked": 7,
+    "inlineBlocks": 116,
+    "inlineUnique": 48,
+    "inlineBytesTotal": 1797263,
+    "inlineBytesUnique": 923437
+  },
+  "notes": [
+    "Complete interleaved style chain. `styles[]` in the Site IR carries the linked subset only, because v1 requires an `href` and forbids unknown properties such as `origin`; the gaps in its `order` values are the inline blocks listed here.",
+    "Deduplicated by CSS sha256: Divi repeats the same theme block on every page, so a block may carry many pages."
+  ]
+}

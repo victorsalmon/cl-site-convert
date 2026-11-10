@@ -23,6 +23,7 @@
     "test:watch": "vitest",
     "capture:routes": "node dist/source/wp-rest/routes.js",
     "capture:content": "pnpm run build && node dist/source/wp-rest/content.js",
+    "capture:assets": "pnpm run build && node dist/source/wp-rest/assets.js",
     "capture:capabilities": "node dist/source/capabilities/detect.js",
     "gate": "pwsh -NoProfile -File scripts/gate.ps1"
   },
