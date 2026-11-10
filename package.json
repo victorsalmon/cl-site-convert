@@ -17,6 +17,7 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate:ir": "node scripts/validate-ir.mjs",
     "validate:plugins": "pnpm run build && node scripts/validate-plugins.mjs",
+    "validate:wasm-size": "node scripts/wasm-size.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "capture:routes": "node dist/source/wp-rest/routes.js",
