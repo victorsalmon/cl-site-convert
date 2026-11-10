@@ -1,0 +1,38 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "static-html-emitter",
+  "version": "0.1.0",
+  "role": "emitter",
+  "consumes": ["site-ir"],
+  "acceptsIrRange": "^1.1.0",
+  "emits": ["static-html", "islands-wasm"],
+  "hooks": ["emit:page", "emit:site"],
+  "entrypoint": { "module": "dist/index.js", "hooksExport": "hooks" },
+  "assets": [
+    {
+      "path": "templates",
+      "kind": "template",
+      "type": "directory",
+      "files": [
+        {
+          "path": "page.html",
+          "sha256": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "bytes": 1024
+        },
+        {
+          "path": "partials/header.html",
+          "sha256": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+          "bytes": 256
+        }
+      ]
+    },
+    {
+      "path": "pkg/island.wasm",
+      "kind": "wasm",
+      "sha256": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+      "bytes": 204800,
+      "brotliBytes": 96000
+    }
+  ],
+  "runbook": "runbook.md"
+}

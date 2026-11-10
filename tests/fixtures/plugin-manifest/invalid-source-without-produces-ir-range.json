@@ -1,0 +1,12 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "broken-source",
+  "version": "0.1.0",
+  "role": "source",
+  "consumes": [],
+  "emits": ["site-ir"],
+  "hooks": ["capture:start"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [],
+  "runbook": "runbook.md"
+}

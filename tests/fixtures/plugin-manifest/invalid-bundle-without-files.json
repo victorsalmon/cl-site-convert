@@ -1,0 +1,13 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "bundle-without-members",
+  "version": "0.1.0",
+  "role": "emitter",
+  "consumes": ["site-ir"],
+  "acceptsIrRange": "^1.1.0",
+  "emits": ["static-html"],
+  "hooks": ["emit:page"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [{ "path": "templates", "kind": "template", "type": "directory" }],
+  "runbook": "runbook.md"
+}

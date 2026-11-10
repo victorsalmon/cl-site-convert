@@ -1,20 +1,16 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.cl-site-convert.dev/plugin-manifest-1.0.0.schema.json",
-  "title": "Plugin Manifest v1",
-  "description": "The contract a plugin declares so the pipeline can load it without knowing its internals. A plugin is a source adapter, an emitter, a sink, or a deployer; `emits` says which.",
+  "$id": "https://schemas.cl-site-convert.dev/plugin-manifest-1.1.0.schema.json",
+  "title": "Plugin Manifest v1.1",
+  "description": "The contract a plugin declares so the pipeline can load it without knowing its internals. v1.1 adds `role`/`consumes`, splits `irRange` into `acceptsIrRange` (emitter/sink) and `producesIrRange` (source), declares the hook->export load surface on `entrypoint`, lets an asset be a bundle directory carrying `sha256`/`bytes`/`brotliBytes`, and names the config's location. Version selection is explicit: a manifest that omits `manifestVersion` is a v1.0.0 manifest and keeps the v1.0.0 contract exactly (`irRange` only; `role`, `consumes`, `acceptsIrRange` and `producesIrRange` are rejected). Set `manifestVersion: \"1.1.0\"` to opt into the v1.1 rules. The additive fields (`entrypoint` object form, asset integrity/bundles, `config`) are accepted by both versions, so no v1.0.0 manifest needs to change.",
   "type": "object",
-  "required": [
-    "name",
-    "version",
-    "irRange",
-    "emits",
-    "hooks",
-    "assets",
-    "runbook"
-  ],
+  "required": ["name", "version", "emits", "hooks", "assets", "runbook"],
   "additionalProperties": false,
   "properties": {
+    "manifestVersion": {
+      "description": "Which manifest contract this document is written against. Absent means `1.0.0` (the frozen original). `1.1.0` opts into the role, directional IR-range, hook-export, asset-integrity and config rules below.",
+      "enum": ["1.0.0", "1.1.0"]
+    },
     "name": {
       "description": "Plugin id, unique per repository.",
       "type": "string",
@@ -25,29 +21,42 @@
       "type": "string",
       "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+)?$"
     },
+    "role": {
+      "description": "Which seam this plugin sits on. Required in v1.1 and it decides which IR-range field is required and which artifact kinds `emits`/`consumes` must contain. A `source` reads the live site and produces Site IR; an `emitter` turns Site IR into a site artifact; a `sink` turns a form submission into a delivery and needs a server function (`api-functions`); a `deployer` pushes built artifacts to a host and speaks no IR.",
+      "enum": ["source", "emitter", "sink", "deployer"]
+    },
     "irRange": {
-      "description": "Semver range of Site IR versions this plugin accepts or produces, e.g. `^1.0.0`.",
+      "description": "v1.0.0 only: semver range of Site IR versions this plugin accepts or produces. Deprecated in v1.1, where the direction is explicit (`acceptsIrRange` or `producesIrRange`); a v1.1 manifest that keeps it is rejected rather than silently honoured.",
       "type": "string",
       "pattern": "^(?:[\\^~]|[<>]=?|=)?\\s*(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:\\s+[<>=].*)?$"
     },
+    "acceptsIrRange": {
+      "description": "v1.1, required for `emitter` and `sink`: semver range of Site IR versions this plugin can read. Must accept `IR_VERSION` from `src/schema/site-ir.ts`.",
+      "$ref": "#/$defs/irRange"
+    },
+    "producesIrRange": {
+      "description": "v1.1, required for `source`: semver range of Site IR versions this plugin emits. Must accept `IR_VERSION` from `src/schema/site-ir.ts`; a source that emits a version this repo cannot read is a conformance failure.",
+      "$ref": "#/$defs/irRange"
+    },
     "emits": {
-      "description": "Artifact kinds this plugin produces. A source adapter emits `site-ir`; an emitter emits a site artifact; a deployer emits a deployment.",
+      "description": "Artifact kinds this plugin produces. v1.1 ties this to `role`: a source emits `site-ir`, an emitter emits `static-html` or `islands-wasm`, a sink emits `api-functions`, a deployer emits `deployment`.",
       "type": "array",
       "minItems": 1,
       "uniqueItems": true,
       "items": {
-        "enum": [
-          "site-ir",
-          "static-html",
-          "islands-wasm",
-          "api-functions",
-          "deployment",
-          "capability-report"
-        ]
+        "$ref": "#/$defs/artifactKind"
+      }
+    },
+    "consumes": {
+      "description": "v1.1: artifact kinds this plugin reads, which is what makes a source adapter distinguishable from an emitter. Required in v1.1: a source consumes nothing from the pipeline (empty array), an emitter consumes `site-ir`, a sink consumes `form-submission`, a deployer consumes at least one built artifact.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/consumableKind"
       }
     },
     "sinks": {
-      "description": "Submission targets this plugin can emit or consume. Required only for form-sink plugins.",
+      "description": "Submission targets this plugin handles. In v1.1 this is only meaningful for `role: \"sink\"`: a sink must declare at least one, and a plugin that declares one must be a sink.",
       "type": "array",
       "uniqueItems": true,
       "items": {
@@ -55,7 +64,7 @@
       }
     },
     "hooks": {
-      "description": "Lifecycle hooks the pipeline will call, in `phase:name` form.",
+      "description": "Lifecycle hooks the pipeline will call, in `phase:name` form. Every hook listed here must be a callable function on the export named by `entrypoint.hooksExport`.",
       "type": "array",
       "uniqueItems": true,
       "items": {
@@ -63,24 +72,35 @@
         "pattern": "^(capture|emit|deploy|sink):[a-z][a-z0-9-]*$"
       }
     },
+    "entrypoint": {
+      "description": "Where the loadable module is and which export holds the hook record. The v1.0.0 string form names only the module and assumes the `hooks` export; the object form declares both, which is what lets the conformance harness prove hook coverage. v1.1 requires the object form.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/modulePath"
+        },
+        {
+          "type": "object",
+          "required": ["module", "hooksExport"],
+          "additionalProperties": false,
+          "properties": {
+            "module": {
+              "description": "Plugin-relative path to the module the pipeline imports.",
+              "$ref": "#/$defs/modulePath"
+            },
+            "hooksExport": {
+              "description": "Named export on that module holding the hook record (`{ \"capture:start\": fn, ... }`).",
+              "type": "string",
+              "pattern": "^[A-Za-z_$][A-Za-z0-9_$]*$"
+            }
+          }
+        }
+      ]
+    },
     "assets": {
-      "description": "Files the plugin ships beside its code (templates, golden payloads, migration SQL). Paths are plugin-relative.",
+      "description": "Files or bundle directories the plugin ships beside its code (templates, golden payloads, migration SQL, Wasm bundles). Paths are plugin-relative. A file asset may declare `sha256`/`bytes`/`brotliBytes`; a bundle declares `type: \"directory\"` and lists its members in `files[]`.",
       "type": "array",
       "items": {
-        "type": "object",
-        "required": ["path"],
-        "additionalProperties": false,
-        "properties": {
-          "path": {
-            "type": "string",
-            "minLength": 1,
-            "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$"
-          },
-          "kind": {
-            "enum": ["template", "fixture", "config", "data", "wasm", "other"]
-          },
-          "optional": { "type": "boolean" }
-        }
+        "$ref": "#/$defs/asset"
       }
     },
     "runbook": {
@@ -89,15 +109,330 @@
       "pattern": "^(?!/)(?!.*\\.\\.).*\\.md$"
     },
     "configSchema": {
-      "description": "Plugin-relative path to the JSON Schema for its own configuration.",
+      "description": "Plugin-relative path to the JSON Schema for this plugin's own configuration. v1.1 also requires `config` when this is present, so the loader can resolve the document the schema describes.",
       "type": "string",
       "pattern": "^(?!/)(?!.*\\.\\.).*\\.json$"
     },
-    "entrypoint": {
-      "description": "Plugin-relative path to the module the pipeline imports.",
+    "config": {
+      "description": "v1.1: where the plugin's configuration actually is, so a loader can resolve it instead of guessing from `configSchema`. Exactly one of `path` (a JSON document beside the plugin) or `inline` (the document, for a plugin with no file).",
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "path": {
+          "description": "Plugin-relative path to the config document. JSON, because it is validated against `configSchema`.",
+          "type": "string",
+          "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+\\.json$"
+        },
+        "inline": {
+          "description": "The config document itself, for a plugin whose config is not a shipped file.",
+          "type": "object"
+        }
+      },
+      "oneOf": [
+        {
+          "type": "object",
+          "required": ["path"],
+          "properties": { "path": { "type": "string" } }
+        },
+        {
+          "type": "object",
+          "required": ["inline"],
+          "properties": { "inline": { "type": "object" } }
+        }
+      ]
+    }
+  },
+  "$defs": {
+    "modulePath": {
       "type": "string",
       "minLength": 1,
       "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$"
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*\\.\\.)[^\\\\]+$"
+    },
+    "irRange": {
+      "type": "string",
+      "pattern": "^(?:[\\^~]|[<>]=?|=)?\\s*(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:\\s+[<>=].*)?$"
+    },
+    "sha256": {
+      "description": "Lowercase hex SHA-256 of the shipped bytes.",
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "artifactKind": {
+      "enum": [
+        "site-ir",
+        "static-html",
+        "islands-wasm",
+        "api-functions",
+        "deployment",
+        "capability-report"
+      ]
+    },
+    "consumableKind": {
+      "description": "An artifact kind a plugin can read, plus `form-submission` for a sink: the visitor's POST, which is not a build artifact but is the sink's real input.",
+      "enum": [
+        "site-ir",
+        "static-html",
+        "islands-wasm",
+        "api-functions",
+        "deployment",
+        "capability-report",
+        "form-submission"
+      ]
+    },
+    "bundleFile": {
+      "description": "One member of a bundle directory. `path` is relative to the bundle's own directory, so a bundle can be moved without rewriting every member.",
+      "type": "object",
+      "required": ["path", "sha256", "bytes"],
+      "additionalProperties": false,
+      "properties": {
+        "path": { "$ref": "#/$defs/relativePath" },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "brotliBytes": {
+          "description": "Brotli-compressed size at quality 11 (what a CDN would serve). Required for a Wasm bundle member: the < 250 KB per-bundle budget is measured on this number.",
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "wasmBundleFile": {
+      "description": "A bundle member that must also declare its compressed size, because the size budget is measured on brotli bytes.",
+      "allOf": [{ "$ref": "#/$defs/bundleFile" }],
+      "type": "object",
+      "required": ["brotliBytes"],
+      "properties": {
+        "brotliBytes": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "required": ["path"],
+      "additionalProperties": false,
+      "properties": {
+        "path": { "$ref": "#/$defs/relativePath" },
+        "kind": {
+          "enum": ["template", "fixture", "config", "data", "wasm", "other"]
+        },
+        "optional": {
+          "description": "The asset may be absent on a fresh checkout. Nothing verifies integrity for an asset that is not there.",
+          "type": "boolean"
+        },
+        "type": {
+          "description": "`file` (default) or `directory` for a bundle. A bundle carries its integrity per member, in `files[]`.",
+          "enum": ["file", "directory"]
+        },
+        "sha256": { "$ref": "#/$defs/sha256" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "brotliBytes": {
+          "description": "Brotli-compressed size at quality 11. Declared for a Wasm file so the size budget is checkable from the manifest; the harness re-measures it and rejects a claim that does not match.",
+          "type": "integer",
+          "minimum": 0
+        },
+        "files": {
+          "description": "A bundle's members. Required when `type` is `directory`, forbidden otherwise.",
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/bundleFile" }
+        }
+      },
+      "dependentRequired": {
+        "brotliBytes": ["bytes"],
+        "sha256": ["bytes"]
+      },
+      "allOf": [
+        {
+          "description": "`type: directory` is a bundle and must list its members; a file asset must not.",
+          "if": {
+            "type": "object",
+            "required": ["type"],
+            "properties": { "type": { "const": "directory" } }
+          },
+          "then": {
+            "type": "object",
+            "required": ["files"],
+            "properties": { "files": { "type": "array" } }
+          },
+          "else": {
+            "type": "object",
+            "properties": { "files": false }
+          }
+        },
+        {
+          "description": "A Wasm asset must declare verifiable integrity: a file carries `sha256`/`bytes`/`brotliBytes`, a bundle carries them per member.",
+          "if": {
+            "type": "object",
+            "required": ["kind"],
+            "properties": { "kind": { "const": "wasm" } }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "sha256": { "$ref": "#/$defs/sha256" },
+              "bytes": { "type": "integer", "minimum": 0 },
+              "brotliBytes": { "type": "integer", "minimum": 0 }
+            },
+            "if": {
+              "type": "object",
+              "required": ["type"],
+              "properties": { "type": { "const": "directory" } }
+            },
+            "then": {
+              "type": "object",
+              "properties": {
+                "files": {
+                  "type": "array",
+                  "items": { "$ref": "#/$defs/wasmBundleFile" }
+                }
+              }
+            },
+            "else": {
+              "type": "object",
+              "required": ["sha256", "bytes", "brotliBytes"],
+              "properties": {
+                "sha256": { "$ref": "#/$defs/sha256" },
+                "bytes": { "type": "integer", "minimum": 0 },
+                "brotliBytes": { "type": "integer", "minimum": 0 }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "manifestV10": {
+      "description": "The frozen v1.0.0 contract: `irRange` is the only IR-version signal and the directional/role fields do not exist yet. This branch is what keeps every existing manifest valid.",
+      "type": "object",
+      "required": ["irRange"],
+      "properties": {
+        "irRange": { "$ref": "#/$defs/irRange" },
+        "role": false,
+        "consumes": false,
+        "acceptsIrRange": false,
+        "producesIrRange": false
+      }
+    },
+    "manifestV11": {
+      "description": "The v1.1.0 contract: `role` decides which IR direction is required and which artifact kinds `emits`/`consumes` must contain, and the hook load surface is explicit.",
+      "type": "object",
+      "required": ["manifestVersion", "role", "consumes", "entrypoint"],
+      "properties": {
+        "manifestVersion": { "enum": ["1.0.0", "1.1.0"] },
+        "role": { "enum": ["source", "emitter", "sink", "deployer"] },
+        "consumes": { "type": "array" },
+        "entrypoint": { "type": "object" },
+        "configSchema": { "type": "string" },
+        "config": { "type": "object" },
+        "irRange": false
+      },
+      "dependentRequired": {
+        "configSchema": ["config"],
+        "config": ["configSchema"]
+      },
+      "allOf": [
+        {
+          "description": "A source reads the live site, produces Site IR, and reads nothing the pipeline built.",
+          "if": {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "const": "source" } }
+          },
+          "then": {
+            "type": "object",
+            "required": ["producesIrRange"],
+            "properties": {
+              "producesIrRange": { "$ref": "#/$defs/irRange" },
+              "acceptsIrRange": false,
+              "consumes": { "type": "array", "maxItems": 0 },
+              "emits": { "type": "array", "contains": { "const": "site-ir" } }
+            }
+          }
+        },
+        {
+          "description": "An emitter reads Site IR and produces a site artifact.",
+          "if": {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "const": "emitter" } }
+          },
+          "then": {
+            "type": "object",
+            "required": ["acceptsIrRange"],
+            "properties": {
+              "acceptsIrRange": { "$ref": "#/$defs/irRange" },
+              "producesIrRange": false,
+              "consumes": { "type": "array", "contains": { "const": "site-ir" } },
+              "emits": { "type": "array", "contains": { "enum": ["static-html", "islands-wasm"] } }
+            }
+          }
+        },
+        {
+          "description": "A sink turns a form submission into a delivery. It needs a server function, and it is the only role that may declare `sinks`.",
+          "if": {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "const": "sink" } }
+          },
+          "then": {
+            "type": "object",
+            "required": ["acceptsIrRange", "sinks"],
+            "properties": {
+              "acceptsIrRange": { "$ref": "#/$defs/irRange" },
+              "producesIrRange": false,
+              "consumes": { "type": "array", "contains": { "const": "form-submission" } },
+              "emits": { "type": "array", "contains": { "const": "api-functions" } },
+              "sinks": { "type": "array", "minItems": 1 }
+            }
+          }
+        },
+        {
+          "description": "A deployer pushes built artifacts to a host. It speaks no Site IR, so neither IR range applies.",
+          "if": {
+            "type": "object",
+            "required": ["role"],
+            "properties": { "role": { "const": "deployer" } }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "acceptsIrRange": false,
+              "producesIrRange": false,
+              "consumes": {
+                "type": "array",
+                "contains": { "enum": ["static-html", "islands-wasm", "api-functions"] }
+              },
+              "emits": { "type": "array", "contains": { "const": "deployment" } }
+            }
+          }
+        },
+        {
+          "description": "`sinks` is not a comment: declaring a submission target makes the plugin a sink, and a sink must declare one.",
+          "if": {
+            "type": "object",
+            "required": ["sinks"],
+            "properties": { "sinks": { "type": "array", "minItems": 1 } }
+          },
+          "then": {
+            "type": "object",
+            "properties": { "role": { "const": "sink" } }
+          }
+        }
+      ]
     }
-  }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "required": ["manifestVersion"],
+        "properties": { "manifestVersion": { "const": "1.1.0" } }
+      },
+      "then": { "$ref": "#/$defs/manifestV11" },
+      "else": { "$ref": "#/$defs/manifestV10" }
+    }
+  ]
 }

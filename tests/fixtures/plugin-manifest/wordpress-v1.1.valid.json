@@ -1,0 +1,23 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "wordpress",
+  "version": "0.2.0",
+  "role": "source",
+  "consumes": [],
+  "producesIrRange": "^1.1.0",
+  "emits": ["site-ir", "capability-report"],
+  "hooks": ["capture:start", "capture:page", "capture:end"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [
+    {
+      "path": "templates/page.html",
+      "kind": "template",
+      "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "bytes": 214
+    },
+    { "path": "fixtures/golden-payload.json", "kind": "fixture", "optional": true }
+  ],
+  "runbook": "runbook.md",
+  "configSchema": "config.schema.json",
+  "config": { "path": "config.json" }
+}

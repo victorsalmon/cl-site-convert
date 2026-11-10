@@ -6,8 +6,12 @@
  *   node scripts/validate-plugins.mjs --verbose  # print each plugin's facts
  *
  * What it proves, per plugin: the manifest validates in strict mode against
- * `schemas/plugin-manifest.schema.json`, every file the manifest references
- * exists, and `irRange` accepts `IR_VERSION` from `src/schema/site-ir.ts`.
+ * `schemas/plugin-manifest.schema.json` at its declared version (v1.0.0 or
+ * v1.1.0), every file or bundle member the manifest references exists, every
+ * declared asset `sha256`/`bytes`/`brotliBytes` matches the bytes on disk, the
+ * config document satisfies its config schema, the declared IR range accepts
+ * `IR_VERSION` from `src/schema/site-ir.ts`, and — because this script awaits the
+ * async harness — the entrypoint exports a function for every declared hook.
  *
  * Exit codes: 0 every plugin conforms, 1 a plugin failed, 2 cannot evaluate
  * (the compiled harness is missing). Never a false pass: zero plugins is a
@@ -39,7 +43,7 @@ if (!existsSync(HARNESS)) {
 let report;
 try {
   const harness = await import(pathToFileURL(HARNESS).href);
-  report = harness.runPluginConformance();
+  report = await harness.runPluginConformanceAsync();
 } catch (error) {
   console.error(`cannot-evaluate: ${error instanceof Error ? error.message : String(error)}`);
   process.exit(2);
@@ -55,20 +59,30 @@ const labelWidth = Math.max(
   ...skipped.map((entry) => entry.id.length),
 );
 
+/** One line naming the seam and the IR direction this manifest declares. */
+function factsOf(manifest) {
+  const version = manifest.manifestVersion ?? "1.0.0";
+  const role = manifest.role ?? "unroled";
+  const range =
+    manifest.acceptsIrRange !== undefined
+      ? `acceptsIrRange=${manifest.acceptsIrRange}`
+      : manifest.producesIrRange !== undefined
+        ? `producesIrRange=${manifest.producesIrRange}`
+        : `irRange=${manifest.irRange}`;
+  return `  v${version} role=${role} ${range} name=${manifest.name}`;
+}
+
 for (const result of results) {
   const label = result.id.padEnd(labelWidth);
   const status = result.ok ? "PASS" : "FAIL";
-  const facts =
-    result.manifest === undefined
-      ? ""
-      : `  name=${result.manifest.name} irRange=${result.manifest.irRange}`;
+  const facts = result.manifest === undefined ? "" : factsOf(result.manifest);
   console.log(`${status}  ${label}${facts}`);
 
   for (const finding of result.findings) {
     console.log(`        ${finding.code}: ${finding.path}: ${finding.message}`);
   }
   if (result.ok && verbose && result.manifest !== undefined) {
-    console.log(`        hooks: ${result.manifest.hooks.join(", ")}`);
+    console.log(`        hooks: ${result.manifest.hooks.join(", ") || "(none)"}`);
     console.log(
       `        assets: ${result.manifest.assets.map((asset) => asset.path).join(", ") || "(none)"}`,
     );

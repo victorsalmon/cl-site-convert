@@ -588,3 +588,51 @@ blocks, 230 media files, 2.16 MB of HTML. Contract and proofs:
   the tree. Two mutation probes were run against it: an injected `<script>` is
   refused by the emitter's own guard, and emitting the chain at the end of the
   head instead of the first link's position fails three tests.
+
+## 2026-11-10 — Plugin manifest v1.1: role, direction, load surface, integrity, config
+
+B0.4 reported six concrete manifest gaps that would bite the real feature
+plugins. Contract and evidence: `docs/plugin-manifest.md`,
+`schemas/plugin-manifest.schema.json`, `src/conformance/plugin-manifest.ts`,
+`plugins/_template` (migrated), `tests/plugin-conformance.test.ts`.
+
+- **Version selection is explicit, and v1.0.0 is untouched.** A manifest without
+  `manifestVersion` keeps the frozen v1.0.0 contract exactly (`irRange` only; the
+  string `entrypoint`). `manifestVersion: "1.1.0"` opts into `role`,
+  directional IR ranges and the object entrypoint; a v1.0.0 manifest that
+  declares a v1.1 field is rejected rather than half-honoured. The committed
+  `tests/fixtures/plugin-manifest/wordpress.valid.json` was deliberately **not**
+  edited, so the additive claim is re-proven on every `pnpm validate:ir` run.
+- **`role` is the switch, not a label.** `source` requires `producesIrRange` and
+  an empty `consumes`; `emitter`/`sink` require `acceptsIrRange`, and a
+  `producesIrRange` on them is an error; `deployer` may declare neither. `emits`
+  is role-checked (`site-ir`, a site artifact, `api-functions`, `deployment`),
+  and a **sink must emit `api-functions`**: every form island reaches Pabbly
+  through a Pages Function, so a static-only sink is a contract error.
+- **`sinks` is now consequential in both directions.** Declaring a submission
+  target makes the plugin a sink; a sink must declare at least one.
+- **The hook load surface is declared and proven.** `entrypoint: { module,
+  hooksExport }` in v1.1; `pnpm validate:plugins` imports the module and fails on
+  an unloadable entrypoint, a missing hooks export, or a hook the manifest
+  declares that is not a function on it. This is the async half of the harness —
+  the sync half stays filesystem/JSON only.
+- **Assets can be bundles and can carry integrity.** `type: "directory"` +
+  `files[]` (member paths relative to the bundle) expresses a template or Wasm
+  bundle; `sha256`/`bytes`/`brotliBytes` are accepted and **re-measured** — a
+  declared hash or size that the bytes do not reproduce fails the gate. A
+  `kind: "wasm"` asset must declare all three, with `brotliBytes` measured at
+  quality 11 exactly as the **< 250 KB** size gate measures, so the manifest can
+  carry the number that gate decides on. The 250 KB ceiling itself stays owned by
+  `validate:wasm-size`; duplicating the threshold here would be two sources of
+  truth for one budget.
+- **The config is resolvable, not just described.** `config` is exactly one of
+  `path` (a `.json` document) or `inline`, and in v1.1 `configSchema` ⇔ `config`.
+  The harness validates the document against the schema, so a loader receives a
+  config it can trust rather than a schema it must interpret.
+- **Deliberately deferred, and said so in the doc:** a plugin permission/grant
+  shape, per-hook payload schemas, signed assets beyond content hashes, and
+  Rust-side manifest types (`crates/` carries the Site IR, not plugin contracts —
+  and it is out of scope for this bead). Automating the migration is also
+  declined: choosing a `role` is a judgement about which seam a plugin occupies,
+  and guessing it is the same error class as inferring a form from a path.
+

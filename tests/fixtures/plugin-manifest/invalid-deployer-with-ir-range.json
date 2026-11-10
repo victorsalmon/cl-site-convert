@@ -1,0 +1,13 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "deployer-with-ir-range",
+  "version": "0.1.0",
+  "role": "deployer",
+  "consumes": ["static-html"],
+  "acceptsIrRange": "^1.1.0",
+  "emits": ["deployment"],
+  "hooks": ["deploy:push"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [],
+  "runbook": "runbook.md"
+}

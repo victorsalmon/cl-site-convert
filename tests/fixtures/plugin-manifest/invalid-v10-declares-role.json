@@ -1,0 +1,13 @@
+{
+  "name": "v10-with-v11-fields",
+  "version": "0.1.0",
+  "irRange": "^1.0.0",
+  "role": "source",
+  "consumes": [],
+  "producesIrRange": "^1.1.0",
+  "emits": ["site-ir"],
+  "hooks": ["capture:start"],
+  "entrypoint": "index.mjs",
+  "assets": [],
+  "runbook": "runbook.md"
+}
