@@ -636,3 +636,54 @@ plugins. Contract and evidence: `docs/plugin-manifest.md`,
   declined: choosing a `role` is a judgement about which seam a plugin occupies,
   and guessing it is the same error class as inferring a form from a path.
 
+## 2026-11-12 - The emitted site is self-contained; canonical is the one deliberate exception
+
+B2.2 (P2.6) makes the artifact portable. Contract and evidence:
+`docs/static-emitter.md` -> `## Self-containment`, `src/emit/static-html/localise.ts`,
+`tests/emit-static-selfcontained.test.ts`, `tests/fixtures/self-contained/allowlist.json`.
+
+Measured before: **352** absolute `https://upscalehavens.ca/...` references survived
+B2.1's emit across the 19 pages - 104 anchors, 171 non-canonical `link` hrefs
+(feeds, oEmbed, `wp-json`, `xmlrpc`, `shortlink`), 19 canonicals, 18 form actions,
+19 `msapplication-TileImage` metas and 3 broken-image references. After: **40**,
+all of them allowlisted and each with its own reason.
+
+- **Internal references become site-root relative, not relative-to-page.** `/care/`
+  works at a host root, under a `*.pages.dev` subpath and on the apex with no rewrite,
+  and it preserves query and fragment bytes. Page-relative (`../../care/`) would also
+  work but makes every link depend on the page's depth for no gain.
+- **Non-route self references are localised too, and that is a judgement call.** A
+  `/feed/` or `/wp-json/` path exists only on WordPress, so localising it converts a
+  working-but-off-site link into a same-site 404. That is the right trade for this
+  artifact: on a preview, the absolute form silently sends readers and crawlers to
+  production WordPress, which is exactly the leak this bead exists to close. Nothing is
+  deleted - pruning WordPress discovery tags is a fidelity change nobody asked for, and
+  is left as a separate decision.
+- **Canonical stays absolute and takes the host from `--base-url`.** Relativising it
+  would be an SEO defect (a relative canonical resolves against the current URL and
+  is not a canonical at all). The default is the captured origin; a preview and the
+  apex MUST be emitted with different values, which the docs, the CLI help, the
+  report and a stdout `note:` all say out loud.
+- **Forms never reach the old site.** Every `form[action]` on the source host is
+  re-pointed at `--form-sink`, default `/api/submit`. The default endpoint **does not
+  exist yet** (the forms-sink bead owns it) and that is stated in the docs, the CLI
+  help, the report and a `note:` line. Posting to the live WordPress site would be a
+  silent write to production; a 404 is visible and harmless. Recorded fact: all 18
+  captured forms are the theme's `method="get"` search form - the Fluent Forms
+  submissions are not in the captured DOM, so the forms bead owns their behaviour.
+- **`<meta content>` image URLs are localised through the asset map**, not by guessing
+  from the `name`. `msapplication-TileImage` localises because the logo was captured;
+  anything the map does not know is left untouched *and reported*.
+- **The allowlist is the test.** The emitted tree's residual absolute self-references
+  must equal `tests/fixtures/self-contained/allowlist.json` exactly, and each entry is
+  then justified independently - a canonical whose path is the page's own route, a
+  deferred-CSS asset at its captured href, or a reference the asset map does not hold.
+  A fourth category cannot be invented without failing the composition proof, and the
+  emitter itself throws on any unjustified survivor. Mutation-proved twice: leaving one
+  anchor absolute makes `pnpm emit:static` fail with "it is a localisation defect, not
+  an allowlist entry", and re-injecting one absolute href into an emitted page makes the
+  set-equality assertion report it as unexpected.
+- **Accounting is enforced, not assumed.** Per page,
+  `captured - (handled by an earlier pass) == rewritten + residual`; a mismatch is a
+  build failure. That is what makes "nothing was lost or double counted" a measurement
+  rather than a claim.

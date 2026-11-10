@@ -10,11 +10,17 @@
  *     `styleOrder` exactly throws; it is not a warning.
  *  3. **Asset references are rewritten** through `capture/asset-rewrite-map.json`
  *     (`./rewrite.ts`) — `img[src]`, `img[srcset]`, `source[srcset]`, `link[href]`
- *     and `url(...)` inside linked *and* inline CSS. That is the only transform.
- *  4. **The body is the captured body.** Tags, attribute order, class lists and
- *     text nodes are byte-identical apart from (3). Nothing is wrapped, reordered
- *     or "fixed".
- *  5. **No island bootloader**, because no page mounts an island. The decision comes
+ *     and `url(...)` inside linked *and* inline CSS.
+ *  4. **Self-references are localised** (`./localise.ts`): every absolute reference
+ *     to the captured origin becomes site-root relative, form actions point at a
+ *     configured sink instead of the live WordPress site, meta images localise
+ *     through the asset map, and canonical links stay absolute on a per-target
+ *     `--base-url`. The artifact is therefore self-contained — nothing in it points
+ *     home — which is what makes it deployable anywhere.
+ *  5. **The body is the captured body.** Tags, attribute order, class lists and
+ *     text nodes are byte-identical apart from (3) and (4). Nothing is wrapped,
+ *     reordered, deleted or "fixed".
+ *  6. **No island bootloader**, because no page mounts an island. The decision comes
  *     from `bundlesForHtml` on the *emitted* HTML, and a page that mounts something
  *     this emitter cannot serve is refused rather than shipped inert.
  *
@@ -43,15 +49,42 @@ import {
   resolvePageCascade,
 } from "./cascade.js";
 import type { CascadeEntry } from "./cascade.js";
-import { buildRewriteTable, rewriteCssUrls, rewriteHtmlUrls } from "./rewrite.js";
+import type {
+  LocalisationConfig,
+  LocalisationResult,
+  ResidualCategory,
+  SelfReferenceCategory,
+} from "./localise.js";
+import {
+  classifyCapturedReference,
+  classifyResidual,
+  findAbsoluteSelfReferences,
+  normaliseFormSink,
+  normaliseOrigin,
+  RESIDUAL_REASONS,
+  rewriteSelfReferences,
+} from "./localise.js";
+import { buildRewriteTable, lookupRewrite, rewriteCssUrls, rewriteHtmlUrls } from "./rewrite.js";
 import type { RewriteTable } from "./rewrite.js";
 
 /** Repo-relative inputs, as the CLI runs from the repository root. */
 export const DEFAULT_IR_PATH = "capture/site-ir.json";
 export const DEFAULT_REWRITE_MAP_PATH = "capture/asset-rewrite-map.json";
+export const DEFAULT_ROUTES_PATH = "capture/routes.manifest.json";
 export const DEFAULT_ASSETS_ROOT = "capture/assets";
 export const DEFAULT_OUT_DIR = "dist/site";
 export const DEFAULT_REPORT_PATH = "dist/emit-static.report.json";
+
+/**
+ * Where a form submission goes when no sink is configured.
+ *
+ * It **does not exist yet**: the forms-sink bead (`src/sinks/`) owns the endpoint
+ * that will receive these POSTs. Pointing the default at nothing is deliberate —
+ * posting to the live WordPress site would be a silent write to production, whereas
+ * a 404 from `/api/submit` is visible and harmless. Any deployment that ships forms
+ * must pass `--form-sink`.
+ */
+export const DEFAULT_FORM_SINK = "/api/submit";
 
 /**
  * Capture layout: media blobs and captured CSS live under different homes inside
@@ -152,6 +185,10 @@ export interface PageEmitResult {
   readonly htmlRefs: number;
   /** `url(...)` targets rewritten inside this page's inline `<style>` blocks. */
   readonly inlineCssRefs: number;
+  /** Absolute self-references rewritten to a local form on this page. */
+  readonly selfRefs: number;
+  /** Absolute self-references this page still carries, all allowlisted. */
+  readonly residualRefs: number;
   readonly scriptTags: number;
   readonly bundles: number;
 }
@@ -162,6 +199,44 @@ export interface LinkedStyleResult {
   readonly emittedPath: string;
   readonly bytes: number;
   readonly cssRefs: number;
+}
+
+/** One allowlisted survivor: what it is, and why it is allowed to stay absolute. */
+export interface AllowlistEntry {
+  readonly category: ResidualCategory;
+  readonly reason: string;
+  readonly count: number;
+  /** The distinct values that survive, so the list can be read as an allowlist. */
+  readonly values: readonly string[];
+}
+
+/** Before/after evidence for the self-reference localisation pass. */
+export interface SelfReferenceReport {
+  /** The capture's origin: the only host treated as "self". */
+  readonly sourceOrigin: string;
+  /** The origin canonical links declare for this target. */
+  readonly baseUrl: string;
+  readonly formSink: string;
+  /** True when no `--form-sink` was supplied and the loud default is in force. */
+  readonly formSinkIsDefault: boolean;
+  /** Captured routes navigation is allowed to target. */
+  readonly routeCount: number;
+  /** Absolute self-references in the capture, per category. */
+  readonly before: Readonly<Record<string, number>>;
+  /** Absolute self-references that survive, per category. */
+  readonly after: Readonly<Record<string, number>>;
+  /** Rewrites actually applied, per category. */
+  readonly rewritten: Readonly<Record<SelfReferenceCategory, number>>;
+  /** The complete allowlist of survivors, with a reason per entry. */
+  readonly allowlist: readonly AllowlistEntry[];
+  /** References the capture holds no bytes for, reported rather than dropped. */
+  readonly unlocalisable: readonly {
+    readonly page: string;
+    readonly tag: string;
+    readonly attribute: string;
+    readonly value: string;
+    readonly reason: string;
+  }[];
 }
 
 export interface EmitReport {
@@ -176,11 +251,14 @@ export interface EmitReport {
     readonly inlineBlocksShipped: number;
   };
   readonly assets: { readonly copied: number; readonly bytes: number; readonly skipped: boolean };
+  readonly selfReferences: SelfReferenceReport;
   readonly totals: {
     readonly pages: number;
     readonly pageBytes: number;
     readonly htmlRefs: number;
     readonly cssRefs: number;
+    readonly selfRefs: number;
+    readonly residualRefs: number;
     readonly scriptTags: number;
   };
   readonly notes: readonly string[];
@@ -189,9 +267,14 @@ export interface EmitReport {
 export interface EmitOptions {
   readonly irPath?: string;
   readonly rewriteMapPath?: string;
+  readonly routesPath?: string;
   readonly assetsRoot?: string;
   readonly outDir?: string;
   readonly reportPath?: string;
+  /** Canonical origin declared by `link[rel=canonical]`. Defaults to the capture's. */
+  readonly baseUrl?: string;
+  /** Where form submissions go. Defaults to {@link DEFAULT_FORM_SINK}. */
+  readonly formSink?: string;
   /** Copy `assets[]` into the tree. Off only for a pages-only spot check. */
   readonly copyAssets?: boolean;
 }
@@ -268,8 +351,9 @@ export function emitPage(
     readonly styleIndex: Map<string, Style[]>;
     readonly cssFor: (entry: CascadeEntry) => string | null;
     readonly dirDepth: number;
+    readonly localisation: LocalisationConfig;
   },
-): { html: string; result: PageEmitResult } {
+): { html: string; result: PageEmitResult; localisation: LocalisationResult } {
   const sequence = resolvePageCascade(page, options.styleIndex);
   assertSequenceMatchesCascade(page, sequence);
 
@@ -282,9 +366,10 @@ export function emitPage(
 
   const withChain = parts.upToHeadContent + rebuilt.headHtml + parts.fromHeadClose;
   const rewritten = rewriteHtmlUrls(withChain, options.table, options.dirDepth);
+  const localised = rewriteSelfReferences(rewritten.text, options.localisation);
 
   const doctype = page.dom.doctype;
-  const html = doctype === undefined ? rewritten.text : `${doctype}\n${rewritten.text}`;
+  const html = doctype === undefined ? localised.text : `${doctype}\n${localised.text}`;
 
   const scriptTags = (html.match(/<script\b/gi) ?? []).length;
   if (scriptTags > 0) {
@@ -315,6 +400,7 @@ export function emitPage(
   }
 
   const origins = countOrigins(sequence);
+  const residual = findAbsoluteSelfReferences(html, options.localisation.sourceOrigin).length;
   return {
     html,
     result: {
@@ -326,9 +412,12 @@ export function emitPage(
       inlineStyles: origins.inline,
       htmlRefs: rewritten.count,
       inlineCssRefs: rebuilt.cssRewrites,
+      selfRefs: localised.rewrites.length,
+      residualRefs: residual,
       scriptTags,
       bundles: bundles.length,
     },
+    localisation: localised,
   };
 }
 
@@ -336,6 +425,7 @@ export function emitPage(
 export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitReport> {
   const irPath = options.irPath ?? DEFAULT_IR_PATH;
   const rewriteMapPath = options.rewriteMapPath ?? DEFAULT_REWRITE_MAP_PATH;
+  const routesPath = options.routesPath ?? DEFAULT_ROUTES_PATH;
   const assetsRoot = options.assetsRoot ?? DEFAULT_ASSETS_ROOT;
   const outDir = options.outDir ?? DEFAULT_OUT_DIR;
   const reportPath = options.reportPath ?? DEFAULT_REPORT_PATH;
@@ -349,6 +439,18 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
   if (table.baseUrl !== ir.site.baseUrl.replace(/\/+$/, "")) {
     throw new EmitError(
       `${rewriteMapPath} was captured for ${table.baseUrl}, but ${irPath} is for ${ir.site.baseUrl}; refusing to mix captures`,
+    );
+  }
+
+  const routes = await readRoutes(routesPath);
+  const sourceOrigin = normaliseOrigin(ir.site.baseUrl, `${irPath} site.baseUrl`);
+  const baseUrl = normaliseOrigin(options.baseUrl ?? sourceOrigin, "--base-url");
+  const formSink = normaliseFormSink(options.formSink ?? DEFAULT_FORM_SINK);
+  const formSinkIsDefault = options.formSink === undefined;
+
+  if (baseUrl !== sourceOrigin) {
+    process.stdout.write(
+      `note: canonical links point at ${baseUrl} (--base-url), not the captured ${sourceOrigin}\n`,
     );
   }
 
@@ -394,20 +496,93 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
 
   const outputs = new OutputIndex();
   const pages: PageEmitResult[] = [];
+  const rewrittenByCategory: Record<SelfReferenceCategory, number> = {
+    navigation: 0,
+    "internal-link": 0,
+    canonical: 0,
+    "form-action": 0,
+    "meta-asset": 0,
+  };
+  const unlocalisable: {
+    page: string;
+    tag: string;
+    attribute: string;
+    value: string;
+    reason: string;
+  }[] = [];
+  const residualByCategory: Record<string, number> = {
+    canonical: 0,
+    "deferred-css": 0,
+    unlocalisable: 0,
+  };
+  const beforeByCategory: Record<string, number> = {};
+  const allowlistValues = new Map<ResidualCategory, Set<string>>();
+  const localisationConfig = (dirDepth: number): LocalisationConfig => ({
+    sourceOrigin,
+    baseUrl,
+    formSink,
+    routes,
+    dirDepth,
+    table,
+  });
 
   for (const page of ir.pages) {
     const location = routeLocation(page.url);
-    const { html, result } = emitPage(page, {
+    const { html, result, localisation } = emitPage(page, {
       table,
       styleIndex,
       cssFor,
       dirDepth: location.depth,
+      localisation: localisationConfig(location.depth),
     });
     const target = join(resolvedOut, location.outputPath);
     outputs.claim(location.outputPath, `page ${page.url}`);
     await mkdir(dirname(target), { recursive: true });
     await writeFile(target, html, "utf8");
     pages.push(result);
+
+    for (const rewrite of localisation.rewrites) rewrittenByCategory[rewrite.category] += 1;
+    for (const entry of localisation.unlocalisable) {
+      unlocalisable.push({ page: page.url, ...entry });
+    }
+
+    // "Before" is measured on the capture, not on the document entering this pass, so
+    // the table reports the real problem. Every captured reference is then attributed
+    // to exactly one step: an earlier pass, a rewrite here, or an allowlisted survivor.
+    const captured = findAbsoluteSelfReferences(page.dom.html, sourceOrigin);
+    const pageBefore: Record<string, number> = {};
+    for (const reference of captured) {
+      const category = classifyCapturedReference(reference, localisationConfig(location.depth));
+      beforeByCategory[category] = (beforeByCategory[category] ?? 0) + 1;
+      pageBefore[category] = (pageBefore[category] ?? 0) + 1;
+    }
+
+    // The residual set is measured on the bytes that ship, then every survivor must
+    // justify itself. An unjustified survivor is a localisation defect, not an entry.
+    const residual = findAbsoluteSelfReferences(html, sourceOrigin);
+    for (const reference of residual) {
+      const { category } = classifyResidual(reference, {
+        resolvable: (value) => lookupRewrite(table, value) !== null,
+      });
+      residualByCategory[category] = (residualByCategory[category] ?? 0) + 1;
+      const bucket = allowlistValues.get(category) ?? new Set<string>();
+      bucket.add(reference.value);
+      allowlistValues.set(category, bucket);
+    }
+
+    // Nothing may be lost or double-counted. The document that reaches this pass holds
+    // every captured reference except the ones an earlier pass already localised
+    // (stylesheet links rebuilt by the cascade, asset references rewritten by the asset
+    // pass), and each of those must be either rewritten here or still present.
+    const earlierPasses = (pageBefore["stylesheet"] ?? 0) + (pageBefore["asset"] ?? 0);
+    const entering = captured.length - earlierPasses;
+    const handled = localisation.rewrites.length + residual.length;
+    if (entering !== handled) {
+      throw new EmitError(
+        `page ${page.url}: ${entering} self-reference(s) entered localisation but ${handled} were ` +
+          `accounted for (${localisation.rewrites.length} rewritten + ${residual.length} residual)`,
+      );
+    }
   }
 
   // Every linked stylesheet a page ships is written once, at its mirrored path, with
@@ -454,15 +629,49 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
   const notes = [
     "dist/ is generated and gitignored; the tree is reproducible from the IR plus capture/assets/**.",
     "Linked stylesheets keep their mirrored absolute path so their own relative url(...) references still resolve; a path with no .css extension gains one in the same directory so a static host serves it as text/css.",
-    '<link rel="preload" as="style" onload="this.rel=\'stylesheet\'"> tags are not stylesheet links: they are preserved as captured and their CSS was not captured by B1.3, so they still point at the source host. Deferred-CSS capture is a separate gap.',
-    "Navigation links (<a href>) are not rewritten: this bead rewrites asset references only.",
+    '<link rel="preload" as="style" onload="this.rel=\'stylesheet\'"> tags are not stylesheet links: they are preserved as captured and their CSS was not captured by B1.3, so they still point at the source host. Deferred-CSS capture is a separate gap (cl-site-convert-mzi).',
+    "Every other absolute reference to the captured origin is rewritten to a site-root-relative path, so the artifact is portable and internal navigation cannot leave the new site.",
+    `Canonical links stay absolute and declare ${baseUrl}; a preview deployment and the apex MUST be emitted with different --base-url values or search engines will be told the new site duplicates the old one.`,
+    formSinkIsDefault
+      ? `Form actions point at ${formSink}, which DOES NOT EXIST YET: the forms-sink bead owns it. Nothing is posted to the live WordPress site, but a submitted form will 404 until a sink endpoint is deployed — pass --form-sink to point at one.`
+      : `Form actions point at the configured sink ${formSink}; nothing is posted to the live WordPress site.`,
+    "External references (signal.org, youtube.com, sweepy.com, support.hp.com, mailto:, …) are never rewritten.",
     "No island bootloader is emitted: bundlesForHtml returns nothing for every page in this IR, and a page with mount slots is refused.",
   ];
+
+  const selfReferences: SelfReferenceReport = {
+    sourceOrigin,
+    baseUrl,
+    formSink,
+    formSinkIsDefault,
+    routeCount: routes.size,
+    before: {
+      ...beforeByCategory,
+      total: Object.values(beforeByCategory).reduce((sum, count) => sum + count, 0),
+    },
+    after: {
+      canonical: residualByCategory["canonical"] ?? 0,
+      "deferred-css": residualByCategory["deferred-css"] ?? 0,
+      unlocalisable: residualByCategory["unlocalisable"] ?? 0,
+      total: pages.reduce((total, page) => total + page.residualRefs, 0),
+    },
+    rewritten: rewrittenByCategory,
+    // Every residual category is allowlisted with its reason; nothing survives silently.
+    allowlist: (["canonical", "deferred-css", "unlocalisable"] as const)
+      .filter((category) => (residualByCategory[category] ?? 0) > 0)
+      .map((category) => ({
+        category,
+        reason: RESIDUAL_REASONS[category],
+        count: residualByCategory[category] ?? 0,
+        values: [...(allowlistValues.get(category) ?? [])].sort(),
+      })),
+    unlocalisable,
+  };
 
   const report: EmitReport = {
     generatedAt: new Date().toISOString(),
     irVersion: ir.irVersion,
-    baseUrl: ir.site.baseUrl,
+    baseUrl,
     outDir: resolvedOut,
     pages,
     styles: {
@@ -471,6 +680,7 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
       inlineBlocksShipped: pages.reduce((total, page) => total + page.inlineStyles, 0),
     },
     assets: { copied: assetsCopied, bytes: assetBytes, skipped: !copyAssets },
+    selfReferences,
     totals: {
       pages: pages.length,
       pageBytes: pages.reduce((total, page) => total + page.bytes, 0),
@@ -478,10 +688,19 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
       cssRefs:
         pages.reduce((total, page) => total + page.inlineCssRefs, 0) +
         [...linkedFiles.values()].reduce((total, file) => total + file.cssRefs, 0),
+      selfRefs: pages.reduce((total, page) => total + page.selfRefs, 0),
+      residualRefs: pages.reduce((total, page) => total + page.residualRefs, 0),
       scriptTags: pages.reduce((total, page) => total + page.scriptTags, 0),
     },
     notes,
   };
+
+  if (selfReferences.after["total"] !== report.totals.residualRefs) {
+    throw new EmitError(
+      `internal: ${String(selfReferences.after["total"])} classified residual reference(s) but ` +
+        `${report.totals.residualRefs} page(s) reported — the allowlist would be incomplete`,
+    );
+  }
 
   await mkdir(dirname(resolve(reportPath)), { recursive: true });
   await writeFile(resolve(reportPath), `${JSON.stringify(report, null, 2)}\n`, "utf8");
@@ -516,6 +735,38 @@ async function readIr(path: string): Promise<SiteIr> {
   }
   return parsed;
 }
+
+/**
+ * Read the captured route set from `capture/routes.manifest.json`.
+ *
+ * Only `path` is used: navigation is localised to a **site-root-relative** form, and
+ * a route whose path is `/care/` is served at `/care/` no matter what host serves it.
+ * A manifest with no routes is a build failure — an emitter that cannot tell a route
+ * from a WordPress endpoint would rewrite navigation into dead links and call it done.
+ */
+async function readRoutes(path: string): Promise<ReadonlySet<string>> {
+  const document: unknown = JSON.parse(await readFile(path, "utf8"));
+  if (typeof document !== "object" || document === null) {
+    throw new EmitError(`${path} is not a route manifest`);
+  }
+  const routes = (document as { routes?: unknown }).routes;
+  if (!Array.isArray(routes) || routes.length === 0) {
+    throw new EmitError(`${path} carries no routes; navigation cannot be localised`);
+  }
+  const paths = new Set<string>();
+  for (const route of routes) {
+    if (typeof route !== "object" || route === null) continue;
+    const candidate = (route as { path?: unknown }).path;
+    if (typeof candidate !== "string" || !candidate.startsWith("/")) {
+      throw new EmitError(`${path}: a route has no site-relative path`);
+    }
+    paths.add(candidate);
+  }
+  if (paths.size === 0) throw new EmitError(`${path}: no route path could be read`);
+  return paths;
+}
+
+/** Before/after totals: a category's captured count is "rewritten here" + "still absolute". */
 
 // ---------------------------------------------------------------------------
 // Report formatting
@@ -576,7 +827,43 @@ export function formatEmitReport(report: EmitReport): string {
   );
   lines.push(`  html refs rewritten  : ${report.totals.htmlRefs}`);
   lines.push(`  css refs rewritten   : ${report.totals.cssRefs}`);
+  lines.push(
+    `  self refs rewritten  : ${report.totals.selfRefs} ` +
+      `(of ${String(report.selfReferences.before["total"])} captured; ` +
+      `${report.totals.residualRefs} allowlisted survivors)`,
+  );
   lines.push(`  <script> tags emitted: ${report.totals.scriptTags}`);
+
+  lines.push("");
+  lines.push(
+    `  self-reference localisation — source ${report.selfReferences.sourceOrigin}, ` +
+      `canonical ${report.selfReferences.baseUrl}, forms → ${report.selfReferences.formSink}` +
+      `${report.selfReferences.formSinkIsDefault ? " (default; endpoint not implemented yet)" : ""}`,
+  );
+  const categories = Object.keys(report.selfReferences.before).sort();
+  const width2 = Math.max(...categories.map((category) => category.length), "category".length);
+  lines.push(`    ${pad("category", width2)}  ${padStart("before", 7)}  ${padStart("after", 6)}`);
+  for (const category of categories) {
+    if (category === "total") continue;
+    lines.push(
+      `    ${pad(category, width2)}  ${padStart(String(report.selfReferences.before[category] ?? 0), 7)}  ` +
+        `${padStart(String(report.selfReferences.after[category] ?? 0), 6)}`,
+    );
+  }
+  lines.push(
+    `    ${pad("total", width2)}  ${padStart(String(report.selfReferences.before["total"] ?? 0), 7)}  ` +
+      `${padStart(String(report.totals.residualRefs), 6)}`,
+  );
+  for (const entry of report.selfReferences.allowlist) {
+    lines.push(`    allowlist ${entry.category} (${entry.count}): ${entry.reason}`);
+  }
+  if (report.selfReferences.unlocalisable.length > 0) {
+    const distinct = new Set(report.selfReferences.unlocalisable.map((entry) => entry.value));
+    lines.push(
+      `    unlocalisable: ${report.selfReferences.unlocalisable.length} reference(s), ` +
+        `${distinct.size} distinct — left untouched, reported, not dropped`,
+    );
+  }
 
   if (report.notes.length > 0) {
     lines.push("");
@@ -592,9 +879,12 @@ export function formatEmitReport(report: EmitReport): string {
 interface CliArgs {
   irPath: string;
   rewriteMapPath: string;
+  routesPath: string;
   assetsRoot: string;
   outDir: string;
   reportPath: string;
+  baseUrl: string | undefined;
+  formSink: string | undefined;
   copyAssets: boolean;
 }
 
@@ -602,25 +892,34 @@ const USAGE = [
   "Usage: node dist/emit/static-html/index.js [options]",
   "",
   "Emit the Site IR as a complete static tree (pretty URLs, rebuilt CSS cascade,",
-  "rewritten asset references).",
+  "rewritten asset references, self-contained internal references).",
   "",
   "Options:",
-  `  --ir <path>       Site IR (default ${DEFAULT_IR_PATH})`,
-  `  --map <path>      asset rewrite map (default ${DEFAULT_REWRITE_MAP_PATH})`,
-  `  --assets <dir>    capture assets root (default ${DEFAULT_ASSETS_ROOT})`,
-  `  --out <dir>       output directory (default ${DEFAULT_OUT_DIR})`,
-  `  --report <path>   report path (default ${DEFAULT_REPORT_PATH})`,
-  "  --no-assets       emit HTML and CSS only, do not copy media",
-  "  -h, --help        show this help",
+  `  --ir <path>        Site IR (default ${DEFAULT_IR_PATH})`,
+  `  --map <path>       asset rewrite map (default ${DEFAULT_REWRITE_MAP_PATH})`,
+  `  --routes <path>    route manifest, for navigation targets (default ${DEFAULT_ROUTES_PATH})`,
+  `  --assets <dir>     capture assets root (default ${DEFAULT_ASSETS_ROOT})`,
+  `  --out <dir>        output directory (default ${DEFAULT_OUT_DIR})`,
+  `  --report <path>    report path (default ${DEFAULT_REPORT_PATH})`,
+  "  --base-url <url>   origin canonical links declare for THIS target",
+  "                     (default: the captured origin). A *.pages.dev preview and the",
+  "                     apex MUST be emitted with different values.",
+  `  --form-sink <url>  where form submissions go (default ${DEFAULT_FORM_SINK}, which`,
+  "                     does not exist yet — the forms-sink bead owns the endpoint)",
+  "  --no-assets        emit HTML and CSS only, do not copy media",
+  "  -h, --help         show this help",
 ].join("\n");
 
 function parseArgs(argv: readonly string[]): CliArgs | null {
   const args: CliArgs = {
     irPath: DEFAULT_IR_PATH,
     rewriteMapPath: DEFAULT_REWRITE_MAP_PATH,
+    routesPath: DEFAULT_ROUTES_PATH,
     assetsRoot: DEFAULT_ASSETS_ROOT,
     outDir: DEFAULT_OUT_DIR,
     reportPath: DEFAULT_REPORT_PATH,
+    baseUrl: undefined,
+    formSink: undefined,
     copyAssets: true,
   };
   for (let index = 0; index < argv.length; index += 1) {
@@ -634,6 +933,9 @@ function parseArgs(argv: readonly string[]): CliArgs | null {
     } else if (arg === "--map" && value !== undefined) {
       args.rewriteMapPath = value;
       index += 1;
+    } else if (arg === "--routes" && value !== undefined) {
+      args.routesPath = value;
+      index += 1;
     } else if (arg === "--assets" && value !== undefined) {
       args.assetsRoot = value;
       index += 1;
@@ -642,6 +944,12 @@ function parseArgs(argv: readonly string[]): CliArgs | null {
       index += 1;
     } else if (arg === "--report" && value !== undefined) {
       args.reportPath = value;
+      index += 1;
+    } else if (arg === "--base-url" && value !== undefined) {
+      args.baseUrl = value;
+      index += 1;
+    } else if (arg === "--form-sink" && value !== undefined) {
+      args.formSink = value;
       index += 1;
     } else {
       return null;
@@ -660,10 +968,13 @@ async function main(argv: readonly string[]): Promise<number> {
   const report = await emitStaticSite({
     irPath: args.irPath,
     rewriteMapPath: args.rewriteMapPath,
+    routesPath: args.routesPath,
     assetsRoot: args.assetsRoot,
     outDir: args.outDir,
     reportPath: args.reportPath,
     copyAssets: args.copyAssets,
+    ...(args.baseUrl === undefined ? {} : { baseUrl: args.baseUrl }),
+    ...(args.formSink === undefined ? {} : { formSink: args.formSink }),
   });
 
   process.stdout.write(`${formatEmitReport(report)}\n`);
@@ -687,11 +998,13 @@ if (invokedDirectly) {
 export {
   buildRewriteTable,
   emittedStylePath,
+  findAbsoluteSelfReferences,
   findStylesheetLinks,
   indexStyles,
   rebuildHead,
   resolvePageCascade,
   rewriteCssUrls,
   rewriteHtmlUrls,
+  rewriteSelfReferences,
 };
 export type { CascadeEntry, RewriteTable };
