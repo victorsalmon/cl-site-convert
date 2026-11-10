@@ -26,6 +26,7 @@
     "capture:content": "pnpm run build && node dist/source/wp-rest/content.js",
     "capture:assets": "pnpm run build && node dist/source/wp-rest/assets.js",
     "capture:capabilities": "node dist/source/capabilities/detect.js",
+    "analyze:templates": "pnpm run build && node dist/analysis/cli.js",
     "gate": "pwsh -NoProfile -File scripts/gate.ps1"
   },
   "devDependencies": {
