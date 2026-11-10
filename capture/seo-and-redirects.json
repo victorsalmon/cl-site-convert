@@ -1,0 +1,1255 @@
+{
+  "seoVersion": "1",
+  "generatedAt": "2026-11-10T07:42:24.579Z",
+  "baseUrl": "https://upscalehavens.ca",
+  "tool": {
+    "name": "cl-site-convert",
+    "version": "0.1.0",
+    "userAgent": "cl-site-convert/0.1 (route enumeration; polite; +https://github.com/clocklobster/cl-site-convert)",
+    "minIntervalMs": 600,
+    "requests": 29
+  },
+  "provenance": {
+    "manifest": "capture/routes.manifest.json",
+    "siteIr": "capture/site-ir.json",
+    "assetsReport": "capture/assets.capture-report.json",
+    "notes": [
+      "SEO surface: captured dom.html (offline).",
+      "Redirect arrivals and destinations: live read-only requests.",
+      "robots.txt and sitemap: live read-only requests, body stored verbatim.",
+      "Broken references: captured dom.html scanned, statuses taken from the route manifest's own probes and the asset capture report."
+    ]
+  },
+  "summary": {
+    "pages": 19,
+    "seoAbsentSiteWide": [
+      "description",
+      "hreflang",
+      "openGraph",
+      "twitter",
+      "jsonLd"
+    ],
+    "canonicalMismatches": 0,
+    "redirects": 11,
+    "redirectsVerified": 11,
+    "redirectChains": 0,
+    "redirectLoops": 0,
+    "brokenReferences": 5,
+    "trailingSlashPolicy": "always",
+    "searchStatus": 200
+  },
+  "pages": [
+    {
+      "url": "/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Upscale Havens Leasing and Tenant Coordination | Intentional homes for friendly roommates who like nice things",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/care/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Caretaker | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/care/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/care/showings/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Showings (draft) | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/care/showings/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/care/signal-admin/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Signal | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/care/signal-admin/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/care/sweepy-admin/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Sweepy (caretakers) | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/care/sweepy-admin/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/care/ttlock-admin/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "TT Lock for Caretakers | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/care/ttlock-admin/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/mlm/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Mill Lake Manor | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/mlm/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/mlm/applym/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Apply at Mill Lake Manor | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/mlm/applym/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/mlm/onboard-mlm/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Move Into MLM | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/resources/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Resources | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/resources/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/resources/checklists/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Checklists for Tenants | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/resources/checklists/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/resources/sweepy/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Sweepy | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/resources/sweepy/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/tmh/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Turtle Mountain Home | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/tmh/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/tmh/apply/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Apply at Turtle Mountain Home | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/tmh/apply/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/tmh/offboard/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Move Out of TMH | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/tmh/offboard/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/tmh/onboard-tmh/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Move Into TMH | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/tmh/onboard-tmh/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/ush/owner/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Owner | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/ush/owner/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/ush/privacy-policy/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Privacy Policy | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/ush/privacy-policy/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    },
+    {
+      "url": "/ush/thanks/",
+      "httpStatus": 200,
+      "canonicalMatchesRoute": true,
+      "surface": {
+        "title": "Thanks | Upscale Havens Leasing and Tenant Coordination",
+        "description": null,
+        "canonical": "https://upscalehavens.ca/ush/thanks/",
+        "robots": "max-image-preview:large",
+        "hreflang": [],
+        "openGraph": [],
+        "twitter": [],
+        "jsonLd": {
+          "count": 0,
+          "types": [],
+          "invalid": 0
+        },
+        "absent": [
+          "description",
+          "hreflang",
+          "openGraph",
+          "twitter",
+          "jsonLd"
+        ]
+      }
+    }
+  ],
+  "urlContract": {
+    "baseUrl": "https://upscalehavens.ca",
+    "canonical": {
+      "pages": 19,
+      "matches": 19,
+      "mismatches": [],
+      "checks": [
+        {
+          "route": "/",
+          "declared": "https://upscalehavens.ca/",
+          "relative": false,
+          "resolved": "/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/care/",
+          "declared": "https://upscalehavens.ca/care/",
+          "relative": false,
+          "resolved": "/care/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/care/showings/",
+          "declared": "https://upscalehavens.ca/care/showings/",
+          "relative": false,
+          "resolved": "/care/showings/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/care/signal-admin/",
+          "declared": "https://upscalehavens.ca/care/signal-admin/",
+          "relative": false,
+          "resolved": "/care/signal-admin/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/care/sweepy-admin/",
+          "declared": "https://upscalehavens.ca/care/sweepy-admin/",
+          "relative": false,
+          "resolved": "/care/sweepy-admin/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/care/ttlock-admin/",
+          "declared": "https://upscalehavens.ca/care/ttlock-admin/",
+          "relative": false,
+          "resolved": "/care/ttlock-admin/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/mlm/",
+          "declared": "https://upscalehavens.ca/mlm/",
+          "relative": false,
+          "resolved": "/mlm/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/mlm/applym/",
+          "declared": "https://upscalehavens.ca/mlm/applym/",
+          "relative": false,
+          "resolved": "/mlm/applym/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/mlm/onboard-mlm/",
+          "declared": "https://upscalehavens.ca/mlm/onboard-mlm/",
+          "relative": false,
+          "resolved": "/mlm/onboard-mlm/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/resources/",
+          "declared": "https://upscalehavens.ca/resources/",
+          "relative": false,
+          "resolved": "/resources/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/resources/checklists/",
+          "declared": "https://upscalehavens.ca/resources/checklists/",
+          "relative": false,
+          "resolved": "/resources/checklists/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/resources/sweepy/",
+          "declared": "https://upscalehavens.ca/resources/sweepy/",
+          "relative": false,
+          "resolved": "/resources/sweepy/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/tmh/",
+          "declared": "https://upscalehavens.ca/tmh/",
+          "relative": false,
+          "resolved": "/tmh/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/tmh/apply/",
+          "declared": "https://upscalehavens.ca/tmh/apply/",
+          "relative": false,
+          "resolved": "/tmh/apply/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/tmh/offboard/",
+          "declared": "https://upscalehavens.ca/tmh/offboard/",
+          "relative": false,
+          "resolved": "/tmh/offboard/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/tmh/onboard-tmh/",
+          "declared": "https://upscalehavens.ca/tmh/onboard-tmh/",
+          "relative": false,
+          "resolved": "/tmh/onboard-tmh/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/ush/owner/",
+          "declared": "https://upscalehavens.ca/ush/owner/",
+          "relative": false,
+          "resolved": "/ush/owner/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/ush/privacy-policy/",
+          "declared": "https://upscalehavens.ca/ush/privacy-policy/",
+          "relative": false,
+          "resolved": "/ush/privacy-policy/",
+          "matches": true,
+          "reason": null
+        },
+        {
+          "route": "/ush/thanks/",
+          "declared": "https://upscalehavens.ca/ush/thanks/",
+          "relative": false,
+          "resolved": "/ush/thanks/",
+          "matches": true,
+          "reason": null
+        }
+      ]
+    },
+    "trailingSlash": {
+      "policy": "always",
+      "withSlash": 18,
+      "withoutSlash": 0,
+      "outliers": [],
+      "note": "Every one of 18 non-root routes ends in \"/\" (WordPress permalink structure)."
+    },
+    "aliasProbe": {
+      "path": "/care",
+      "status": 301,
+      "location": "https://upscalehavens.ca/care/",
+      "resolves": false
+    },
+    "indexHtml": {
+      "routes": [],
+      "probe": {
+        "path": "/index.html",
+        "status": 404,
+        "location": null,
+        "resolves": false
+      },
+      "finding": null
+    }
+  },
+  "redirects": {
+    "source": "capture/routes.manifest.json discovery.redirects — 301s proven by requesting each old path. The Redirection plugin's own store was NOT read: its data is behind an admin/export surface and reading it would mean authenticated or mutating requests against production.",
+    "count": 11,
+    "verified": 11,
+    "chains": [],
+    "loops": [],
+    "entries": [
+      {
+        "from": "/apply",
+        "to": "https://upscalehavens.ca/?fluent-form=3",
+        "code": 301,
+        "external": false,
+        "hops": 1,
+        "chain": [
+          "/apply",
+          "/?fluent-form=3"
+        ],
+        "finalUrl": "/?fluent-form=3",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/mlm/bylaws",
+        "to": "https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing",
+        "code": 301,
+        "external": true,
+        "hops": 1,
+        "chain": [
+          "/mlm/bylaws",
+          "https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing"
+        ],
+        "finalUrl": "https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/mlm/join-signal",
+        "to": "https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu",
+        "code": 301,
+        "external": true,
+        "hops": 1,
+        "chain": [
+          "/mlm/join-signal",
+          "https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu"
+        ],
+        "finalUrl": "https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/mlm/onboard",
+        "to": "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "code": 301,
+        "external": false,
+        "hops": 1,
+        "chain": [
+          "/mlm/onboard",
+          "/mlm/onboard-mlm/"
+        ],
+        "finalUrl": "/mlm/onboard-mlm/",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/mlm/orientation",
+        "to": "https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1",
+        "code": 301,
+        "external": true,
+        "hops": 1,
+        "chain": [
+          "/mlm/orientation",
+          "https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1"
+        ],
+        "finalUrl": "https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/tmh/bylaws",
+        "to": "https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing",
+        "code": 301,
+        "external": true,
+        "hops": 1,
+        "chain": [
+          "/tmh/bylaws",
+          "https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing"
+        ],
+        "finalUrl": "https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/tmh/join-signal",
+        "to": "https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9",
+        "code": 301,
+        "external": true,
+        "hops": 1,
+        "chain": [
+          "/tmh/join-signal",
+          "https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9"
+        ],
+        "finalUrl": "https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/tmh/onboard",
+        "to": "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "code": 301,
+        "external": false,
+        "hops": 1,
+        "chain": [
+          "/tmh/onboard",
+          "/mlm/onboard-mlm/"
+        ],
+        "finalUrl": "/mlm/onboard-mlm/",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/tmh/onboard/",
+        "to": "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "code": 301,
+        "external": false,
+        "hops": 1,
+        "chain": [
+          "/tmh/onboard/",
+          "/mlm/onboard-mlm/"
+        ],
+        "finalUrl": "/mlm/onboard-mlm/",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/tmh/orientation",
+        "to": "https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu",
+        "code": 301,
+        "external": true,
+        "hops": 1,
+        "chain": [
+          "/tmh/orientation",
+          "https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu"
+        ],
+        "finalUrl": "https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      },
+      {
+        "from": "/ush/moving-checklist",
+        "to": "https://upscalehavens.ca/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf",
+        "code": 301,
+        "external": false,
+        "hops": 1,
+        "chain": [
+          "/ush/moving-checklist",
+          "/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf"
+        ],
+        "finalUrl": "/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf",
+        "finalStatus": 200,
+        "verified": true,
+        "problems": []
+      }
+    ],
+    "cloudflareRedirects": [
+      "/apply https://upscalehavens.ca/?fluent-form=3 301",
+      "/mlm/bylaws https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing 301",
+      "/mlm/join-signal https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu 301",
+      "/mlm/onboard https://upscalehavens.ca/mlm/onboard-mlm/ 301",
+      "/mlm/orientation https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1 301",
+      "/tmh/bylaws https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing 301",
+      "/tmh/join-signal https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9 301",
+      "/tmh/onboard https://upscalehavens.ca/mlm/onboard-mlm/ 301",
+      "/tmh/onboard/ https://upscalehavens.ca/mlm/onboard-mlm/ 301",
+      "/tmh/orientation https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu 301",
+      "/ush/moving-checklist https://upscalehavens.ca/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf 301"
+    ]
+  },
+  "sitemap": {
+    "root": "/wp-sitemap.xml",
+    "status": 200,
+    "kind": "index",
+    "children": [
+      {
+        "url": "https://upscalehavens.ca/wp-sitemap-posts-page-1.xml",
+        "status": 200,
+        "kind": "urlset",
+        "urls": 19,
+        "locs": [
+          "https://upscalehavens.ca/tmh/",
+          "https://upscalehavens.ca/resources/checklists/",
+          "https://upscalehavens.ca/tmh/apply/",
+          "https://upscalehavens.ca/mlm/applym/",
+          "https://upscalehavens.ca/ush/privacy-policy/",
+          "https://upscalehavens.ca/tmh/onboard-tmh/",
+          "https://upscalehavens.ca/tmh/offboard/",
+          "https://upscalehavens.ca/",
+          "https://upscalehavens.ca/mlm/",
+          "https://upscalehavens.ca/care/",
+          "https://upscalehavens.ca/ush/owner/",
+          "https://upscalehavens.ca/care/sweepy-admin/",
+          "https://upscalehavens.ca/care/signal-admin/",
+          "https://upscalehavens.ca/resources/",
+          "https://upscalehavens.ca/ush/thanks/",
+          "https://upscalehavens.ca/care/showings/",
+          "https://upscalehavens.ca/resources/sweepy/",
+          "https://upscalehavens.ca/mlm/onboard-mlm/",
+          "https://upscalehavens.ca/care/ttlock-admin/"
+        ]
+      }
+    ],
+    "urlCount": 19,
+    "locs": [
+      "https://upscalehavens.ca/",
+      "https://upscalehavens.ca/care/",
+      "https://upscalehavens.ca/care/showings/",
+      "https://upscalehavens.ca/care/signal-admin/",
+      "https://upscalehavens.ca/care/sweepy-admin/",
+      "https://upscalehavens.ca/care/ttlock-admin/",
+      "https://upscalehavens.ca/mlm/",
+      "https://upscalehavens.ca/mlm/applym/",
+      "https://upscalehavens.ca/mlm/onboard-mlm/",
+      "https://upscalehavens.ca/resources/",
+      "https://upscalehavens.ca/resources/checklists/",
+      "https://upscalehavens.ca/resources/sweepy/",
+      "https://upscalehavens.ca/tmh/",
+      "https://upscalehavens.ca/tmh/apply/",
+      "https://upscalehavens.ca/tmh/offboard/",
+      "https://upscalehavens.ca/tmh/onboard-tmh/",
+      "https://upscalehavens.ca/ush/owner/",
+      "https://upscalehavens.ca/ush/privacy-policy/",
+      "https://upscalehavens.ca/ush/thanks/"
+    ],
+    "declaredInRobots": [
+      "https://upscalehavens.ca/wp-sitemap.xml"
+    ],
+    "notInSitemap": [],
+    "notCaptured": []
+  },
+  "robots": {
+    "url": "/robots.txt",
+    "status": 200,
+    "contentType": "text/plain; charset=utf-8",
+    "body": "User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\n\nSitemap: https://upscalehavens.ca/wp-sitemap.xml\n",
+    "rules": {
+      "disallow": [
+        "/wp-admin/"
+      ],
+      "allow": [
+        "/wp-admin/admin-ajax.php"
+      ]
+    },
+    "sitemaps": [
+      "https://upscalehavens.ca/wp-sitemap.xml"
+    ]
+  },
+  "search": {
+    "probe": {
+      "url": "/?s=test",
+      "status": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "documentTitle": "Search results for \"test\" | Upscale Havens Leasing and Tenant Coordination",
+      "canonical": null,
+      "robots": "noindex, follow, max-image-preview:large",
+      "noResults": true,
+      "resultMarkers": 0,
+      "bodyClasses": [
+        "search",
+        "search-no-results",
+        "custom-background",
+        "wp-theme-Divi",
+        "et-tb-has-template",
+        "et-tb-has-footer",
+        "et_pb_button_helper_class",
+        "et_fixed_nav",
+        "et_show_nav",
+        "et_primary_nav_dropdown_animation_fade",
+        "et_secondary_nav_dropdown_animation_fade",
+        "et_header_style_left",
+        "et_cover_background",
+        "et_pb_gutter",
+        "et_pb_gutters3",
+        "et_right_sidebar",
+        "et_divi_theme",
+        "et-db"
+      ],
+      "bytes": 42297
+    },
+    "matchingProbe": {
+      "url": "/?s=room",
+      "status": 200,
+      "contentType": "text/html; charset=UTF-8",
+      "documentTitle": "Search results for \"room\" | Upscale Havens Leasing and Tenant Coordination",
+      "canonical": null,
+      "robots": "noindex, follow, max-image-preview:large",
+      "noResults": false,
+      "resultMarkers": 10,
+      "bodyClasses": [
+        "search",
+        "search-results",
+        "custom-background",
+        "wp-theme-Divi",
+        "et-tb-has-template",
+        "et-tb-has-footer",
+        "et_pb_button_helper_class",
+        "et_fixed_nav",
+        "et_show_nav",
+        "et_primary_nav_dropdown_animation_fade",
+        "et_secondary_nav_dropdown_animation_fade",
+        "et_header_style_left",
+        "et_cover_background",
+        "et_pb_gutter",
+        "et_pb_gutters3",
+        "et_pb_pagebuilder_layout",
+        "et_right_sidebar",
+        "et_divi_theme",
+        "et-db"
+      ],
+      "bytes": 41597
+    },
+    "behaviour": "GET /?s=<q> answers 200 with an HTML search-results page titled \"Search results for \"test\" | Upscale Havens Leasing and Tenant Coordination\". It declares no canonical, so the query URL is its own canonical. It carries <meta name=\"robots\" content=\"noindex, follow, max-image-preview:large\">, so results pages are already excluded from the index while still passing link equity — reproduce that exact directive, do not invent one. The matching probe (/?s=room) returned 10 result marker(s), so search is a live feature returning real results, not a stub.",
+    "newSite": {
+      "route": "/search/",
+      "queryParam": "q",
+      "rewrite": "/?s=<q>  ->  /search/?q=<q>  (302, so the query string survives and the old URL stops being canonical)",
+      "indexSource": "a build-time index of the 19 captured pages (title, url, body text)",
+      "note": "Search is a real feature (the matching probe returns results), so dropping it is a capability loss, not a clean cut. Bead P4.2 (Search plugin) owns the static implementation; until it lands, 302 /?s=* to /search/ and have that route answer with a client-side search over the build index. The results page must keep `noindex, follow` and no canonical, exactly as the live site does: that is the one place the current site already gets duplicate-content handling right, and the parity gate would otherwise protect a regression."
+    }
+  },
+  "brokenReferences": [
+    {
+      "id": "link-wp-content-uploads-2024-07-real-estate-09-1024x648-1-jpg",
+      "kind": "link",
+      "attributes": [
+        "href",
+        "srcset"
+      ],
+      "raw": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1.jpg",
+      "resolved": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1.jpg",
+      "pages": [
+        "/mlm/applym/"
+      ],
+      "status": 404,
+      "severity": "high",
+      "statusSource": "asset-capture",
+      "finding": "A clickable `href` (href + srcset) points at `https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1.jpg`, which answers 404 on the live site too. Copying it keeps parity; the fix is one source-file repair upstream."
+    },
+    {
+      "id": "scheme-less-chatgpt-com-link-mlm-applym-chatgpt-com",
+      "kind": "link",
+      "attributes": [
+        "href"
+      ],
+      "raw": "chatgpt.com",
+      "resolved": "https://upscalehavens.ca/mlm/applym/chatgpt.com",
+      "pages": [
+        "/mlm/applym/"
+      ],
+      "status": 404,
+      "severity": "high",
+      "statusSource": "live-probe",
+      "finding": "The href is `chatgpt.com` with no scheme, so the browser resolves it as a path relative to the page and requests `https://upscalehavens.ca/mlm/applym/chatgpt.com`, which answers 404. The author meant an external site. Fidelity says copy it; correctness says fix it. That is a content decision, so it is recorded, not silently repaired."
+    },
+    {
+      "id": "scheme-less-chatgpt-com-link-mlm-onboard-mlm-chatgpt-com",
+      "kind": "link",
+      "attributes": [
+        "href"
+      ],
+      "raw": "chatgpt.com",
+      "resolved": "https://upscalehavens.ca/mlm/onboard-mlm/chatgpt.com",
+      "pages": [
+        "/mlm/onboard-mlm/"
+      ],
+      "status": 404,
+      "severity": "high",
+      "statusSource": "live-probe",
+      "finding": "The href is `chatgpt.com` with no scheme, so the browser resolves it as a path relative to the page and requests `https://upscalehavens.ca/mlm/onboard-mlm/chatgpt.com`, which answers 404. The author meant an external site. Fidelity says copy it; correctness says fix it. That is a content decision, so it is recorded, not silently repaired."
+    },
+    {
+      "id": "scheme-less-chatgpt-com-link-tmh-onboard-tmh-chatgpt-com",
+      "kind": "link",
+      "attributes": [
+        "href"
+      ],
+      "raw": "chatgpt.com",
+      "resolved": "https://upscalehavens.ca/tmh/onboard-tmh/chatgpt.com",
+      "pages": [
+        "/tmh/onboard-tmh/"
+      ],
+      "status": 404,
+      "severity": "high",
+      "statusSource": "live-probe",
+      "finding": "The href is `chatgpt.com` with no scheme, so the browser resolves it as a path relative to the page and requests `https://upscalehavens.ca/tmh/onboard-tmh/chatgpt.com`, which answers 404. The author meant an external site. Fidelity says copy it; correctness says fix it. That is a content decision, so it is recorded, not silently repaired."
+    },
+    {
+      "id": "image-wp-content-uploads-2024-07-real-estate-09-1024x648-1-400x284-jpg",
+      "kind": "image",
+      "attributes": [
+        "src"
+      ],
+      "raw": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1-400x284.jpg",
+      "resolved": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1-400x284.jpg",
+      "pages": [
+        "/mlm/applym/"
+      ],
+      "status": 404,
+      "severity": "medium",
+      "statusSource": "asset-capture",
+      "finding": "The src reference `https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1-400x284.jpg` answers 404 on the live site too, so the old page renders the same missing image. Copying it keeps parity; the two entries are one fix (re-upload the source image)."
+    }
+  ],
+  "newSiteContract": {
+    "url": {
+      "htmlPaths": "one file per route",
+      "trailingSlash": "always",
+      "canonicalForm": "absolute URL on the serving origin, with the same trailing-slash form the route uses",
+      "notes": [
+        "The live site's policy is \"always\" (18 with, 0 without).",
+        "Slash-less /care answers 301 -> https://upscalehavens.ca/care/; the new host must reproduce that 301, not serve both forms.",
+        "/index.html answers 404; the emitter must not create it."
+      ]
+    },
+    "seo": {
+      "required": [
+        "title",
+        "canonical",
+        "robots"
+      ],
+      "absentOnLiveSite": [
+        "description",
+        "hreflang",
+        "openGraph",
+        "twitter",
+        "jsonLd"
+      ],
+      "notes": [
+        "Emit exactly the fields the live site emits. Adding a meta description, OpenGraph, Twitter cards or JSON-LD is a content improvement, not parity — it belongs to a decision, not to the emitter's defaults.",
+        "Every absent tag is recorded as absent rather than defaulted: an emitter that invented a description or a canonical would make the SEO parity gate compare two different surfaces and call it green."
+      ]
+    },
+    "redirects": {
+      "file": "/_redirects",
+      "lines": [
+        "/apply https://upscalehavens.ca/?fluent-form=3 301",
+        "/mlm/bylaws https://drive.google.com/file/d/1XlD2m2Z50tA8q7QpYnX5OCLtJGSHPTqV/view?usp=sharing 301",
+        "/mlm/join-signal https://signal.group/#CjQKIHqY_rwlcpd5RxUef7LUBTtslhUxQE6WJviOo8qc4lrNEhCKbuOth0CgFVt0Uc2_plsu 301",
+        "/mlm/onboard https://upscalehavens.ca/mlm/onboard-mlm/ 301",
+        "/mlm/orientation https://www.youtube.com/watch?v=HR0uFU5x_as&list=PLPafy6DgxGCc4HAEU2SonuukawUrCDcAt&index=1 301",
+        "/tmh/bylaws https://drive.google.com/file/d/1sr_f1gicFyObMLsdLowOk994tEm7Y52A/view?usp=sharing 301",
+        "/tmh/join-signal https://signal.group/#CjQKIHIMWh9xESOmLVkMn3bmg1DEoffPOBTz29h6tQZo-iKXEhAghi9tWYH-XeQzQwJ-uxv9 301",
+        "/tmh/onboard https://upscalehavens.ca/mlm/onboard-mlm/ 301",
+        "/tmh/onboard/ https://upscalehavens.ca/mlm/onboard-mlm/ 301",
+        "/tmh/orientation https://www.youtube.com/playlist?list=PLPafy6DgxGCcEMSd1O_wwwE5tfZRFBDdu 301",
+        "/ush/moving-checklist https://upscalehavens.ca/wp-content/uploads/2025/12/Moving-Inspection-Worksheet-v5.2.pdf 301"
+      ]
+    },
+    "sitemap": {
+      "path": "/wp-sitemap.xml",
+      "kind": "urlset",
+      "urlCount": 19,
+      "locs": [
+        "https://upscalehavens.ca/",
+        "https://upscalehavens.ca/care/",
+        "https://upscalehavens.ca/care/showings/",
+        "https://upscalehavens.ca/care/signal-admin/",
+        "https://upscalehavens.ca/care/sweepy-admin/",
+        "https://upscalehavens.ca/care/ttlock-admin/",
+        "https://upscalehavens.ca/mlm/",
+        "https://upscalehavens.ca/mlm/applym/",
+        "https://upscalehavens.ca/mlm/onboard-mlm/",
+        "https://upscalehavens.ca/resources/",
+        "https://upscalehavens.ca/resources/checklists/",
+        "https://upscalehavens.ca/resources/sweepy/",
+        "https://upscalehavens.ca/tmh/",
+        "https://upscalehavens.ca/tmh/apply/",
+        "https://upscalehavens.ca/tmh/offboard/",
+        "https://upscalehavens.ca/tmh/onboard-tmh/",
+        "https://upscalehavens.ca/ush/owner/",
+        "https://upscalehavens.ca/ush/privacy-policy/",
+        "https://upscalehavens.ca/ush/thanks/"
+      ],
+      "mustEmit": [
+        "serve /wp-sitemap.xml as a single <urlset> with 19 <loc> entries — one per captured page",
+        "absolute URLs on the new origin: a sitemap that lists the old host is a sitemap that points at the site being retired",
+        "no lastmod the capture cannot prove: copy the captured lastmod only where the IR already holds it",
+        "serve /wp-sitemap.xsl or drop the xml-stylesheet reference — a dangling stylesheet is a 404 on every sitemap fetch"
+      ]
+    },
+    "robots": {
+      "path": "/robots.txt",
+      "body": "User-agent: *\nDisallow: /wp-admin/\nAllow: /wp-admin/admin-ajax.php\n\nSitemap: https://upscalehavens.ca/wp-sitemap.xml\n",
+      "rules": {
+        "disallow": [
+          "/wp-admin/"
+        ],
+        "allow": [
+          "/wp-admin/admin-ajax.php"
+        ]
+      },
+      "mustEmit": [
+        "serve /robots.txt byte-identical to the captured body (captured)",
+        "keep the \"Sitemap:\" pointer pointing at /wp-sitemap.xml, which the new site must serve",
+        "keep Disallow: /wp-admin/ — these are the site owner's crawler instructions",
+        "keep the Allow: /wp-admin/admin-ajax.php override",
+        "robots.txt declares https://upscalehavens.ca/wp-sitemap.xml; the replacement must answer that exact URL",
+        "keep the /wp-admin/ rule as it stands for parity, while noting that the path does not exist on the static site — so the rule is inert rather than wrong. Dropping it is a deliberate decision, not a tidy-up, because a stale rule is the only remaining trace of the old admin surface."
+      ]
+    },
+    "search": {
+      "route": "/search/",
+      "queryParam": "q",
+      "rewrite": "/?s=<q>  ->  /search/?q=<q>  (302, so the query string survives and the old URL stops being canonical)",
+      "indexSource": "a build-time index of the 19 captured pages (title, url, body text)",
+      "note": "Search is a real feature (the matching probe returns results), so dropping it is a capability loss, not a clean cut. Bead P4.2 (Search plugin) owns the static implementation; until it lands, 302 /?s=* to /search/ and have that route answer with a client-side search over the build index. The results page must keep `noindex, follow` and no canonical, exactly as the live site does: that is the one place the current site already gets duplicate-content handling right, and the parity gate would otherwise protect a regression."
+    }
+  },
+  "notes": [
+    "The SEO surface is derived from capture/site-ir.json's captured dom.html — no page was re-fetched for it. Live requests covered only facts a capture cannot hold: redirect arrivals and destinations, robots.txt, the sitemap tree, /index.html, one slash-less alias, and two search probes.",
+    "This file is a SIDECAR. It does not modify capture/site-ir.json; folding pages[].seo into the IR is a later bead.",
+    "route manifest: broken link: /mlm/applym/chatgpt.com 404s (linked from the site, in no source)",
+    "route manifest: broken link: /mlm/onboard-mlm/chatgpt.com 404s (linked from the site, in no source)",
+    "route manifest: broken link: /tmh/onboard-tmh/chatgpt.com 404s (linked from the site, in no source)"
+  ]
+}

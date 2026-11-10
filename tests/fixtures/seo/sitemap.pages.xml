@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="https://upscalehavens.ca/wp-sitemap.xsl" ?>
+<!--
+  TRIMMED EXCERPT of the recorded live response for
+  GET /wp-sitemap-posts-page-1.xml (status 200, 19 <url> entries). Entries 4-19
+  are elided; the first three keep the real order and `lastmod` shapes.
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"><url><loc>https://upscalehavens.ca/tmh/</loc><lastmod>2025-08-20T12:06:57-08:00</lastmod></url><url><loc>https://upscalehavens.ca/resources/checklists/</loc><lastmod>2025-11-13T01:55:56-08:00</lastmod></url><url><loc>https://upscalehavens.ca/tmh/apply/</loc><lastmod>2025-10-14T16:49:58-08:00</lastmod></url></urlset>

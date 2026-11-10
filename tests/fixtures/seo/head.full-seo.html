@@ -1,0 +1,47 @@
+<!doctype html>
+<!--
+  EXTRACTOR FIXTURE, NOT SITE EVIDENCE.
+
+  This head is synthetic on purpose. The live upscalehavens.ca head (see
+  head.home.html, a verbatim capture) carries no description, no OpenGraph, no
+  Twitter card, no JSON-LD and no hreflang — so an extractor tested only against
+  that page could be completely broken and still "confirm" the absence.
+
+  This fixture exercises the positive path for every field, including the awkward
+  shapes the real site is not available to prove: single-quoted attributes, a
+  `property=` OpenGraph key, a `name=` Twitter key that also starts with `og:`,
+  an array `@type`, an unparseable JSON-LD block counted as `invalid`, and a
+  multi-language hreflang set with an `x-default`.
+-->
+<html lang="en-CA">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Full SEO surface &amp; entities — Fixture</title>
+    <meta name="description" content='A description with an &amp; entity and a "quoted" phrase.' />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <link rel="canonical" href="https://example.test/full-seo/" />
+    <link rel="alternate" hreflang="en-CA" href="https://example.test/full-seo/" />
+    <link rel="alternate" hreflang="fr-CA" href="https://example.test/fr/full-seo/" />
+    <link rel="alternate" hreflang="x-default" href="https://example.test/full-seo/" />
+    <meta property="og:title" content="OpenGraph title" />
+    <meta property="og:description" content="OpenGraph description" />
+    <meta property="og:image" content="https://example.test/og.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Twitter title" />
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          { "@type": "Organization", "name": "Example" },
+          { "@type": ["WebSite", "WebPage"], "url": "https://example.test/" }
+        ]
+      }
+    </script>
+    <script type="application/ld+json">
+      { this is not json }
+    </script>
+  </head>
+  <body class="page-template-default">
+    <h1>Full SEO surface</h1>
+  </body>
+</html>

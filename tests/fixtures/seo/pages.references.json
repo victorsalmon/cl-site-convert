@@ -1,0 +1,17 @@
+{
+  "provenance": "Verbatim excerpts from capture/site-ir.json dom.html (the B1.2 capture of upscalehavens.ca). Only the elements carrying a broken reference are kept; surrounding markup is elided with <!-- ... -->.",
+  "pages": [
+    {
+      "url": "/mlm/applym/",
+      "html": "<!-- ... -->\n<a href=\"chatgpt.com\">chatgpt.com</a>\n<div class=\"et_pb_gallery_item et_pb_grid_item et_pb_bg_layout_light et_pb_gallery_item_0_4\"><div class=\"et_pb_gallery_image landscape\">\n\t\t\t\t\t<a href=\"https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1.jpg\" title=\"real-estate-09-1024x648-1\">\n\t\t\t\t\t<img loading=\"lazy\" decoding=\"async\" width=\"400\" height=\"284\" src=\"https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1-400x284.jpg\" srcset=\"https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1.jpg 479w, https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1-400x284.jpg 480w\" sizes=\"(max-width:479px) 479px, 100vw\" class=\"wp-image-22\" />\n\t\t\t\t\t<span class=\"et_overlay\"></span>\n\t\t\t\t</a>\n<!-- ... -->"
+    },
+    {
+      "url": "/mlm/onboard-mlm/",
+      "html": "<!-- ... -->\n<a href=\"chatgpt.com\">chatgpt.com</a>\n<!-- ... -->"
+    },
+    {
+      "url": "/tmh/onboard-tmh/",
+      "html": "<!-- ... -->\n<a href=\"chatgpt.com\">chatgpt.com</a>\n<!-- ... -->"
+    }
+  ]
+}
