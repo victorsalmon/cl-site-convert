@@ -55,6 +55,30 @@ export interface HttpResponse {
 }
 
 /**
+ * A response as raw bytes.
+ *
+ * Binary payloads (CSS, images, fonts) must never round-trip through
+ * `response.text()`: decoding and re-encoding UTF-16 strings is lossy for any
+ * byte sequence that is not valid UTF-8, and a stylesheet has to be hashed and
+ * shipped byte-identically. Same politeness rules as `fetch`.
+ */
+export interface HttpBytesResponse {
+  url: string;
+  status: number;
+  headers: Record<string, string>;
+  bytes: Uint8Array;
+  location: string | null;
+  error: string | null;
+  attempts: number;
+}
+
+/** What we tell the server we accept for a document fetch. */
+const ACCEPT_DOCUMENT = "application/json, application/xml, text/xml, text/html;q=0.8, */*;q=0.5";
+
+/** Assets: we take whatever the site serves, verbatim. */
+const ACCEPT_ANY = "*/*";
+
+/**
  * robots.txt as it applies to us.
  *
  * Only the group that matches our agent token (or the `*` group) is considered;
@@ -247,8 +271,31 @@ export class PoliteFetcher {
   }
 
   async fetch(pathOrUrl: string, options: { method?: "GET" | "HEAD" } = {}): Promise<HttpResponse> {
+    const exchange = await this.#exchange(pathOrUrl, options.method ?? "GET", ACCEPT_DOCUMENT);
+    return {
+      url: exchange.url,
+      status: exchange.status,
+      headers: exchange.headers,
+      // UTF-8 with BOM removal, which is what `Response.text()` does.
+      body: new TextDecoder().decode(exchange.bytes),
+      location: exchange.location,
+      error: exchange.error,
+      attempts: exchange.attempts,
+    };
+  }
+
+  /** Fetch an asset verbatim. Never decodes: the bytes are the deliverable. */
+  async fetchBytes(pathOrUrl: string): Promise<HttpBytesResponse> {
+    return this.#exchange(pathOrUrl, "GET", ACCEPT_ANY);
+  }
+
+  /** One polite request with bounded retries. Bytes, because both callers can use them. */
+  async #exchange(
+    pathOrUrl: string,
+    method: "GET" | "HEAD",
+    accept: string,
+  ): Promise<HttpBytesResponse> {
     const url = this.absolute(pathOrUrl);
-    const method = options.method ?? "GET";
     let lastError = "no attempt was made";
 
     for (let attempt = 1; attempt <= this.#attempts; attempt += 1) {
@@ -266,12 +313,12 @@ export class PoliteFetcher {
           method,
           headers: {
             "user-agent": this.#userAgent,
-            accept: "application/json, application/xml, text/xml, text/html;q=0.8, */*;q=0.5",
+            accept,
           },
           redirect: "manual",
           signal: controller.signal,
         });
-        const body = await response.text();
+        const bytes = new Uint8Array(await response.arrayBuffer());
         const headers: Record<string, string> = {};
         response.headers.forEach((value, key) => {
           headers[key.toLowerCase()] = value;
@@ -292,7 +339,7 @@ export class PoliteFetcher {
           url,
           status: response.status,
           headers,
-          body,
+          bytes,
           location,
           error: null,
           attempts: attempt,
@@ -309,7 +356,7 @@ export class PoliteFetcher {
       url,
       status: 0,
       headers: {},
-      body: "",
+      bytes: new Uint8Array(0),
       location: null,
       error: lastError,
       attempts: this.#attempts,

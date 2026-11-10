@@ -9,7 +9,7 @@
 *.bat text eol=crlf
 *.cmd text eol=crlf
 
-# Binary — never touched.
+# Binary - never touched.
 *.png binary
 *.jpg binary
 *.jpeg binary
@@ -22,3 +22,8 @@
 *.wasm binary
 *.zip binary
 *.pdf binary
+
+# Captured evidence: byte-exact, so git must never convert line endings here.
+# A stylesheet's sha256 is its acceptance criterion; `eol=lf` on `*.css` would
+# silently invalidate it on a fresh Windows checkout.
+capture/assets/** -text

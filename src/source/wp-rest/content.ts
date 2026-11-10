@@ -348,8 +348,11 @@ export function buildCapabilities(
       detail:
         `Divi inlines per-page critical CSS in <style> elements (${inlineStylePages.length} of ${pages.length} pages). ` +
         "v1 styles[] requires an href and cannot express inline CSS, so DOM normalisation removes these blocks and " +
-        "their bytes are recorded by sha256 in capture/site-ir.capture-report.json. Until B1.3 materialises them as ordered " +
-        "stylesheet files (or the schema gains a v1.1 field), emitted pages will render without their critical CSS.",
+        "their bytes are recorded by sha256 in capture/site-ir.capture-report.json. `pnpm capture:assets` (B1.3) then " +
+        "re-fetches each page, proves the block hashes still match, and materialises the CSS under " +
+        "capture/assets/styles/inline/; the ordered chain lives in capture/style-chain.json. Until the emitter " +
+        "inlines that chain (or the schema gains a v1.1 origin/inline field), emitted pages render without their " +
+        "critical CSS.",
       blocking: true,
       where: inlineStylePages,
     });
@@ -690,7 +693,8 @@ export function assembleSiteIr(
   }
 
   const captureNotes = [
-    'styles[] and assets[] are empty by design in this pass: stylesheet and asset capture is B1.3, and a style entry requires the sha256 of shipped bytes. <link rel="stylesheet"> tags are preserved in every dom.html.',
+    "`styles[]` and `assets[]` are empty at the end of this pass: a style entry requires the sha256 of shipped bytes. Run `pnpm capture:assets` (B1.3) afterwards to fetch them, write capture/assets/ and patch this IR — this pass cannot do it, and re-running it overwrites styles[] and assets[].",
+    '`<link rel="stylesheet">` tags and asset references are preserved in every dom.html, which is what `capture:assets` reads.',
     "Redirects (optional field) are owned by B1.6; the route manifest already records 11 proven 301s discovered during enumeration.",
     "site.locale is derived from the document lang attribute because /wp-json/ does not expose the WP locale.",
     ...(options.notes ?? []),

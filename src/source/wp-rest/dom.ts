@@ -167,6 +167,8 @@ interface ElementRange {
   end: number;
   openingTag: string;
   closed: boolean;
+  /** Length of the closing tag, or 0 when the element is self-closed or unclosed. */
+  closeTagLength: number;
 }
 
 /**
@@ -190,14 +192,20 @@ function elementRanges(html: string, tag: string): ElementRange[] {
     // still serve it; treat it as the whole element rather than hunting for a
     // closing tag that will never come.
     if (/\/>$/.test(openingTag)) {
-      ranges.push({ start, end: start + openingTag.length, openingTag, closed: true });
+      ranges.push({
+        start,
+        end: start + openingTag.length,
+        openingTag,
+        closed: true,
+        closeTagLength: 0,
+      });
       cursor = start + openingTag.length;
       continue;
     }
     closeRe.lastIndex = start + openingTag.length;
     const close = closeRe.exec(html);
     if (close === null) {
-      ranges.push({ start, end: html.length, openingTag, closed: false });
+      ranges.push({ start, end: html.length, openingTag, closed: false, closeTagLength: 0 });
       break;
     }
     ranges.push({
@@ -205,10 +213,48 @@ function elementRanges(html: string, tag: string): ElementRange[] {
       end: close.index + close[0].length,
       openingTag,
       closed: true,
+      closeTagLength: close[0].length,
     });
     cursor = close.index + close[0].length;
   }
   return ranges;
+}
+
+/**
+ * One `<tag>…</tag>` element exactly as the server sent it.
+ *
+ * `element` is the payload the normaliser hashes when it deletes the element, so
+ * hashing it here reproduces the recorded `sha256` — that is how a later pass
+ * proves it recovered the exact bytes that were dropped. `inner` is everything
+ * between the tags: for `<style>` that is the CSS itself, never re-serialised.
+ */
+export interface ElementPayload {
+  /** Byte offset of `<` in the source document. */
+  start: number;
+  end: number;
+  element: string;
+  inner: string;
+  openingTag: string;
+  detail: string;
+  closed: boolean;
+}
+
+/** Slice every `<tag>` element out of a document without parsing it into a tree. */
+export function elementPayloads(html: string, tag: "script" | "style"): ElementPayload[] {
+  return elementRanges(html, tag).map((range) => {
+    const element = html.slice(range.start, range.end);
+    const innerStart = range.openingTag.length;
+    const innerEnd = range.closed ? element.length - range.closeTagLength : element.length;
+    return {
+      start: range.start,
+      end: range.end,
+      element,
+      inner: element.slice(innerStart, Math.max(innerStart, innerEnd)),
+      openingTag: range.openingTag,
+      detail: describeElement(range.openingTag, tag),
+      closed: range.closed,
+    };
+  });
 }
 
 /** Cut the given ranges out of `html`, in one pass. */
@@ -378,7 +424,13 @@ function stripTelemetry(html: string, stripped: StrippedNode[], notes: string[])
         continue;
       }
       const start = match.index;
-      ranges.push({ start, end: start + match[0].length, openingTag: match[0], closed: true });
+      ranges.push({
+        start,
+        end: start + match[0].length,
+        openingTag: match[0],
+        closed: true,
+        closeTagLength: 0,
+      });
       stripped.push({
         kind: "telemetry",
         detail: `${tag} ${url}`,
@@ -403,7 +455,13 @@ function stripComments(html: string, stripped: StrippedNode[], notes: string[]):
       continue;
     }
     const start = match.index;
-    ranges.push({ start, end: start + text.length, openingTag: text, closed: true });
+    ranges.push({
+      start,
+      end: start + text.length,
+      openingTag: text,
+      closed: true,
+      closeTagLength: 0,
+    });
     stripped.push({
       kind: "comment",
       detail: inner.replace(/\s+/g, " ").slice(0, 80) || "(empty)",

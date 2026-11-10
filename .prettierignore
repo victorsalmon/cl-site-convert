@@ -25,4 +25,5 @@ CLAUDE.md
 # destroy the "this is what the server returned" claim. A test that reads a
 # reformatted recording is testing the formatter.
 tests/fixtures/wp-rest/
+tests/fixtures/assets/
 capture/
