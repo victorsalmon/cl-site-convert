@@ -26,6 +26,7 @@
     "capture:routes": "node dist/source/wp-rest/routes.js",
     "capture:content": "pnpm run build && node dist/source/wp-rest/content.js",
     "capture:assets": "pnpm run build && node dist/source/wp-rest/assets.js",
+    "capture:deferred-css": "pnpm run build && node dist/source/wp-rest/deferred-css.js && node scripts/project-style-chain.mjs",
     "capture:capabilities": "node dist/source/capabilities/detect.js",
     "capture:seo": "pnpm run build && node dist/source/seo/capture.js",
     "capture:forms": "pnpm run build && node dist/source/forms/cli.js",

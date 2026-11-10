@@ -217,14 +217,15 @@ describe("residual absolute self-references", () => {
       unlocalisable += 1;
     }
 
-    // The measured composition of the allowlist: 19 canonicals, 18 deferred assets,
-    // and the live site's own broken media.
+    // The measured composition of the allowlist: 19 canonicals and the live site's own
+    // broken media. Divi's deferred CSS is no longer a residual category — its bytes
+    // are captured and emitted from the page cascade (bead cl-site-convert-mzi).
     expect({ canonical, deferredCss, unlocalisable }).toEqual({
       canonical: 19,
-      deferredCss: 18,
+      deferredCss: 0,
       unlocalisable: 3,
     });
-    expect(fixture.entries.length).toBe(40);
+    expect(fixture.entries.length).toBe(22);
   });
 
   it("refuses an absolute self-reference that no rule justifies", () => {
@@ -479,23 +480,40 @@ describe("meta image references", () => {
 });
 
 describe("deferred CSS", () => {
-  it("leaves Divi's deferred stylesheets byte-identical and allowlisted", () => {
+  it("replaces Divi's deferred stylesheets with captured, local cascade links", () => {
+    const styles = (
+      JSON.parse(readFileSync(join(CAPTURE, "site-ir.json"), "utf8")) as {
+        styles: { href?: string; localPath: string }[];
+      }
+    ).styles;
     let deferred = 0;
     for (const page of IR.pages) {
+      const html = emittedHtml(page.url);
+      const depth = routeLocation(page.url).depth;
       for (const match of page.dom.html.matchAll(/<link\b[^>]*>/g)) {
         const tag = match[0];
         if (!/rel=["']?preload/.test(tag) || !/as=["']?style/.test(tag)) continue;
         const href = /href=["']([^"']*)["']/.exec(tag)?.[1] ?? "";
         if (!href.startsWith(SOURCE_ORIGIN)) continue;
-        // The captured tag survives verbatim: an un-captured asset cannot be localised.
-        expect(emittedHtml(page.url), `${page.url}: ${href}`).toContain(tag);
         deferred += 1;
+
+        // The captured preload does not survive, and no absolute deferred href does.
+        expect(html, `${page.url}: ${href} still preloads from the source host`).not.toContain(tag);
+        expect(html, `${page.url}: ${href} is still absolute`).not.toContain(href);
+
+        // Its bytes are emitted, relative, from the cascade — and they are on disk.
+        const style = styles.find((candidate) => candidate.href === href);
+        expect(style, `${page.url}: ${href} has no styles[] entry`).toBeDefined();
+        expect(existsSync(join(outDir, style?.localPath ?? ""))).toBe(true);
+        expect(html).toContain(`href="${"../".repeat(depth)}${style?.localPath ?? ""}"`);
       }
     }
-    // 11 `et-core-unified`/`et-divi-dynamic` sheets' worth of tags across the pages that
-    // carry them; the report counts the same 18 references.
+    // 18 deferred links across the pages that carried them; the allowlist has none.
     expect(deferred).toBe(18);
-    expect(report.selfReferences.after["deferred-css"]).toBe(18);
+    expect(report.selfReferences.after["deferred-css"]).toBe(0);
+    expect(report.selfReferences.allowlist.some((entry) => entry.category === "deferred-css")).toBe(
+      false,
+    );
   });
 });
 

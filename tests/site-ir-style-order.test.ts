@@ -78,21 +78,21 @@ function styleOrderOf(url: string): string[] {
 /** Every page url the capture measured, with the chain length it was captured at. */
 const MEASURED_CHAIN_LENGTHS: Record<string, number> = {
   "/": 8,
-  "/care/": 8,
+  "/care/": 9,
   "/care/showings/": 8,
-  "/care/signal-admin/": 8,
-  "/care/sweepy-admin/": 8,
-  "/care/ttlock-admin/": 8,
-  "/mlm/": 8,
-  "/mlm/applym/": 9,
-  "/mlm/onboard-mlm/": 8,
+  "/care/signal-admin/": 10,
+  "/care/sweepy-admin/": 10,
+  "/care/ttlock-admin/": 10,
+  "/mlm/": 10,
+  "/mlm/applym/": 11,
+  "/mlm/onboard-mlm/": 9,
   "/resources/": 7,
   "/resources/checklists/": 8,
   "/resources/sweepy/": 8,
-  "/tmh/": 8,
-  "/tmh/apply/": 12,
-  "/tmh/offboard/": 8,
-  "/tmh/onboard-tmh/": 8,
+  "/tmh/": 10,
+  "/tmh/apply/": 14,
+  "/tmh/offboard/": 9,
+  "/tmh/onboard-tmh/": 9,
   "/ush/owner/": 16,
   "/ush/privacy-policy/": 17,
   "/ush/thanks/": 9,
@@ -105,15 +105,16 @@ describe("per-page style order in the captured IR", () => {
 
     expect(ir.irVersion).toBe("1.1.0");
     expect(ir.styles).toHaveLength(chain.styleChain.length);
-    expect(ir.styles).toHaveLength(55);
-    expect(linked).toHaveLength(7);
+    expect(ir.styles).toHaveLength(73);
+    // 7 sheets captured by B1.3 plus 18 Divi deferred sheets captured by mzi.
+    expect(linked).toHaveLength(25);
     // 116 captured inline blocks, deduplicated by sha256 to 48 distinct files.
     expect(inline).toHaveLength(48);
     expect(new Set(inline.map((style) => style.sha256)).size).toBe(48);
 
-    // `styles[].order` stays the site-level chain index: 0..54, no gaps, no repeats.
+    // `styles[].order` stays the site-level chain index: 0..72, no gaps, no repeats.
     expect(ir.styles.map((style) => style.order)).toEqual(
-      Array.from({ length: 55 }, (_, index) => index),
+      Array.from({ length: 73 }, (_, index) => index),
     );
 
     for (const style of inline) {
@@ -188,27 +189,35 @@ describe("per-page style order in the captured IR", () => {
     expect(styleOrderOf("/")).toEqual(home.map((entry) => shaAt(entry.order)));
     expect(styleOrderOf("/care/")).toEqual(care.map((entry) => shaAt(entry.order)));
 
-    // Both are 8 entries with the same site-level prefix; the Divi dynamic-critical
+    // Both pages start with the same site-level prefix; the Divi dynamic-critical
     // block and the font subset differ, which is exactly what the site chain loses.
+    // `/care/` also gained its deferred sheet, and it is measured last, not appended
+    // by accident: the live document put it after every other style element.
     expect(home.map((entry) => entry.order)).not.toEqual(care.map((entry) => entry.order));
     expect(styleOrderOf("/")).not.toEqual(styleOrderOf("/care/"));
+    expect(care).toHaveLength(9);
+    expect(care.at(-1)?.origin).toBe("linked");
   });
 
   it("never emits the site sequence as a page cascade", () => {
     // The failure mode this bead closes: an emitter sorting the site chain would
-    // give every page all 55 entries.
+    // give every page all 73 entries.
     const siteSequence = ir.styles.map((style) => style.sha256);
-    expect(ir.styles).toHaveLength(55);
+    expect(ir.styles).toHaveLength(73);
     for (const candidate of ir.pages) {
       expect(candidate.styleOrder).not.toEqual(siteSequence);
     }
   });
 
-  it("keeps per-page resolution unambiguous despite two entries sharing a sha256", () => {
-    // Captured data, reported rather than hidden: the inline `#et-critical-inline-css`
-    // block (order 38) and the linked `et-divi-customizer-global.min.css` (order 51)
-    // are the same 977 bytes, so `styles[]` holds 55 entries but only 54 distinct
-    // hashes. No page loads both, so a sha256 still names one entry within a page.
+  it("keeps per-page resolution unambiguous despite entries sharing a sha256", () => {
+    // Captured data, reported rather than hidden. Four payloads are shared by more
+    // than one entry: the inline `#et-critical-inline-css` and the linked
+    // `et-divi-customizer-global.min.css` (977 bytes), a 159-byte deferred sheet three
+    // pages share, a 23872-byte deferred sheet two pages share, and a 2092-byte
+    // deferred sheet five pages share plus the inline block with the same bytes.
+    // `styles[]` therefore holds 73 entries but only 64 distinct hashes. No page loads
+    // both halves of a collision, so a sha256 still names exactly one entry within any
+    // one page.
     const bySha = new Map<string, IrStyle[]>();
     for (const style of ir.styles) {
       const bucket = bySha.get(style.sha256) ?? [];
@@ -216,20 +225,25 @@ describe("per-page style order in the captured IR", () => {
       bySha.set(style.sha256, bucket);
     }
     const collisions = [...bySha.entries()].filter(([, styles]) => styles.length > 1);
-    expect(collisions).toHaveLength(1);
-    expect(bySha.size).toBe(54);
+    expect(collisions).toHaveLength(4);
+    expect(bySha.size).toBe(64);
 
-    const [sharedSha, sharingStyles] = collisions[0] ?? [];
-    expect(sharingStyles?.map((style) => style.order).sort((a, b) => a - b)).toEqual([38, 51]);
+    const collisionSizes = collisions.map(([, styles]) => styles.length).sort((a, b) => a - b);
+    expect(collisionSizes).toEqual([2, 2, 3, 6]);
 
+    // The real invariant: within one page's cascade, a hash names one entry.
     for (const candidate of ir.pages) {
-      const occurrences = capturedChain(candidate.url).filter(
-        (entry) => entry.sha256 === sharedSha,
-      );
-      expect(
-        occurrences.length,
-        `${candidate.url} loads the shared hash twice`,
-      ).toBeLessThanOrEqual(1);
+      const order = candidate.styleOrder ?? [];
+      expect(new Set(order).size, `${candidate.url} loads a hash twice`).toBe(order.length);
+      for (const [sharedSha, sharingStyles] of collisions) {
+        const occurrences = capturedChain(candidate.url).filter(
+          (entry) => entry.sha256 === sharedSha,
+        );
+        expect(
+          occurrences.length,
+          `${candidate.url} loads the shared hash from ${sharingStyles.length} entries`,
+        ).toBeLessThanOrEqual(1);
+      }
     }
   });
 });

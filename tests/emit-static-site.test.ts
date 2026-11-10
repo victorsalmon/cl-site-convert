@@ -197,6 +197,27 @@ function isStylesheetLink(node: P5Node): boolean {
   );
 }
 
+/** Hrefs the cascade represents as linked styles, deferred sheets included. */
+const CASCADE_LINKED_HREFS = new Set(
+  IR.styles
+    .filter((style) => style.origin !== "inline")
+    .map((style) => (style as { href: string }).href),
+);
+
+/**
+ * A captured Divi deferred preload link whose bytes the cascade now carries.
+ *
+ * The emitter replaces it with a normal stylesheet link in the cascade block, so it
+ * is not a "non-stylesheet head element" any more — it is the CSS, re-emitted.
+ */
+function isReplacedDeferredLink(node: P5Node): boolean {
+  if (node.nodeName !== "link") return false;
+  const rel = (attr(node, "rel") ?? "").toLowerCase().split(/\s+/).filter(Boolean);
+  if (!rel.includes("preload")) return false;
+  if ((attr(node, "as") ?? "").trim().toLowerCase() !== "style") return false;
+  return CASCADE_LINKED_HREFS.has(attr(node, "href") ?? "");
+}
+
 /** Captured inline CSS, addressed the way the capture stored it. */
 function capturedInlineCss(sha256: string): string {
   return readFileSync(join(CAPTURE, "assets", "styles", "inline", `${sha256}.css`), "utf8");
@@ -365,7 +386,10 @@ function assertOnlyUrlSubstitutions(
 
 describe("CSS diff proof", () => {
   it("proves every emitted linked stylesheet changed only in url() bodies", async () => {
-    expect(report.styles.linkedFiles).toHaveLength(7);
+    // 7 sheets linked by `rel="stylesheet"` in the capture, plus 11 distinct files
+    // behind the 18 captured deferred preload links (deduplicated by sha256).
+    expect(report.styles.linkedFiles).toHaveLength(18);
+    expect(report.styles.deferredFiles).toBe(11);
     let changedTokens = 0;
 
     for (const file of report.styles.linkedFiles) {
@@ -618,7 +642,7 @@ describe("DOM parity", () => {
       ).filter((node) => node.nodeName !== "style" && !isStylesheetLink(node));
       const capturedChildren = elementChildren(
         findElement(parse(page.dom.html) as unknown as P5Node, "head") as P5Node,
-      ).filter((node) => !isStylesheetLink(node));
+      ).filter((node) => !isStylesheetLink(node) && !isReplacedDeferredLink(node));
 
       expect(
         emittedChildren.map((node) => node.nodeName),
@@ -636,6 +660,53 @@ describe("DOM parity", () => {
         },
       );
     }
+  });
+
+  it("replaces every captured deferred preload link with one cascade stylesheet link", async () => {
+    let replaced = 0;
+    for (const page of IR.pages) {
+      const html = await readFile(emittedPathOf(page.url), "utf8");
+      const head = findElement(parse(html) as unknown as P5Node, "head") as P5Node;
+      const capturedDeferred = elementChildren(
+        findElement(parse(page.dom.html) as unknown as P5Node, "head") as P5Node,
+      ).filter(isReplacedDeferredLink);
+      replaced += capturedDeferred.length;
+
+      // Not one of them survives as a preload: the cascade emits the CSS, once.
+      for (const node of elementChildren(head)) {
+        expect(isReplacedDeferredLink(node), `${page.url}: a replaced preload survived`).toBe(
+          false,
+        );
+      }
+      expect(html, `${page.url}: deferred onload handler survived`).not.toContain(
+        "this.rel='stylesheet'",
+      );
+      expect(html).not.toContain("this.onload=null");
+
+      // Each captured deferred href is now a stylesheet link pointing at the file the
+      // IR recorded for it, which resolves inside the emitted tree.
+      for (const node of capturedDeferred) {
+        const href = attr(node, "href") ?? "";
+        const style = IR.styles.find(
+          (candidate) => candidate.origin !== "inline" && candidate.href === href,
+        );
+        expect(style, `${page.url}: ${href} is not in styles[]`).toBeDefined();
+        const emittedHref = relative(
+          dirname(emittedPathOf(page.url)),
+          join(outDir, emittedStylePath(style as Style)),
+        )
+          .split("\\")
+          .join("/");
+        expect(
+          elementChildren(head)
+            .filter(isStylesheetLink)
+            .map((link) => attr(link, "href")),
+        ).toContain(emittedHref);
+      }
+    }
+    // 18 captured deferred links across 11 pages, none left dangling.
+    expect(replaced).toBe(18);
+    expect(report.totals.deferredStyles).toBe(18);
   });
 
   it("reproduces the site's own broken scheme-less anchor rather than fixing it", async () => {

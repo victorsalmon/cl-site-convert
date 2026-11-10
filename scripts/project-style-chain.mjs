@@ -20,6 +20,14 @@
  * equal the recorded `sha256` and `bytes`. A drifting hash is a failure, not a
  * warning — the whole point of `sha256` is that the shipped bytes are verbatim.
  *
+ * Identity, not index: an entry is recognised by what it is (linked href + media, or
+ * inline sha256), never by its `order`. Later capture passes legitimately insert
+ * entries and shift the indices around them (deferred CSS did exactly that), so a
+ * changed `order` is reported as a shift. Everything else — sha256, bytes, paths,
+ * pages — must still match the committed IR exactly, and a previously known entry
+ * that disappeared is a failure. That keeps the guard catching stale evidence
+ * without forbidding an honest chain extension.
+ *
  * The projection is idempotent: running it twice produces a byte-identical file.
  */
 
@@ -101,19 +109,40 @@ for (const [index, order] of orders.entries()) {
 const styles = chainEntries.map(styleEntry);
 const styleShas = new Set(styles.map((style) => style.sha256));
 
-// The IR's linked entries were captured by B1.3 from the same documents. If the
-// regenerated form differs, one of the two is stale: stop rather than rewrite
-// evidence silently.
-const previousStyles = new Map((ir.styles ?? []).map((style) => [style.order, style]));
+// A chain entry's identity is what it is, not where it sits: a later capture pass
+// can insert entries and shift the indices around them without the existing
+// evidence changing at all.
+const identity = (style) =>
+  (style.origin ?? "linked") === "inline"
+    ? `inline:${style.sha256}`
+    : `linked:${style.href ?? ""}|${style.media ?? ""}`;
+
+const previousStyles = (ir.styles ?? []).map((style) => [identity(style), style]);
+const previousByIdentity = new Map(previousStyles);
+const identities = new Set(styles.map(identity));
+const added = [];
+let shifted = 0;
 for (const style of styles) {
-  const previous = previousStyles.get(style.order);
-  if (previous === undefined) continue;
-  if (JSON.stringify(previous) !== JSON.stringify(style)) {
-    fail(
-      `styles[${style.order}] would change:\n  ir:    ${JSON.stringify(previous)}\n` +
-        `  chain: ${JSON.stringify(style)}`,
-    );
+  const previous = previousByIdentity.get(identity(style));
+  if (previous === undefined) {
+    added.push(style.href ?? style.sha256);
+    continue;
   }
+  for (const field of ["origin", "href", "localPath", "sha256", "media"]) {
+    const before = field === "origin" ? (previous.origin ?? "linked") : previous[field];
+    const after = field === "origin" ? (style.origin ?? "linked") : style[field];
+    if (JSON.stringify(before) !== JSON.stringify(after)) {
+      fail(
+        `styles[] entry ${identity(style)} would change its ${field}:\n` +
+          `  ir:    ${JSON.stringify(before)}\n  chain: ${JSON.stringify(after)}`,
+      );
+    }
+  }
+  if (previous.order !== style.order) shifted += 1;
+}
+const dropped = previousStyles.filter(([key]) => !identities.has(key)).map(([key]) => key);
+if (dropped.length > 0) {
+  fail(`styles[] entries would disappear from the chain: ${dropped.join(", ")}`);
 }
 
 const chainPages = new Set(chainEntries.flatMap((entry) => entry.pages ?? []));
@@ -140,9 +169,13 @@ const pages = ir.pages.map((page) => {
   }
   chainLengths.push({ url: page.url, length: styleOrder.length });
 
-  // `styleOrder` belongs next to `dom` — both describe what the page ships.
+  // `styleOrder` belongs next to `dom` — both describe what the page ships. A
+  // pre-existing `styleOrder` key is dropped rather than copied: the projection owns
+  // that field, and copying it first would silently keep a stale cascade when the
+  // chain grows.
   const projected = {};
   for (const [key, value] of Object.entries(page)) {
+    if (key === "styleOrder") continue;
     projected[key] = value;
     if (key === "dom") projected.styleOrder = styleOrder;
   }
@@ -175,6 +208,8 @@ console.log(
   `styles[]: ${styles.length} entries (${linked} linked, ${inline} inline; ` +
     `${styleShas.size} distinct sha256)`,
 );
+if (added.length > 0)
+  console.log(`  added: ${added.length} entr(y/ies), order shifted on ${shifted}`);
 for (const { url, length } of chainLengths) {
   console.log(`  ${String(length).padStart(3)}  ${url}`);
 }

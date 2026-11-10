@@ -17,6 +17,7 @@ import {
   CascadeError,
   assertSequenceMatchesCascade,
   emittedStylePath,
+  findCascadeStyleLinks,
   findStylesheetLinks,
   indexStyles,
   rebuildHead,
@@ -272,7 +273,69 @@ describe("cascade rebuild", () => {
 
     // No captured stylesheet link survives outside the rebuilt block.
     expect(findStylesheetLinks(rebuilt.headHtml)).toHaveLength(1);
+    expect(rebuilt.replacedDeferredLinks).toBe(0);
+    expect(rebuilt.preservedDeferredLinks).toBe(1);
     expect(rebuilt.headHtml.indexOf("<style")).toBeLessThan(rebuilt.headHtml.indexOf('rel="icon"'));
+  });
+
+  it("replaces a deferred link the cascade carries with a real stylesheet link", () => {
+    const deferredHref = "https://upscalehavens.ca/wp-content/et-cache/deferred.css";
+    const deferred: Style = {
+      href: deferredHref,
+      localPath: "deferred/dddd.css",
+      sha256: "d".repeat(64),
+      order: 3,
+    };
+    const page: Page = {
+      ...PAGE,
+      styleOrder: [...(PAGE.styleOrder ?? []), deferred.sha256],
+    };
+    const rebuilt = rebuildHead(
+      HEAD.join(""),
+      resolvePageCascade(page, indexStyles([INLINE_A, LINKED_B, INLINE_C, deferred])),
+      { dirDepth: 1, table: TABLE, cssFor: () => "a{}" },
+    );
+
+    // The preload is gone, and a normal stylesheet link sits at the end of the chain.
+    expect(rebuilt.headHtml).not.toContain('rel="preload"');
+    expect(rebuilt.headHtml).not.toContain("onload=");
+    expect(rebuilt.replacedDeferredLinks).toBe(1);
+    expect(rebuilt.preservedDeferredLinks).toBe(0);
+    expect(rebuilt.markup.split("\n").at(-1)).toBe(
+      '<link rel="stylesheet" href="../deferred/dddd.css" />',
+    );
+    // One stylesheet link for the captured sheet plus one for the deferred entry.
+    expect(findStylesheetLinks(rebuilt.headHtml)).toHaveLength(2);
+  });
+
+  it("keeps the id and media of a replaced deferred link, dropping only as/onload", () => {
+    const href = "https://upscalehavens.ca/wp-content/et-cache/x-deferred.css?ver=1";
+    const tag =
+      "<link rel='preload' as='style' id='divi-dynamic-css' media='all' " +
+      `href='${href}' onload="this.onload=null;this.rel='stylesheet'" />`;
+    const deferred: Style = {
+      href,
+      localPath: "deferred/eeee.css",
+      sha256: "e".repeat(64),
+      order: 0,
+      media: "all",
+    };
+    const page: Page = {
+      url: "/x/",
+      slug: "x",
+      status: "publish",
+      template: "",
+      dom: { html: `<html><head>${tag}</head><body></body></html>` },
+      styleOrder: [deferred.sha256],
+    };
+    const rebuilt = rebuildHead(tag, resolvePageCascade(page, indexStyles([deferred])), {
+      dirDepth: 0,
+      table: TABLE,
+      cssFor: () => null,
+    });
+    expect(rebuilt.markup).toBe(
+      "<link rel=\"stylesheet\" id='divi-dynamic-css' media='all' href=\"deferred/eeee.css\" />",
+    );
   });
 
   it("wraps inline bytes and nothing else, which is the before-rewriting artifact", () => {
@@ -406,7 +469,9 @@ describe("cascade rebuild against the committed capture", () => {
     for (const page of capture.pages) {
       const head = /<head\b[^>]*>([\s\S]*?)<\/head>/i.exec(page.dom.html)?.[1];
       expect(head, `${page.url} has a head`).toBeTypeOf("string");
-      const links = findStylesheetLinks(head ?? "");
+      // Stylesheets *and* deferred preload links: both are CSS the page applies, and
+      // both are managed by the rebuild once the cascade represents them.
+      const links = findCascadeStyleLinks(head ?? "");
       linkedTags += links.length;
 
       const sequence = resolvePageCascade(page, index);
@@ -421,8 +486,9 @@ describe("cascade rebuild against the committed capture", () => {
       expect(missing.map((entry) => entry.href)).toEqual([]);
     }
 
-    // 19 pages and 58 captured `link rel=stylesheet` tags: 3 per page on most, 5 on
-    // `/tmh/apply/`, 2 on `/resources/`. No page's cascade drifts from that evidence.
-    expect(linkedTags).toBe(58);
+    // 19 pages, 58 captured `link rel=stylesheet` tags and 18 captured deferred
+    // `link rel=preload as=style` tags: 76 CSS link elements, none of them unaccounted
+    // for by the page's cascade.
+    expect(linkedTags).toBe(76);
   });
 });

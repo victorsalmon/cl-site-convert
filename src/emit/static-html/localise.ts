@@ -33,10 +33,12 @@
  *     the capture holds the bytes, and left untouched *and reported* when it does not.
  *     `msapplication-TileImage` is the live case: its logo was captured, so it
  *     localises.
- *  6. **Deferred Divi CSS is not touched.** `<link rel="preload" as="style"
- *     onload="…">` points at CSS that was never captured (`cl-site-convert-mzi` owns
- *     that). Leaving it byte-identical and naming it in the allowlist keeps the
- *     verification test honest instead of weakening it.
+ *  6. **A deferred Divi link is only preserved when its bytes are not in the cascade.**
+ *     `<link rel="preload" as="style" onload="…">` whose href the page's
+ *     `styleOrder` represents is replaced by the cascade rebuild before this pass
+ *     runs (`./cascade.ts`). One whose href is absent — never captured — is left
+ *     byte-identical and named in the allowlist, which keeps the verification test
+ *     honest instead of weakening it.
  *  7. **Nothing is deleted and nothing is normalised.** A WordPress discovery link
  *     (`rel="alternate"` feeds, `wp-json`, `xmlrpc`, `shortlink`) becomes
  *     `/feed/`-shaped rather than being dropped: dropping a captured element is a
@@ -223,12 +225,14 @@ export interface ResidualReference extends AbsoluteSelfReference {
 }
 
 /**
- * Is this `link` a Deferred-CSS asset?
+ * Is this `link` a deferred-CSS asset?
  *
  * Divi emits `<link rel="preload" as="style" … onload="this.rel='stylesheet'">` for
- * per-page dynamic CSS, and the capture never fetched those files — so their href is
- * an absolute self-reference that emission must preserve verbatim. Both evidence
- * forms are accepted: the preload/onload shape, and the `et-cache` path shape.
+ * per-page dynamic CSS. When its bytes were captured, the cascade rebuild replaces
+ * the tag with a real stylesheet link before this pass sees it, so a survivor here
+ * means the capture holds no bytes for that href: preserving it verbatim and
+ * reporting it is the only honest outcome. Both evidence forms are accepted: the
+ * preload/onload shape, and the `et-cache` path shape.
  */
 export function isDeferredCssLink(rel: readonly string[], href: string): boolean {
   const isPreload = rel.includes("preload");
@@ -242,7 +246,7 @@ export const RESIDUAL_REASONS: Readonly<Record<ResidualCategory, string>> = {
   canonical:
     "SEO: a canonical URL must be absolute; it is rewritten at emit to the per-target --base-url, never relativised",
   "deferred-css":
-    'Divi deferred CSS (<link rel="preload" as="style" onload="…">) was never captured by B1.3, so its bytes do not exist to localise; owned by cl-site-convert-mzi',
+    'a Divi deferred CSS link (<link rel="preload" as="style" onload="…">) whose href no styles[] entry carries, so its bytes were never captured; preserved verbatim rather than silently dropped',
   unlocalisable:
     "the capture holds no bytes for this reference (the live site 404s it), so it cannot be re-pointed; reported, not silently dropped",
 };

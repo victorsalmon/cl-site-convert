@@ -92,17 +92,24 @@ provable; `origin` only removes the *url* requirement. Divi 4.27.7 emits 5–14
 inline blocks per page (~1.77 MB across 19 pages), so this is the difference
 between a page with its critical CSS and one without.
 
+Divi also emits **deferred** stylesheets as
+`<link rel="preload" as="style" onload="this.rel='stylesheet'">`. Those are not
+`<link rel="stylesheet">` links, so the first chain capture missed them; the
+deferred-CSS pass captures their bytes and records them as ordinary `linked`
+entries whose `href` is the captured deferred url. Their `order` is inserted at
+the position each page's own document gave them, never appended — see
+`docs/static-emitter.md` and `docs/01-DECISIONS.md` (2026-11-10).
+
 ### Per-page cascade (`page.styleOrder`, v1.1)
 
 Measured: the 19 captured pages have **18 distinct style chains**, from 7 entries
 at `/resources/` to 17 at `/ush/privacy-policy/`. A single site-level sequence
-cannot express that, so each page carries its own ordered cascade:
-
-```jsonc
+cannot express that, so each page carries its own ordered cascade:```jsonc
 {
   "url": "/resources/",
   "dom": { "html": "..." },
-  // 7 entries for this page, in captured document order:
+  // 7 entries for this page, in captured document order; a deferred sheet is one
+  // more `sha256` here, at the index its own document gave it:
   "styleOrder": ["f605fbff…", "256ed3e2…", "7bdbdaf0…", "…"]
 }
 ```
@@ -132,11 +139,17 @@ The rules:
 - **Emitters MUST use it.** An emitter that walks `styles[]` in `order` ships CSS
   the page never had; that is the visual drift this field exists to prevent.
 
-In the captured artifact, `styles[]` holds all **55** entries: 7 linked sheets and
-48 inline blocks deduplicated by `sha256` from 116 raw blocks. That is 54 distinct
-hashes, not 55: the inline `#et-critical-inline-css` at order 38 and the linked
-`et-divi-customizer-global.min.css` at order 51 are the same 977 bytes. No page
-loads both, so a hash still names exactly one entry within any one page.
+In the captured artifact, `styles[]` holds all **73** entries: 25 linked sheets (7
+captured with the document's own `<link rel="stylesheet">` tags, 18 Divi deferred
+sheets captured separately) and 48 inline blocks deduplicated by `sha256` from 116
+raw blocks. That is **64 distinct hashes**, not 73, in four collision groups: the
+inline `#et-critical-inline-css` at order 45 and the linked
+`et-divi-customizer-global.min.css` at order 67 are the same 977 bytes; one
+2092-byte deferred sheet is shared by five pages and matches an inline block on a
+sixth; and two more deferred sheets are shared by three pages and two pages. No
+page loads both halves of a collision, so a hash still names exactly one entry
+within any one page — `resolvePageCascade` disambiguates by which `href` the page's
+own `dom.html` carries.
 
 The projection is reproducible rather than hand-edited:
 
