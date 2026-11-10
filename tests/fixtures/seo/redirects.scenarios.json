@@ -1,0 +1,64 @@
+{
+  "provenance": "Hand-written scenarios for analyseChain / buildRedirectMap. Shape copied from capture/routes.manifest.json (discovery.redirects + linkHarvest.probes). The live map is healthy on every point these exercise, so the failure classes would be untestable against it.",
+  "baseUrl": "https://example.test",
+  "scenarios": {
+    "healthy": {
+      "entries": [
+        { "from": "/apply", "to": "https://example.test/?fluent-form=3", "code": 301 },
+        { "from": "/bylaws", "to": "https://drive.example.com/file/abc/view", "code": 301 }
+      ],
+      "arrivals": [
+        { "from": "/apply", "status": 301, "location": "https://example.test/?fluent-form=3" },
+        { "from": "/bylaws", "status": 301, "location": "https://drive.example.com/file/abc/view" }
+      ],
+      "finalStatuses": [
+        { "from": "/apply", "status": 200 },
+        { "from": "/bylaws", "status": 200 }
+      ]
+    },
+    "chain": {
+      "entries": [
+        { "from": "/a", "to": "/b", "code": 301 },
+        { "from": "/b", "to": "/c", "code": 301 }
+      ],
+      "arrivals": [
+        { "from": "/a", "status": 301, "location": "https://example.test/b" },
+        { "from": "/b", "status": 301, "location": "https://example.test/c" }
+      ],
+      "finalStatuses": [{ "from": "/a", "status": 200 }]
+    },
+    "loop": {
+      "entries": [
+        { "from": "/x", "to": "/y", "code": 301 },
+        { "from": "/y", "to": "/x", "code": 301 }
+      ],
+      "arrivals": [
+        { "from": "/x", "status": 301, "location": "https://example.test/y" },
+        { "from": "/y", "status": 301, "location": "https://example.test/x" }
+      ],
+      "finalStatuses": []
+    },
+    "target-error": {
+      "entries": [{ "from": "/gone", "to": "/nowhere/", "code": 301 }],
+      "arrivals": [{ "from": "/gone", "status": 301, "location": "https://example.test/nowhere/" }],
+      "finalStatuses": [{ "from": "/gone", "status": 404 }]
+    },
+    "arrival-mismatch": {
+      "entries": [{ "from": "/onboard", "to": "/mlm/onboard-mlm/", "code": 301 }],
+      "arrivals": [
+        { "from": "/onboard", "status": 301, "location": "https://example.test/tmh/onboard-tmh/" }
+      ],
+      "finalStatuses": [{ "from": "/onboard", "status": 200 }]
+    },
+    "self": {
+      "entries": [{ "from": "/self", "to": "/self", "code": 301 }],
+      "arrivals": [{ "from": "/self", "status": 301, "location": "https://example.test/self" }],
+      "finalStatuses": [{ "from": "/self", "status": 200 }]
+    },
+    "not-301": {
+      "entries": [{ "from": "/temp", "to": "/care/", "code": 302 }],
+      "arrivals": [{ "from": "/temp", "status": 302, "location": "https://example.test/care/" }],
+      "finalStatuses": [{ "from": "/temp", "status": 200 }]
+    }
+  }
+}

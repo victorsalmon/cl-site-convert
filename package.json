@@ -26,6 +26,8 @@
     "capture:content": "pnpm run build && node dist/source/wp-rest/content.js",
     "capture:assets": "pnpm run build && node dist/source/wp-rest/assets.js",
     "capture:capabilities": "node dist/source/capabilities/detect.js",
+    "capture:seo": "pnpm run build && node dist/source/seo/capture.js",
+    "validate:seo": "node scripts/validate-seo.mjs",
     "gate": "pwsh -NoProfile -File scripts/gate.ps1"
   },
   "devDependencies": {

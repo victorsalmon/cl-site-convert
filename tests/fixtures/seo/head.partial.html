@@ -1,0 +1,21 @@
+<!doctype html>
+<!--
+  EXTRACTOR FIXTURE, NOT SITE EVIDENCE.
+
+  A head that carries *some* SEO fields and not others, so a partial surface is
+  provable. The live site is all-or-nothing on every tag it omits, which means a
+  per-field bug (e.g. reporting `openGraph` absent because the description was
+  absent) would be invisible against it.
+-->
+<html lang="en-US">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Partial surface</title>
+    <meta name="description" content="Only a description is present here." />
+    <link rel="canonical" href="https://example.test/partial/" />
+    <meta property="og:title" content="Title but no og:image" />
+  </head>
+  <body>
+    <h1>Partial</h1>
+  </body>
+</html>

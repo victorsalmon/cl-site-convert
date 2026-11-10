@@ -439,3 +439,56 @@ B3.2 makes the bundle strategy mechanical. Contract and evidence:
   bundles on the other). It is recorded as a checklist rather than claimed,
   because there is nothing to open in a browser until an emitter exists.
 
+
+## 2026-11-12 — B1.6 SEO surface, redirect map and the `/?s=` contract
+
+Measured by `capture/seo-and-redirects.json` (29 polite serialised requests, >=600 ms
+apart) and re-derivable offline from `capture/site-ir.json` + `capture/routes.manifest.json`.
+
+**The SEO surface is thin, and that is now a recorded fact rather than a suspicion.**
+Confirmed site-wide `absent` on all 19 pages: meta description, OpenGraph, Twitter
+cards, JSON-LD, hreflang. Present on all 19: `<title>`, `<link rel="canonical">`
+(absolute, matching its route exactly), `<meta name="robots" content="max-image-preview:large">`.
+Nothing was defaulted or inherited — a page with no description reports `null`, and
+the site-level list is the intersection, not a vote.
+
+- **The sidecar is a sidecar.** `capture/site-ir.json` is owned by another lane and was
+  not modified; folding `pages[].seo` plus `redirects[]` into the IR is a later bead.
+  `pnpm validate:seo` re-derives every per-page claim from the IR and every redirect
+  claim from the manifest, so a hand-edited artifact fails the gate.
+- **Canonical = route: 19/19.** No mismatch. A trailing-slash difference counts as a
+  mismatch by design (`/care` and `/care/` are two URLs), and that is why the check is
+  path-exact rather than normalised.
+- **Trailing-slash policy: `always`** (18 of 18 non-root routes), and the live site
+  enforces it: `/care` 301s to `/care/`. `/index.html` answers **404**, so no
+  `index.html`-style URL exists to break.
+- **The 301 map is proven, not exported.** The `Redirection` plugin's store was NOT
+  read: its data sits behind an admin/export surface, and reading it would mean
+  authenticated or mutating requests against production. All **11/11** recorded 301s
+  were re-verified live: arrival `Location` matches the map, **hops = 1**, destination
+  **2xx** (five internal, six off-site to Drive/Signal/YouTube). **0 chains, 0 loops.**
+  The verified set is emitted as `_redirects` lines in `newSiteContract.redirects`.
+- **`/?s=` is a live feature, not a stub.** `/?s=test` answers 200 with a
+  `search search-no-results` page; `/?s=room` returns real results. Both carry
+  `noindex, follow, max-image-preview:large` and **no canonical** — the one place the
+  current site already handles duplicate content correctly, so the replacement must
+  reproduce it rather than "improve" it. Contract: 302 `/?s=<q>` → `/search/?q=<q>`,
+  served by a build-time index of the 19 pages (bead P4.2).
+- **Sitemap + robots captured verbatim.** `/wp-sitemap.xml` is an index over one urlset
+  of 19 URLs, all 19 in the capture, declaring `/wp-sitemap.xml` from
+  `robots.txt`; `robots.txt` is stored byte-for-byte with its `Disallow: /wp-admin/`
+  (now inert — the path will not exist on the static host) and its
+  `Allow: /wp-admin/admin-ajax.php` override. The replacement must also serve
+  `/wp-sitemap.xsl` or drop the `xml-stylesheet` reference, or every sitemap fetch
+  carries a 404.
+- **Broken references reconciled into one list (5).** The three scheme-less
+  `href="chatgpt.com"` links resolve *relative to the page* — `/mlm/applym/chatgpt.com`
+  etc., all 404 — and the two 404 images on `/mlm/applym/` are **one** gallery item: the
+  full-size file is reachable as a clickable `<a href>` as well as a `srcset`
+  candidate, which the asset pass recorded only as `img:srcset`. Merging them makes the
+  fix one repair, not three, and the severity ordering (4 high, 1 medium) says what to
+  fix first. Nothing is auto-repaired: `chatgpt.com` → `https://chatgpt.com` changes
+  what the page links to, which is a content decision.
+- **Exit contract.** `capture:seo` exits 1 on any unreachable page, canonical/route
+  mismatch, redirect chain, redirect loop, arrival mismatch or 404 destination; 2 when
+  it cannot evaluate (missing inputs, or `--base-url` disagreeing with the manifest).

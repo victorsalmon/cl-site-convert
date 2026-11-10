@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
     The repository gate: lint, typecheck, validate:ir, validate:capabilities,
-    validate:plugins, validate:wasm-size, test, check-toolchain, cargo fmt,
-    cargo clippy, cargo test.
+    validate:seo, validate:plugins, validate:wasm-size, test, check-toolchain,
+    cargo fmt, cargo clippy, cargo test.
 
 .DESCRIPTION
     Fail-closed. Every step must genuinely pass for the gate to exit 0.
@@ -92,6 +92,7 @@ try {
     Invoke-NativeStep -Name 'typecheck' -Exe 'pnpm' -Arguments @('run', 'typecheck') | Out-Null
     Invoke-NativeStep -Name 'validate:ir' -Exe 'pnpm' -Arguments @('run', 'validate:ir') | Out-Null
     Invoke-NativeStep -Name 'validate:capabilities' -Exe 'pnpm' -Arguments @('run', 'validate:capabilities') | Out-Null
+    Invoke-NativeStep -Name 'validate:seo' -Exe 'pnpm' -Arguments @('run', 'validate:seo') | Out-Null
     Invoke-NativeStep -Name 'validate:plugins' -Exe 'pnpm' -Arguments @('run', 'validate:plugins') | Out-Null
 
     # The Wasm size budget is measured, never asserted: this step compiles every
