@@ -261,3 +261,55 @@ Measured by building the Site IR for all 19 pages (`capture/site-ir.json`,
   addresses and four `tel:` links appear in the DOM. They are published on the live
   site; the capture report lists them so a human can confirm before the IR is used.
 
+## 2026-11-11 - Capability gate: unknown is blocking, and "not evaluated" is not "clean"
+
+B1.5 detects capability from two evidence sources — `/wp-json/` namespaces and
+rendered DOM markers — and reports **which evidence proved each finding** (the
+literal namespace token, or the matched marker plus the route it was found on).
+
+- **Three classes, two IR fields.** `supported` and `unsupported[]` are all the
+  frozen schema has, so `needs-handling` is `unsupported[]` with
+  `blocking: false` and `unsupported-blocking` is `blocking: true`. No new field
+  was needed and `schemas/` is untouched.
+- **Unclassified is blocking.** Any non-core REST namespace not in
+  `src/source/capabilities/catalog.ts` blocks the conversion, whether or not it
+  *looks* stateful; the report names the suspicion separately. Clearing it means
+  adding the plugin to the catalog **with a reason**, never a wildcard.
+- **Cannot-evaluate is not a pass.** With no namespaces and no pages the report is
+  `cannot-evaluate`, the CLI exits 2, and the report carries a blocking
+  `cannot-evaluate` entry so a consumer holding only the JSON still refuses.
+  `capture/capabilities.json` is therefore never empty-and-silent.
+- **The open users endpoint** is recorded as `rest-users-public`
+  (`blocking: false`): a live security finding about the source install, not a
+  conversion blocker. There is no `securityFindings[]` in v1 and inventing one is
+  a schema change, so it rides in `unsupported[]` with a detail that says what it
+  is. **Schema ask for v1.1:** `capabilities.unsupported[].evidence[]`
+  (`kind`/`value`/`source`) and a top-level `securityFindings[]`; today the
+  evidence is carried in prose inside `detail` and on stdout.
+- **Offline by construction.** The CLI reads recorded evidence
+  (`capture/routes.manifest.json`, an optional `/wp-json/` body, an optional
+  `capture/dom.pages.json` bundle) and never the network, so the gate result is a
+  function of the capture and can be re-run and diffed.
+- `capture:capabilities` exits 0 (convertible), 1 (blocking, each printed with
+  its reason) or 2 (cannot evaluate). `assertConvertible(report)` is the
+  emit-time guard B2.1 calls; it refuses both blocking findings and the
+  `cannot-evaluate` sentinel.
+
+Target result: **convertible**, 2 supported (`divi`, `redirection`), 5 needing
+handling (`fluent-forms`, `fluent-crm`, `fluent-smtp`, `litespeed-cache`,
+`rest-users-public`), 0 blocking.
+
+## 2026-11-11 — Gate defect fixed: rustup's install dir was not on PATH
+
+- `pnpm gate` failed at the Rust step on this machine with "cargo is not on PATH"
+  while `cargo 1.99.1` was installed at `%USERPROFILE%\.cargo\bin` — the directory
+  simply was not in the User or Machine `PATH`. That is a gate that cannot pass on
+  a provisioned machine: a defect, not a baseline (ADR 0012).
+- Fix: `scripts/gate.ps1` looks for `cargo.exe` in rustup's standard install
+  location **only when `cargo` is not already on PATH**, prepends it, and prints a
+  loud `note:`. `check-toolchain.ps1` inherits the corrected `PATH` and still
+  verifies the pinned channel and `wasm32-unknown-unknown`. A genuinely missing
+  toolchain still fails, with the same remediation text.
+- Machine-level follow-up (not repo-owned): add `%USERPROFILE%\.cargo\bin` to the
+  User `PATH` so new shells find the toolchain without the note.
+- Proven by running `pnpm gate` green in a fresh worktree.

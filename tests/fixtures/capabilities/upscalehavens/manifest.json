@@ -1,0 +1,37 @@
+{
+  "manifestVersion": "1",
+  "_fixtureNote": "The capability-relevant facts from `capture/routes.manifest.json` (B1.1, 2026-11-11, 48 polite requests against upscalehavens.ca). Trimmed to `rest`; nothing here was re-fetched.",
+  "baseUrl": "https://upscalehavens.ca",
+  "rest": {
+    "available": true,
+    "rootStatus": 200,
+    "namespaces": [
+      "oembed/1.0",
+      "fluent-smtp",
+      "fluentform/v1",
+      "litespeed/v1",
+      "litespeed/v3",
+      "redirection/v1",
+      "fluent-crm/v1",
+      "fluent-crm/v2",
+      "divi/v1",
+      "wp/v2",
+      "wp-site-health/v1",
+      "wp-block-editor/v1",
+      "wp-abilities/v1"
+    ],
+    "pluginNamespaces": [
+      "fluent-smtp",
+      "fluentform/v1",
+      "litespeed/v1",
+      "litespeed/v3",
+      "redirection/v1",
+      "fluent-crm/v1",
+      "fluent-crm/v2",
+      "divi/v1"
+    ],
+    "pluginsEndpointStatus": 401,
+    "usersEndpointOpen": true,
+    "userCount": 1
+  }
+}

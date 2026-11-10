@@ -1,0 +1,12 @@
+{
+  "name": "Fluent Forms fixture",
+  "_fixtureNote": "The target site's form stack: Fluent Forms for capture, FluentCRM and FluentSMTP as the outbound glue that a static site replaces with a sink.",
+  "namespaces": [
+    "oembed/1.0",
+    "fluent-smtp",
+    "fluentform/v1",
+    "fluent-crm/v1",
+    "fluent-crm/v2",
+    "wp/v2"
+  ]
+}

@@ -1,0 +1,33 @@
+{
+  "supported": [
+    "divi",
+    "redirection"
+  ],
+  "unsupported": [
+    {
+      "capability": "fluent-crm",
+      "detail": "Needs handling: FluentCRM — Contacts and lists live in the CRM server-side and historical submissions are deliberately not migrated, so the only open decision is where new submissions are routed. Evidence: REST namespace `fluent-crm/v1`; REST namespace `fluent-crm/v2`.",
+      "blocking": false
+    },
+    {
+      "capability": "fluent-forms",
+      "detail": "Needs handling: Fluent Forms — Forms are extracted into IR `forms[]` and their submissions leave through `src/sinks/`; a sink (webhook, pabbly or email-ses) must be chosen before emit, because nothing here runs PHP. Evidence: REST namespace `fluentform/v1`.",
+      "blocking": false
+    },
+    {
+      "capability": "fluent-smtp",
+      "detail": "Needs handling: FluentSMTP — It is outbound mail delivery, which no static site performs; the sink owns delivery (or the notifications are dropped by decision). Evidence: REST namespace `fluent-smtp`.",
+      "blocking": false
+    },
+    {
+      "capability": "litespeed-cache",
+      "detail": "Needs handling: LiteSpeed Cache — The cache must be primed or bypassed deliberately during capture, otherwise the golden baseline is recorded from a stale layer and every later parity diff inherits the error. Evidence: REST namespace `litespeed/v1`; REST namespace `litespeed/v3`.",
+      "blocking": false
+    },
+    {
+      "capability": "rest-users-public",
+      "detail": "Needs handling: Public user enumeration — `/wp-json/wp/v2/users` answers without authentication and exposes 1 user (identifiers only; no names or emails were recorded). This is a live security finding on the WordPress install, not a conversion blocker — recorded here so the exposure is not lost when the site is retired. Evidence: `/wp-json/wp/v2/users` answered unauthenticated.",
+      "blocking": false
+    }
+  ]
+}

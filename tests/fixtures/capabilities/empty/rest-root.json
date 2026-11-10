@@ -1,0 +1,4 @@
+{
+  "_fixtureNote": "A /wp-json/ body that parsed but advertised nothing. A real REST root always publishes at least `wp/v2`, so this is not evidence of a plugin-free site: it is no evidence at all.",
+  "siteName": "unreadable"
+}
