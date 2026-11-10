@@ -429,8 +429,23 @@ describe("CSS diff proof", () => {
 // DOM parity
 // ---------------------------------------------------------------------------
 
-/** `tag.attribute` pairs this bead is allowed to change (asset references). */
+/** `tag.attribute` pairs this bead is allowed to change into a *relative* asset path. */
 const REWRITABLE = new Set(["img.src", "img.srcset", "source.srcset", "link.href"]);
+
+/**
+ * `tag.attribute` pairs B2.6 is allowed to change into a *localised* form: a
+ * site-root-relative path, a per-target absolute canonical URL, or the form sink.
+ * Every value that changes is re-derived here from the captured value, so the test
+ * never asks the emitter what the answer should be.
+ */
+const LOCALISED = new Set(["a.href", "link.href", "form.action", "meta.content"]);
+
+/** The captured origin: the only host whose references are expected to move. */
+const SOURCE_ORIGIN = "https://upscalehavens.ca";
+/** The canonical origin this test's emit declares (no --base-url override). */
+const BASE_URL = SOURCE_ORIGIN;
+/** The sink this test's emit points form actions at (the documented default). */
+const FORM_SINK = "/api/submit";
 
 /** The live site's own defect, reproduced faithfully: a scheme-less anchor. */
 const KNOWN_BROKEN_ANCHORS = new Set(["chatgpt.com"]);
@@ -438,11 +453,43 @@ const KNOWN_BROKEN_ANCHORS = new Set(["chatgpt.com"]);
 interface CompareContext {
   readonly page: string;
   readonly baseDir: string;
+  readonly dirDepth: number;
   readonly path: string[];
 }
 
 function isUrlBearing(tag: string, name: string): boolean {
   return REWRITABLE.has(`${tag}.${name}`);
+}
+
+/**
+ * The expected emitted value for a self-reference this bead rewrites.
+ *
+ * Re-derived from the captured value and the capture's own data — never by calling
+ * the emitter — so a wrong rewrite cannot agree with a wrong test.
+ */
+function expectedLocalisation(
+  tag: string,
+  name: string,
+  capturedValue: string,
+  rel: readonly string[],
+  dirDepth: number,
+): string {
+  const key = `${tag}.${name}`;
+  const tail = capturedValue.slice(SOURCE_ORIGIN.length);
+
+  if (key === "form.action") return FORM_SINK;
+
+  if (key === "link.href" && rel.includes("canonical")) return `${BASE_URL}${tail}`;
+
+  // A `link` whose target the capture mirrored is an asset reference: the asset pass
+  // localises it to a path relative to this page, not to a site-root path.
+  if (key === "link.href" || key === "meta.content") {
+    const rewritten = expectedRewrite(capturedValue, dirDepth);
+    if (rewritten !== null) return rewritten;
+    if (key === "meta.content") throw new Error(`meta ${capturedValue} has no map entry`);
+  }
+
+  return tail.length === 0 ? "/" : tail;
 }
 
 /** Resolve a relative emitted reference against the page it appears on. */
@@ -473,6 +520,17 @@ function compareElements(captured: P5Node, emitted: P5Node, context: CompareCont
   for (const [index, attribute] of capturedAttributes.entries()) {
     const emittedValue = emittedAttributes[index]?.value ?? "";
     if (attribute.value === emittedValue) continue;
+
+    const key = `${tag}.${attribute.name}`;
+
+    if (LOCALISED.has(key)) {
+      const rel = (attr(captured, "rel") ?? "").toLowerCase().split(/\s+/).filter(Boolean);
+      expect(
+        emittedValue,
+        `${context.page}: ${where} <${tag} ${attribute.name}> localised incorrectly`,
+      ).toBe(expectedLocalisation(tag, attribute.name, attribute.value, rel, context.dirDepth));
+      continue;
+    }
 
     expect(
       isUrlBearing(tag, attribute.name),
@@ -541,6 +599,7 @@ describe("DOM parity", () => {
       compareElements(capturedBody as P5Node, emittedBody as P5Node, {
         page: page.url,
         baseDir: dirname(emittedPathOf(page.url)),
+        dirDepth: routeLocation(page.url).depth,
         path: ["body"],
       });
     }
@@ -569,7 +628,12 @@ describe("DOM parity", () => {
       compareElements(
         { nodeName: "head", attrs: [], childNodes: capturedChildren } as P5Node,
         { nodeName: "head", attrs: [], childNodes: emittedChildren } as P5Node,
-        { page: page.url, baseDir: dirname(emittedPathOf(page.url)), path: ["head"] },
+        {
+          page: page.url,
+          baseDir: dirname(emittedPathOf(page.url)),
+          dirDepth: routeLocation(page.url).depth,
+          path: ["head"],
+        },
       );
     }
   });
