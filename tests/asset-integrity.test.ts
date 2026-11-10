@@ -32,6 +32,13 @@ const ir = read<SiteIr>("capture/site-ir.json");
 const chain = read<StyleChain>("capture/style-chain.json");
 const map = read<RewriteMap>("capture/asset-rewrite-map.json");
 const report = read<AssetCaptureReport>("capture/assets.capture-report.json");
+/**
+ * The deferred-CSS pass ran after B1.3 and has its own report: its bytes live under
+ * `capture/assets/styles/deferred/`, so the B1.3 report cannot claim them.
+ */
+const deferred = read<{
+  totals: { references: number; uniqueFiles: number; bytesUnique: number };
+}>("capture/deferred-css.capture-report.json");
 
 function bytesAt(capturePath: string): Uint8Array {
   return new Uint8Array(readFileSync(join(ROOT, capturePath)));
@@ -122,7 +129,11 @@ describe("captured assets", () => {
   });
 
   it("accounts for every byte it claims to have written", () => {
-    const linked = chain.styleChain.filter((entry) => entry.origin === "linked");
+    // B1.3's linked sheets only: the deferred ones were captured later and their
+    // bytes are accounted for by the deferred report's own test.
+    const linked = chain.styleChain.filter(
+      (entry) => entry.origin === "linked" && !entry.localPath.startsWith("deferred/"),
+    );
     const linkedBytes = linked.reduce(
       (total, entry) => total + bytesAt(entry.capturePath).length,
       0,
@@ -212,7 +223,38 @@ describe("captured assets", () => {
       }
       return total;
     };
-    const total = walk(join(ROOT, "capture/assets"));
-    expect(total).toBe(report.totals.diskBytes);
+    // B1.3's report covers its own pass; the deferred-CSS pass added files afterwards
+    // under the same root and records their bytes in its own report.
+    expect(walk(join(ROOT, "capture/assets"))).toBe(
+      report.totals.diskBytes + deferred.totals.bytesUnique,
+    );
+  });
+
+  it("materialises every deferred sheet as one file per sha256, with its own report", () => {
+    const deferredEntries = chain.styleChain.filter((entry) =>
+      entry.localPath.startsWith("deferred/"),
+    );
+    expect(deferredEntries.length).toBe(deferred.totals.references);
+    expect(new Set(deferredEntries.map((entry) => entry.localPath)).size).toBe(
+      deferred.totals.uniqueFiles,
+    );
+
+    const directory = "capture/assets/styles/deferred";
+    const files = readdirSync(join(ROOT, directory)).sort();
+    expect(files).toEqual(
+      [...new Set(deferredEntries.map((entry) => entry.sha256))]
+        .sort()
+        .map((hash) => `${hash}.css`),
+    );
+
+    let onDisk = 0;
+    for (const name of files) {
+      const bytes = bytesAt(`${directory}/${name}`);
+      expect(sha256Hex(bytes)).toBe(name.replace(/\.css$/, ""));
+      onDisk += bytes.length;
+    }
+    expect(onDisk).toBe(deferred.totals.bytesUnique);
+    expect(chain.totals.deferredFiles).toBe(deferred.totals.uniqueFiles);
+    expect(chain.totals.deferredLinks).toBe(deferred.totals.references);
   });
 });

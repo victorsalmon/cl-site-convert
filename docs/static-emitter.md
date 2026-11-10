@@ -28,6 +28,7 @@ canonical links, which are told, on purpose (§ Self-containment).
 | `capture/routes.manifest.json` | the 19 route paths, so navigation can target them |
 | `capture/assets/media/<localPath>` | every `assets[]` blob, hash-checked before it is copied |
 | `capture/assets/styles/<localPath>` | linked stylesheet bytes (**7** files) |
+| `capture/assets/styles/deferred/<sha256>.css` | captured Divi deferred sheets (**11** files for 18 links) |
 | `capture/assets/styles/inline/<sha256>.css` | inline `<style>` block bytes (**48** files) |
 
 Every byte read is verified against the IR's recorded `sha256` before use. A drifted
@@ -50,20 +51,28 @@ route and an asset that would collide is a build failure.
 
 Everything else is the captured bytes.
 
-1. **Cascade rebuild.** All captured `<link rel="stylesheet">` tags are removed from
-   `<head>` and the page's `styleOrder` is emitted as one contiguous block where the
-   first link stood: `origin: "linked"` → `<link rel="stylesheet" href="…">`,
-   `origin: "inline"` → `<style>` wrapping the captured bytes. Order, count and origin
-   are asserted against `styleOrder` before the page is written; a mismatch is a build
-   failure, not a warning.
+1. **Cascade rebuild.** All captured `<link rel="stylesheet">` tags **and every
+   deferred `<link rel="preload" as="style">` whose bytes the page's cascade carries**
+   are removed from `<head>`, and the page's `styleOrder` is emitted as one contiguous
+   block where the first of them stood: `origin: "linked"` → `<link rel="stylesheet"
+   href="…">`, `origin: "inline"` → `<style>` wrapping the captured bytes. Order,
+   count and origin are asserted against `styleOrder` before the page is written; a
+   mismatch is a build failure, not a warning. A deferred preload whose href the
+   cascade does **not** carry is genuinely unknown: it is preserved byte-identical and
+   reported (`preservedDeferredLinks`), never dropped.
 
    *Why one block:* the capture deleted the inline `<style>` nodes, so their
    interleaved positions between non-CSS head elements are not recorded anywhere.
    Reconstructing them would be invention. What is recorded — and what cascade
    actually depends on — is the order of the CSS itself, which is preserved exactly.
 
-   Non-stylesheet head elements (`<meta>`, `<title>`, `<link rel="preload|icon">`, …)
-   keep their captured bytes and their relative order.
+   *Why a deferred link is replaced rather than kept:* its CSS is now shipped from
+   the tree, so leaving the `onload="this.rel='stylesheet'"` preload as well would load
+   the same bytes twice. The replacement keeps the captured `id` and `media` (Divi's
+   `divi-dynamic-css` node keeps its identity) and drops only `as` and `onload`.
+
+   Non-stylesheet head elements (`<meta>`, `<title>`, `<link rel="icon">`, …) keep
+   their captured bytes and their relative order.
 
 2. **Asset references.** `img[src]`, `img[srcset]`, `source[srcset]`, `link[href]` and
    `url(...)` inside linked and inline CSS are re-pointed through
@@ -104,7 +113,7 @@ touch:
 | `link[rel=canonical]` | absolute, on `--base-url` | **SEO**: a canonical URL must be absolute, and a preview must not declare the apex |
 | `form[action]` | the configured sink (`--form-sink`, default `/api/submit`) | never post to the live WordPress install |
 | `meta[content]` pointing at a captured image | relative path from the asset map | `msapplication-TileImage` is a real image reference |
-| `link[rel=preload][as=style]` (Divi deferred CSS) | **untouched** | its bytes were never captured (bead `cl-site-convert-mzi`) |
+| `link[rel=preload][as=style]` (Divi deferred CSS) | replaced by a `link[rel=stylesheet]` from the cascade, or preserved if uncaptured | its bytes are captured; leaving the preload too would load the CSS twice |
 | `img[src]`/`srcset` the capture does not hold | **untouched, reported** | the live site 404s it; there is nothing to point at |
 
 **`--base-url` is per target, and the default is a trap.** It defaults to the captured
@@ -131,13 +140,45 @@ independently — never by asking the emitter:
 | Category | Count | Reason |
 | :--- | ---: | :--- |
 | `canonical` | 19 | SEO requires absolute; rewritten to `--base-url` |
-| `deferred-css` | 18 | Divi deferred stylesheets were never captured; owned by `cl-site-convert-mzi` |
 | `unlocalisable` | 3 | the live site 404s them, so no bytes exist to localise (2 distinct images on `/mlm/applym/`) |
+
+The `deferred-css` category is **empty** as of `cl-site-convert-mzi`: all 18 deferred
+references were captured and are emitted from the cascade, so a deferred survivor is
+now a defect rather than an allowlisted exception. The category itself stays in the
+classifier because an *unknown* deferred link (one the capture never fetched) is still
+preserved-and-reported rather than dropped.
 
 Anything else that survives is a defect: the emitter itself throws
 `LocalisationError: … is not a canonical URL, a deferred-CSS asset, or an unlocalisable
 asset — it is a localisation defect, not an allowlist entry`, and the test fails. A
 mutation that leaves one anchor absolute is therefore red twice — at emit and at test.
+
+### Deferred CSS, measured and placed (`capture:deferred-css`)
+
+Divi's per-page dynamic CSS is emitted as
+`<link rel="preload" as="style" onload="this.rel='stylesheet'">`, so a capture that
+only looks for `rel="stylesheet"` misses it. The deferred pass closes that:
+
+```powershell
+pnpm capture:deferred-css
+# = build + capture the bytes + extend capture/style-chain.json + project the IR
+```
+
+It re-fetches each page politely (serialised, ≥600 ms apart, robots-aware, read-only),
+recovers the **whole** style element sequence in document order — linked, inline and
+deferred interleaved — and requires the existing part of that sequence to equal the
+page's `styleOrder` exactly. A page that drifted fails the capture instead of
+receiving a guessed position. Each deferred href is fetched once, stored under
+`capture/assets/styles/deferred/<sha256>.css`, and deduplicated by sha256: 18
+references collapsed to 11 files, 128,679 B total → 96,121 B on disk.
+
+The chain is extended by a **stable topological merge** of the existing chain path plus
+every page sequence, so existing entries keep their relative order (27 shifted index)
+and each new entry lands where that page's document had it: 9 of the 18 land mid-cascade
+(position 4 on seven pages; position 9 on `/mlm/applym/` and `/tmh/apply/`), the other
+nine are last because their documents put them last. The per-page report
+(`capture/deferred-css.capture-report.json`) records each position and the total-vs-
+unique byte count, and `tests/deferred-css.test.ts` re-derives both from the IR.
 
 ## What is proved, and how
 
@@ -151,7 +192,10 @@ the bytes on disk:
 - zero `<script>` tags and zero mount slots on every page (`bundlesForHtml` against a
   no-bundles manifest returns `[]`; a page that mounts anything is refused);
 - captured vs emitted CSS differs **only** inside `url(...)` bodies, each change
-  explained by a map entry;
+  explained by a map entry — for the 7 document-linked sheets, the 11 captured
+  deferred sheets and the 116 inline blocks alike;
+- every captured deferred preload link is gone and its bytes are a cascade stylesheet
+  link on disk (18 links, 0 surviving `onload="this.rel='stylesheet'"`);
 - every emitted `<style>` is the captured file with only url bodies substituted (and
   the verbatim wrapper is unit-tested separately);
 - every body element, attribute and class list matches the capture, with value changes
@@ -167,12 +211,6 @@ and the mutation probe.
 
 ## Known gaps, reported not hidden
 
-- **Deferred CSS.** Divi emits `<link rel="preload" as="style"
-  onload="this.rel='stylesheet'">` for per-page dynamic CSS. Those are not
-  `rel="stylesheet"` links, so they are preserved as captured and their CSS was never
-  captured by B1.3: they still point at the source host, and their 18 references are in
-  the allowlist rather than silently dropped. Deferred-CSS capture is bead
-  `cl-site-convert-mzi`.
 - **WordPress discovery links now 404 instead of leaking.** `rel="alternate"` feeds,
   `wp-json`, `xmlrpc.php` and `shortlink` are localised to site-root paths that the
   static host does not serve. They are head metadata nobody fetches on page load, and

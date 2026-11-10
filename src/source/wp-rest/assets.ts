@@ -535,6 +535,11 @@ export interface StyleChain {
     inlineUnique: number;
     inlineBytesTotal: number;
     inlineBytesUnique: number;
+    /** Deferred Divi sheets captured later (`deferred-css.ts`, bead mzi). */
+    deferredLinks?: number;
+    deferredFiles?: number;
+    deferredBytesTotal?: number;
+    deferredBytesUnique?: number;
   };
   notes: string[];
 }

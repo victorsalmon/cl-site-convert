@@ -4,9 +4,10 @@
  * What the captured document says and what the IR can represent are not the same
  * thing:
  *
- *  - `dom.html` still carries the `<link rel="stylesheet">` tags that were in the
- *    `<head>`, but **not** the `<style>` blocks: DOM normalisation deleted those
- *    nodes, leaving their bytes in `capture/assets` with a recorded `sha256`.
+ *  - `dom.html` still carries the `<link rel="stylesheet">` tags and Divi's deferred
+ *    `<link rel="preload" as="style">` tags that were in the `<head>`, but **not**
+ *    the `<style>` blocks: DOM normalisation deleted those nodes, leaving their
+ *    bytes in `capture/assets` with a recorded `sha256`.
  *  - `styles[]` holds both kinds in one site-level sequence, and `page.styleOrder`
  *    holds the page's own cascade as an ordered list of `sha256` values.
  *
@@ -16,8 +17,8 @@
  *
  *  - every non-stylesheet `<head>` element keeps its captured bytes and its
  *    position relative to the other non-stylesheet elements;
- *  - all stylesheet `<link>` tags are removed and the whole chain is emitted where
- *    the first one stood;
+ *  - all stylesheet `<link>` tags, and every deferred link whose bytes the cascade
+ *    carries, are removed and the whole chain is emitted where the first one stood;
  *  - a page whose emitted sequence does not match `styleOrder` **exactly** — count,
  *    order, origin — fails the build. This module cannot return a drifting chain.
  *
@@ -167,15 +168,25 @@ export interface CapturedStyleLink {
   readonly end: number;
   /** Raw `href` value, unquoted; `null` when the tag has none. */
   readonly href: string | null;
+  /**
+   * True for Divi's deferred form (`rel="preload" as="style" onload="…"`), which is
+   * a stylesheet the browser applies once its preload finishes, not a stylesheet
+   * link in the captured markup.
+   */
+  readonly deferred: boolean;
 }
 
 /** An attribute inside a tag, with the span it occupies. */
 interface TagAttribute {
   readonly name: string;
   readonly value: string;
+  /** Offset of the name inside the tag. */
+  readonly nameStart: number;
   /** Offset of the value inside the tag, including quotes. */
   readonly start: number;
   readonly end: number;
+  /** Verbatim source text, e.g. `media='all'`. */
+  readonly raw: string;
 }
 
 const ATTRIBUTE_PATTERN = /([a-zA-Z_:][-a-zA-Z0-9_:.]*)(\s*=\s*)("[^"]*"|'[^']*'|[^\s"'>]+)/g;
@@ -191,8 +202,10 @@ function tagAttributes(tag: string): TagAttribute[] {
     attributes.push({
       name: name.toLowerCase(),
       value: quoted ? rawValue.slice(1, -1) : rawValue,
+      nameStart: match.index,
       start,
       end: start + rawValue.length,
+      raw: tag.slice(match.index, start + rawValue.length),
     });
   }
   return attributes;
@@ -210,29 +223,68 @@ function isStylesheetLink(attributes: readonly TagAttribute[]): boolean {
   return rel.toLowerCase().split(/\s+/).filter(Boolean).includes("stylesheet");
 }
 
-/**
- * Find the captured stylesheet links in a head's content.
- *
- * `rel="preload" as="style" onload="this.rel='stylesheet'"` is deliberately **not** a
- * stylesheet link: it is a non-stylesheet head element for this purpose, it is kept,
- * and its href is whatever the capture recorded. Deferred-CSS capture is a separate
- * gap, reported rather than silently reordered.
- */
-export function findStylesheetLinks(headHtml: string): CapturedStyleLink[] {
+/** Divi's deferred form: `rel="preload" as="style"` (normally with `onload`). */
+function isDeferredStyleLink(attributes: readonly TagAttribute[]): boolean {
+  const rel = attributeValue(attributes, "rel");
+  if (rel === null) return false;
+  const tokens = rel.toLowerCase().split(/\s+/).filter(Boolean);
+  if (!tokens.includes("preload")) return false;
+  return (attributeValue(attributes, "as") ?? "").trim().toLowerCase() === "style";
+}
+
+function linksWhere(
+  headHtml: string,
+  predicate: (attributes: readonly TagAttribute[]) => boolean,
+  deferred: boolean,
+): CapturedStyleLink[] {
   const links: CapturedStyleLink[] = [];
   for (const match of headHtml.matchAll(/<link\b[^>]*>/gi)) {
     const text = match[0];
     const attributes = tagAttributes(text);
-    if (!isStylesheetLink(attributes)) continue;
+    if (!predicate(attributes)) continue;
     const start = match.index;
     links.push({
       text,
       start,
       end: start + text.length,
       href: attributeValue(attributes, "href"),
+      deferred,
     });
   }
   return links;
+}
+
+/**
+ * Find the captured `<link rel="stylesheet">` tags in a head's content.
+ *
+ * A deferred (`rel="preload" as="style"`) link is **not** included: it is a
+ * different element with a different meaning, and the caller decides separately
+ * whether its bytes are now represented in the page's cascade (see
+ * {@link findDeferredStyleLinks}).
+ */
+export function findStylesheetLinks(headHtml: string): CapturedStyleLink[] {
+  return linksWhere(headHtml, isStylesheetLink, false);
+}
+
+/**
+ * Find the captured deferred stylesheet links (`rel="preload" as="style"`) in a
+ * head's content.
+ *
+ * Divi emits one or two per page for its per-page dynamic CSS. Once those bytes are
+ * captured and placed in `page.styleOrder`, the element is re-emitted as a normal
+ * stylesheet link by the cascade rebuild and the preload tag must not survive — a
+ * page would otherwise load the CSS twice. An href the cascade does **not** carry
+ * is genuinely unknown, and is preserved and reported rather than dropped.
+ */
+export function findDeferredStyleLinks(headHtml: string): CapturedStyleLink[] {
+  return linksWhere(headHtml, isDeferredStyleLink, true);
+}
+
+/** Every captured link the cascade rebuild manages, in document order. */
+export function findCascadeStyleLinks(headHtml: string): CapturedStyleLink[] {
+  return [...findStylesheetLinks(headHtml), ...findDeferredStyleLinks(headHtml)].sort(
+    (left, right) => left.start - right.start,
+  );
 }
 
 /** Replace a tag's `href` value in place, keeping every other byte of the tag. */
@@ -257,9 +309,44 @@ export function renderLinkedStyle(
   href: string,
   captured: CapturedStyleLink | null,
 ): string {
-  if (captured !== null) return withHref(captured.text, href);
-  const media = style.media === undefined ? "" : ` media="${style.media}"`;
-  return `<link rel="stylesheet" href="${href}"${media} />`;
+  if (captured === null) {
+    const media = style.media === undefined ? "" : ` media="${style.media}"`;
+    return `<link rel="stylesheet" href="${href}"${media} />`;
+  }
+  if (captured.deferred) return renderDeferredAsStylesheet(captured, href);
+  return withHref(captured.text, href);
+}
+
+/**
+ * Turn a captured deferred tag into a real stylesheet link.
+ *
+ * The element the capture recorded is `<link rel="preload" as="style" id="…"
+ * href="…" onload="this.onload=null;this.rel='stylesheet';" />`. Its bytes are now
+ * part of the page's cascade, so it is re-emitted in the cascade block as a normal
+ * `<link rel="stylesheet">`: `as` and `onload` are dropped (they would be either
+ * meaningless or a second load), `rel` is set to `stylesheet`, and `href` points at
+ * the emitted copy. Every other captured attribute — `id`, `media`, … — survives,
+ * in its captured order, so the node keeps its identity in the document.
+ */
+export function renderDeferredAsStylesheet(captured: CapturedStyleLink, href: string): string {
+  const attributes = tagAttributes(captured.text);
+  const parts: string[] = [];
+  let hasRel = false;
+  for (const attribute of attributes) {
+    if (attribute.name === "as" || attribute.name === "onload") continue;
+    if (attribute.name === "href") {
+      parts.push(`href="${href}"`);
+      continue;
+    }
+    if (attribute.name === "rel") {
+      parts.push('rel="stylesheet"');
+      hasRel = true;
+      continue;
+    }
+    parts.push(attribute.raw);
+  }
+  if (!hasRel) parts.unshift('rel="stylesheet"');
+  return `<link ${parts.join(" ")} />`;
 }
 
 /** One entry's emitted markup, plus the inline-CSS rewrite count it contributed. */
@@ -310,15 +397,26 @@ export interface RebuiltHead {
   readonly sequence: readonly CascadeEntry[];
   /** The contiguous style block, for a report or a focused assertion. */
   readonly markup: string;
-  /** How many captured `<link rel="stylesheet">` tags were removed. */
+  /** How many captured stylesheet links were removed. */
   readonly removedLinks: number;
+  /** How many deferred preload tags the cascade represented and so replaced. */
+  readonly replacedDeferredLinks: number;
+  /** How many deferred preload tags stayed captured because no cascade entry carries them. */
+  readonly preservedDeferredLinks: number;
   /** URL substitutions performed inside inline `<style>` blocks. */
   readonly cssRewrites: number;
 }
 
 /**
  * Rebuild a page's `<head>` content: remove every captured stylesheet `<link>` and
- * emit `styleOrder` as one contiguous block where the first link stood.
+ * every deferred link the cascade now represents, and emit `styleOrder` as one
+ * contiguous block where the first of them stood.
+ *
+ * A deferred (`rel="preload" as="style"`) link whose href **is** in the sequence is
+ * replaced by the cascade's own stylesheet link — keeping it as well would load the
+ * same CSS twice. A deferred link whose href is absent from the sequence was never
+ * captured, so it is left byte-identical and counted in `preservedDeferredLinks`:
+ * preserving-and-reporting is the honest outcome, dropping it is not.
  *
  * The caller supplies `cssFor(entry)`, because the bytes live on disk and this
  * module stays pure.
@@ -332,8 +430,19 @@ export function rebuildHead(
     readonly cssFor: (entry: CascadeEntry) => string | null;
   },
 ): RebuiltHead {
-  const links = findStylesheetLinks(headHtml);
-  const insertionPoint = links[0]?.start ?? headHtml.length;
+  const links = findCascadeStyleLinks(headHtml);
+  const linkedHrefs = new Set(
+    sequence
+      .filter((entry) => entry.origin === "linked" && entry.href !== undefined)
+      .map((entry) => (entry.href as string).trim()),
+  );
+  const removals = links.filter(
+    (link) => !link.deferred || (link.href !== null && linkedHrefs.has(link.href.trim())),
+  );
+  const preservedDeferredLinks = links.filter(
+    (link) => link.deferred && !removals.includes(link),
+  ).length;
+  const insertionPoint = removals[0]?.start ?? headHtml.length;
 
   const byHref = new Map<string, CapturedStyleLink>();
   for (const link of links) {
@@ -358,17 +467,17 @@ export function rebuildHead(
   }
   const markup = pieces.join("\n");
 
-  // One pass: copy the head up to the first stylesheet link, drop every stylesheet
-  // link, and emit the whole chain where the first one was.
+  // One pass: copy the head up to the first managed link, drop every managed link,
+  // and emit the whole chain where the first one was.
   let cursor = 0;
   let rebuilt = "";
-  for (const link of links) {
+  for (const link of removals) {
     rebuilt += headHtml.slice(cursor, link.start);
-    if (link.start === insertionPoint && link === links[0]) rebuilt += markup;
+    if (link.start === insertionPoint && link === removals[0]) rebuilt += markup;
     cursor = link.end;
   }
   rebuilt += headHtml.slice(cursor);
-  if (links.length === 0) {
+  if (removals.length === 0) {
     rebuilt = `${headHtml.slice(0, insertionPoint)}${markup}${headHtml.slice(insertionPoint)}`;
   }
 
@@ -376,7 +485,9 @@ export function rebuildHead(
     headHtml: rebuilt,
     sequence: [...sequence],
     markup,
-    removedLinks: links.length,
+    removedLinks: removals.length,
+    replacedDeferredLinks: removals.filter((link) => link.deferred).length,
+    preservedDeferredLinks,
     cssRewrites,
   };
 }

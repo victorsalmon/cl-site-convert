@@ -1,5 +1,5 @@
 {
-  "note": "Every absolute reference to the captured origin that emission deliberately leaves absolute. Divi deferred CSS is owned by cl-site-convert-mzi (never captured); canonicals must stay absolute; the rest are assets the live site itself 404s, so there are no bytes to localise. tests/emit-static-selfcontained.test.ts asserts the emitted tree's residuals equal this list exactly.",
+  "note": "Every absolute reference to the captured origin that emission deliberately leaves absolute. Canonicals must stay absolute (rewritten to --base-url); the rest are assets the live site 404s, so there are no bytes to localise. Divi deferred CSS used to be a third category (bead cl-site-convert-mzi): those sheets are now captured and emitted as stylesheet links from the page cascade, so a deferred survivor would be a defect. tests/emit-static-selfcontained.test.ts asserts the emitted tree's residuals equal this list exactly.",
   "sourceOrigin": "https://upscalehavens.ca",
   "entries": [
     {
@@ -15,12 +15,6 @@
       "value": "https://upscalehavens.ca/care/"
     },
     {
-      "page": "/care/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/557/et-core-unified-tb-393-deferred-557.min.css?ver=1786301721"
-    },
-    {
       "page": "/care/showings/",
       "tag": "link",
       "attribute": "href",
@@ -33,34 +27,10 @@
       "value": "https://upscalehavens.ca/care/signal-admin/"
     },
     {
-      "page": "/care/signal-admin/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/602/et-core-unified-tb-393-deferred-602.min.css?ver=1786181031"
-    },
-    {
-      "page": "/care/signal-admin/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/602/et-divi-dynamic-tb-393-602.css?ver=1786181030"
-    },
-    {
       "page": "/care/sweepy-admin/",
       "tag": "link",
       "attribute": "href",
       "value": "https://upscalehavens.ca/care/sweepy-admin/"
-    },
-    {
-      "page": "/care/sweepy-admin/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/563/et-core-unified-tb-393-deferred-563.min.css?ver=1786532272"
-    },
-    {
-      "page": "/care/sweepy-admin/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/563/et-divi-dynamic-tb-393-563.css?ver=1786532272"
     },
     {
       "page": "/care/ttlock-admin/",
@@ -69,34 +39,16 @@
       "value": "https://upscalehavens.ca/care/ttlock-admin/"
     },
     {
-      "page": "/care/ttlock-admin/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/834/et-core-unified-tb-393-deferred-834.min.css?ver=1786086776"
-    },
-    {
-      "page": "/care/ttlock-admin/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/834/et-divi-dynamic-tb-393-834.css?ver=1786086776"
-    },
-    {
       "page": "/mlm/",
       "tag": "link",
       "attribute": "href",
       "value": "https://upscalehavens.ca/mlm/"
     },
     {
-      "page": "/mlm/",
+      "page": "/mlm/applym/",
       "tag": "link",
       "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/548/et-core-unified-tb-393-deferred-548.min.css?ver=1786312515"
-    },
-    {
-      "page": "/mlm/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/548/et-divi-dynamic-tb-393-548-late.css?ver=1786312515"
+      "value": "https://upscalehavens.ca/mlm/applym/"
     },
     {
       "page": "/mlm/applym/",
@@ -108,43 +60,19 @@
       "page": "/mlm/applym/",
       "tag": "img",
       "attribute": "srcset",
-      "value": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1-400x284.jpg"
+      "value": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1.jpg"
     },
     {
       "page": "/mlm/applym/",
       "tag": "img",
       "attribute": "srcset",
-      "value": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1.jpg"
-    },
-    {
-      "page": "/mlm/applym/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/mlm/applym/"
-    },
-    {
-      "page": "/mlm/applym/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/353/et-core-unified-deferred-353.min.css?ver=1787452794"
-    },
-    {
-      "page": "/mlm/applym/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/353/et-divi-dynamic-353.css?ver=1787452793"
+      "value": "https://upscalehavens.ca/wp-content/uploads/2024/07/real-estate-09-1024x648-1-400x284.jpg"
     },
     {
       "page": "/mlm/onboard-mlm/",
       "tag": "link",
       "attribute": "href",
       "value": "https://upscalehavens.ca/mlm/onboard-mlm/"
-    },
-    {
-      "page": "/mlm/onboard-mlm/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/739/et-core-unified-tb-393-deferred-739.min.css?ver=1786060718"
     },
     {
       "page": "/resources/",
@@ -171,34 +99,10 @@
       "value": "https://upscalehavens.ca/tmh/"
     },
     {
-      "page": "/tmh/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/72/et-core-unified-tb-393-deferred-72.min.css?ver=1786095076"
-    },
-    {
-      "page": "/tmh/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/72/et-divi-dynamic-tb-393-72-late.css?ver=1786095076"
-    },
-    {
       "page": "/tmh/apply/",
       "tag": "link",
       "attribute": "href",
       "value": "https://upscalehavens.ca/tmh/apply/"
-    },
-    {
-      "page": "/tmh/apply/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/160/et-core-unified-deferred-160.min.css?ver=1786474099"
-    },
-    {
-      "page": "/tmh/apply/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/160/et-divi-dynamic-160.css?ver=1786474099"
     },
     {
       "page": "/tmh/offboard/",
@@ -207,22 +111,10 @@
       "value": "https://upscalehavens.ca/tmh/offboard/"
     },
     {
-      "page": "/tmh/offboard/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/472/et-core-unified-tb-393-deferred-472.min.css?ver=1786087261"
-    },
-    {
       "page": "/tmh/onboard-tmh/",
       "tag": "link",
       "attribute": "href",
       "value": "https://upscalehavens.ca/tmh/onboard-tmh/"
-    },
-    {
-      "page": "/tmh/onboard-tmh/",
-      "tag": "link",
-      "attribute": "href",
-      "value": "https://upscalehavens.ca/wp-content/et-cache/426/et-core-unified-tb-393-deferred-426.min.css?ver=1786087258"
     },
     {
       "page": "/ush/owner/",

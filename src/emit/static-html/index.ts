@@ -189,6 +189,8 @@ export interface PageEmitResult {
   readonly selfRefs: number;
   /** Absolute self-references this page still carries, all allowlisted. */
   readonly residualRefs: number;
+  /** Deferred preload links replaced by a cascade stylesheet link on this page. */
+  readonly deferredStyles: number;
   readonly scriptTags: number;
   readonly bundles: number;
 }
@@ -249,6 +251,8 @@ export interface EmitReport {
     readonly total: number;
     readonly linkedFiles: readonly LinkedStyleResult[];
     readonly inlineBlocksShipped: number;
+    /** Linked files that came from a captured deferred preload link. */
+    readonly deferredFiles: number;
   };
   readonly assets: { readonly copied: number; readonly bytes: number; readonly skipped: boolean };
   readonly selfReferences: SelfReferenceReport;
@@ -259,6 +263,7 @@ export interface EmitReport {
     readonly cssRefs: number;
     readonly selfRefs: number;
     readonly residualRefs: number;
+    readonly deferredStyles: number;
     readonly scriptTags: number;
   };
   readonly notes: readonly string[];
@@ -414,6 +419,7 @@ export function emitPage(
       inlineCssRefs: rebuilt.cssRewrites,
       selfRefs: localised.rewrites.length,
       residualRefs: residual,
+      deferredStyles: rebuilt.replacedDeferredLinks,
       scriptTags,
       bundles: bundles.length,
     },
@@ -572,9 +578,11 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
 
     // Nothing may be lost or double-counted. The document that reaches this pass holds
     // every captured reference except the ones an earlier pass already localised
-    // (stylesheet links rebuilt by the cascade, asset references rewritten by the asset
-    // pass), and each of those must be either rewritten here or still present.
-    const earlierPasses = (pageBefore["stylesheet"] ?? 0) + (pageBefore["asset"] ?? 0);
+    // (stylesheet links and captured deferred links rebuilt by the cascade, asset
+    // references rewritten by the asset pass), and each of those must be either
+    // rewritten here or still present.
+    const earlierPasses =
+      (pageBefore["stylesheet"] ?? 0) + (pageBefore["asset"] ?? 0) + result.deferredStyles;
     const entering = captured.length - earlierPasses;
     const handled = localisation.rewrites.length + residual.length;
     if (entering !== handled) {
@@ -629,7 +637,7 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
   const notes = [
     "dist/ is generated and gitignored; the tree is reproducible from the IR plus capture/assets/**.",
     "Linked stylesheets keep their mirrored absolute path so their own relative url(...) references still resolve; a path with no .css extension gains one in the same directory so a static host serves it as text/css.",
-    '<link rel="preload" as="style" onload="this.rel=\'stylesheet\'"> tags are not stylesheet links: they are preserved as captured and their CSS was not captured by B1.3, so they still point at the source host. Deferred-CSS capture is a separate gap (cl-site-convert-mzi).',
+    '<link rel="preload" as="style" onload="this.rel=\'stylesheet\'"> tags whose CSS was captured are replaced by a normal stylesheet link in the page cascade, so the page never loads the same CSS twice; a deferred href the cascade does not carry is preserved as captured and reported.',
     "Every other absolute reference to the captured origin is rewritten to a site-root-relative path, so the artifact is portable and internal navigation cannot leave the new site.",
     `Canonical links stay absolute and declare ${baseUrl}; a preview deployment and the apex MUST be emitted with different --base-url values or search engines will be told the new site duplicates the old one.`,
     formSinkIsDefault
@@ -678,6 +686,11 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
       total: ir.styles.length,
       linkedFiles: [...linkedFiles.values()].sort((left, right) => left.order - right.order),
       inlineBlocksShipped: pages.reduce((total, page) => total + page.inlineStyles, 0),
+      deferredFiles: new Set(
+        ir.styles
+          .filter((style) => isLinkedStyle(style) && style.localPath.startsWith("deferred/"))
+          .map((style) => emittedStylePath(style)),
+      ).size,
     },
     assets: { copied: assetsCopied, bytes: assetBytes, skipped: !copyAssets },
     selfReferences,
@@ -690,6 +703,7 @@ export async function emitStaticSite(options: EmitOptions = {}): Promise<EmitRep
         [...linkedFiles.values()].reduce((total, file) => total + file.cssRefs, 0),
       selfRefs: pages.reduce((total, page) => total + page.selfRefs, 0),
       residualRefs: pages.reduce((total, page) => total + page.residualRefs, 0),
+      deferredStyles: pages.reduce((total, page) => total + page.deferredStyles, 0),
       scriptTags: pages.reduce((total, page) => total + page.scriptTags, 0),
     },
     notes,
@@ -818,6 +832,10 @@ export function formatEmitReport(report: EmitReport): string {
       `${report.styles.linkedFiles.reduce((total, file) => total + file.cssRefs, 0)} url() rewrite(s)`,
   );
   lines.push(`  inline blocks shipped: ${report.styles.inlineBlocksShipped} across all pages`);
+  lines.push(
+    `  deferred CSS         : ${report.totals.deferredStyles} preload link(s) replaced by ` +
+      `${report.styles.deferredFiles} captured file(s) in the cascade`,
+  );
   lines.push(
     `  assets               : ${
       report.assets.skipped

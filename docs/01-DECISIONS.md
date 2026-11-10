@@ -749,3 +749,49 @@ B4.1a measured the form surface instead of assuming it. Contract and evidence:
   Forms, no Divi contact form, no empty code module, no iframe form. The bead's
   acceptance criterion assumed those pages held forms; the capture says they do
   not, so there is nothing to extract there and nothing was invented to satisfy it.
+
+## 2026-11-10 - Deferred CSS: capture it, then place it where the document had it
+
+`cl-site-convert-mzi` closed the last real fidelity gap: 18 Divi deferred stylesheets
+(`<link rel="preload" as="style" onload="this.rel='stylesheet'">`) were never captured,
+so 11 pages were visually incomplete without the source host. Contract and evidence:
+`src/source/wp-rest/deferred-css.ts`, `capture/deferred-css.capture-report.json`,
+`docs/static-emitter.md`.
+
+- **The gap was real, and no single pass could have seen it.** `rel` is `preload`, not
+  `stylesheet`, so B1.3's chain scan skipped the files entirely. Re-checking the
+  emitted tree for absolute self-references found all 18, which is why they were an
+  allowlisted category rather than a silent omission.
+- **Position is measured, never appended.** `dom.html` keeps the deferred tags but not
+  the inline `<style>` blocks, so the head alone cannot say whether a deferred sheet
+  sat before or after an inline block. The capture re-fetches each page (polite,
+  serialised, robots-aware) and recovers the full interleaved style sequence, matching
+  each existing element back to its chain entry and **requiring the recovered sequence
+  to equal `page.styleOrder`**. Nine of the 18 land mid-cascade (position 4 on seven
+  pages, position 9 on two); the rest are last because their document put them last.
+  Appending all 18 would have changed the cascade on seven pages and silently restyled
+  them.
+- **The chain grew by insertion, not re-derivation.** A stable topological merge of the
+  existing chain path plus every page sequence keeps existing entries in their relative
+  order (27 shifted index; none reordered) and fails if a page's sequence is not an
+  increasing subsequence. `scripts/project-style-chain.mjs` now recognises entries by
+  identity (href/media or inline sha) instead of by `order`, so it still refuses a
+  changed hash or a disappeared entry but permits an honest shift.
+- **A projection bug was found and fixed on the way.** The projector copied a page's
+  pre-existing `styleOrder` key before writing the new one, so a chain extension would
+  have kept the stale cascade and `--check` would have agreed with it. The projection
+  now owns that field. This is exactly the class of defect a "green on the old data"
+  check cannot see.
+- **Deferred bytes are captured and deduplicated by sha256.** 18 hrefs → 11 distinct
+  files (128,679 B on the wire → 96,121 B on disk). Each href keeps its own chain entry
+  so a page's own `dom.html` still disambiguates the shared payloads; the files live at
+  `capture/assets/styles/deferred/<sha256>.css`.
+- **The emitter replaces, it does not duplicate.** A deferred link whose href the
+  cascade carries is removed from the head and re-emitted as a normal
+  `<link rel="stylesheet">` (keeping `id` and `media`, dropping `as`/`onload`); an
+  unknown deferred href is preserved byte-identical and reported. The allowlist's
+  `deferred-css` category is now empty: 19 canonical + 3 unlocalisable images, nothing
+  else.
+- **The proof is byte-level.** Every captured deferred file re-hashes to its name, and
+  each emitted copy differs from it only inside `url()` bodies, exactly like the
+  document-linked and inline sheets.
