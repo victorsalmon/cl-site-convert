@@ -1,5 +1,5 @@
 /**
- * Site IR v1 — TypeScript projection of `schemas/site-ir.schema.json`.
+ * Site IR v1.1 — TypeScript projection of `schemas/site-ir.schema.json`.
  *
  * Hand-synced to the schema. The schema is the source of truth: if the two ever
  * disagree the schema wins and this file is the defect. `tests/fixtures/site-ir`
@@ -9,10 +9,14 @@
  *  - `dom.html` is a normalized HTML skeleton whose class names are preserved
  *    byte-for-byte. Never re-author it into a component tree.
  *  - `styles` is ordered and verbatim. Never prune, reorder, or "clean" it.
+ *
+ * v1.1 is **additive**: `style.origin` (linked | inline), `unsupported.evidence[]`
+ * and the top-level `securityFindings[]` are all optional, so every v1.0 document
+ * is still a valid v1.1 document.
  */
 
 /** Version of the IR shape this file describes. */
-export const IR_VERSION = "1.0.0" as const;
+export const IR_VERSION = "1.1.0" as const;
 
 /** Semver range the v1 schema accepts (`1.x.y`). */
 export const IR_VERSION_PATTERN = /^1\.\d+\.\d+$/;
@@ -53,6 +57,9 @@ export type BehaviorKind =
 export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type RedirectCode = 301 | 302 | 307 | 308;
+
+/** Where a stylesheet entry came from. Absent means `linked` (the v1.0 shape). */
+export type StyleOrigin = "linked" | "inline";
 
 export type ArtifactKind =
   "site-ir" | "static-html" | "islands-wasm" | "api-functions" | "deployment" | "capability-report";
@@ -142,16 +149,37 @@ export interface Asset {
   referencedBy?: string[];
 }
 
-/** Ordered, verbatim. There is deliberately no pruning or cleaned flag. */
-export interface Style {
-  href: string;
+/**
+ * Ordered, verbatim stylesheet entry. There is deliberately no pruning or
+ * cleaned variant.
+ *
+ * `order` is the position in the chain counted across **both** linked and inline
+ * entries, in captured document order.
+ */
+interface StyleBase {
   localPath: string;
+  /** Hash of the shipped bytes: proves verbatim hand-off. */
   sha256: string;
-  /** 0-based cascade order; emitters link ascending and never reorder. */
+  /** 0-based position in the chain; emitters emit ascending and never reorder. */
   order: number;
   media?: string;
   subsite?: string;
 }
+
+/** A linked stylesheet. `href` is required, exactly as in v1.0. */
+export interface LinkedStyle extends StyleBase {
+  /** Absent means `linked`. */
+  origin?: "linked";
+  href: string;
+}
+
+/** An inline `<style>` block. Inline CSS has no url, so it has no `href`. */
+export interface InlineStyle extends StyleBase {
+  origin: "inline";
+  href?: string;
+}
+
+export type Style = LinkedStyle | InlineStyle;
 
 export interface MenuItem {
   label: string;
@@ -261,6 +289,18 @@ export interface ApiContract {
   notes?: string;
 }
 
+/** How a capability finding was proven. */
+export type CapabilityEvidenceKind = "rest-namespace" | "dom-marker" | "rest-endpoint";
+
+/** Machine-checkable proof of a capability finding. */
+export interface CapabilityEvidence {
+  kind: CapabilityEvidenceKind;
+  /** The literal namespace token, matched DOM marker, or endpoint url. */
+  value: string;
+  /** Where it was observed, e.g. `/wp-json/` or the route the marker was found on. */
+  source: string;
+}
+
 export interface UnsupportedCapability {
   /** Stable capability key, e.g. `wpml`. */
   capability: string;
@@ -268,11 +308,28 @@ export interface UnsupportedCapability {
   /** True when faithful conversion is impossible until this is resolved. */
   blocking?: boolean;
   where?: string[];
+  /** What proved this finding. Optional: prose in `detail` is not evidence. */
+  evidence?: CapabilityEvidence[];
 }
 
 export interface Capabilities {
   supported: string[];
   unsupported: UnsupportedCapability[];
+}
+
+/**
+ * A security observation about the **source** site. Not a conversion blocker
+ * unless `blocking` is true, and never a reason to drop the finding silently.
+ */
+export interface SecurityFinding {
+  id: string;
+  /** Stable finding class, e.g. `public-user-enumeration`. */
+  kind: string;
+  detail: string;
+  /** True when the site must not be published from this IR until resolved. */
+  blocking: boolean;
+  /** Affected urls when page-scoped; omit for site-wide findings. */
+  where?: string[];
 }
 
 export interface Redirect {
@@ -305,6 +362,8 @@ export interface SiteIr {
   behaviors?: Behavior[];
   apiContracts?: ApiContract[];
   capabilities: Capabilities;
+  /** Security observations about the source site. Optional and additive. */
+  securityFindings?: SecurityFinding[];
   redirects?: Redirect[];
   capture?: Capture;
 }

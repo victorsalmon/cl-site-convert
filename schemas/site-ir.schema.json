@@ -1,7 +1,7 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://schemas.cl-site-convert.dev/site-ir-1.0.0.schema.json",
-  "title": "Site IR v1",
+  "$id": "https://schemas.cl-site-convert.dev/site-ir-1.1.0.schema.json",
+  "title": "Site IR v1.1",
   "description": "The frozen intermediate representation that every source adapter produces and every emitter consumes. `dom` is the fidelity carrier: it is a normalized HTML skeleton whose class names are preserved byte-for-byte. Styles are ordered and verbatim; there is no pruning field and no 'cleaned' variant. Markdown is never the IR.",
   "type": "object",
   "required": ["irVersion", "site", "pages", "assets", "styles", "capabilities"],
@@ -24,7 +24,7 @@
       "items": { "$ref": "#/$defs/asset" }
     },
     "styles": {
-      "description": "Ordered, verbatim stylesheet chain. The emitter links these in `order`, byte-identical, and never prunes them.",
+      "description": "Ordered, verbatim stylesheet chain: linked stylesheets and inline `<style>` blocks in one sequence. The emitter emits these in `order`, byte-identical, and never prunes them.",
       "type": "array",
       "items": { "$ref": "#/$defs/style" }
     },
@@ -56,6 +56,11 @@
       "items": { "$ref": "#/$defs/apiContract" }
     },
     "capabilities": { "$ref": "#/$defs/capabilities" },
+    "securityFindings": {
+      "description": "Security observations about the *source* site, recorded so they are not lost and not smuggled into `capabilities.unsupported[]`. A finding here is not a conversion blocker unless it sets `blocking: true`.",
+      "type": "array",
+      "items": { "$ref": "#/$defs/securityFinding" }
+    },
     "redirects": {
       "type": "array",
       "items": { "$ref": "#/$defs/redirect" }
@@ -249,12 +254,18 @@
       }
     },
     "style": {
+      "description": "One entry in the ordered stylesheet chain. `origin` says whether the CSS arrived as a linked stylesheet or as an inline `<style>` block; a v1.0 document omits `origin`, which means `linked`, and must still carry `href`.",
       "type": "object",
-      "required": ["href", "localPath", "sha256", "order"],
+      "required": ["localPath", "sha256", "order"],
       "additionalProperties": false,
       "properties": {
+        "origin": {
+          "description": "Where this CSS came from. Absent is `linked`: the v1.0 shape, unchanged. `inline` means the CSS had no external url (a `<style>` block in the captured document) and therefore no `href`.",
+          "enum": ["linked", "inline"],
+          "default": "linked"
+        },
         "href": {
-          "description": "The stylesheet url as captured (absolute or site-relative).",
+          "description": "The stylesheet url as captured (absolute or site-relative). Required unless `origin` is `inline`.",
           "type": "string",
           "minLength": 1
         },
@@ -264,12 +275,22 @@
           "$ref": "#/$defs/sha256"
         },
         "order": {
-          "description": "0-based cascade order. Emitters link in ascending order and never reorder.",
+          "description": "0-based position in the chain, counted across **both** linked and inline entries in document order. Emitters emit in ascending order and never reorder.",
           "type": "integer",
           "minimum": 0
         },
         "media": { "type": "string" },
         "subsite": { "$ref": "#/$defs/slug" }
+      },
+      "if": {
+        "description": "The href requirement is conditional, never dropped.",
+        "required": ["origin"],
+        "properties": { "origin": { "const": "inline" } }
+      },
+      "then": { "description": "Inline CSS has no url, so it has no `href`." },
+      "else": {
+        "required": ["href"],
+        "properties": { "href": true }
       }
     },
     "menu": {
@@ -541,6 +562,56 @@
           "type": "boolean"
         },
         "where": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/routePath" }
+        },
+        "evidence": {
+          "description": "Machine-checkable proof of the finding: the literal REST namespace, DOM marker, or endpoint that proved it. Keeps the proof out of prose.",
+          "type": "array",
+          "items": { "$ref": "#/$defs/capabilityEvidence" }
+        }
+      }
+    },
+    "capabilityEvidence": {
+      "description": "One piece of evidence that proved a capability finding. `kind` says how it was observed, `value` is the literal token, and `source` says where it was observed.",
+      "type": "object",
+      "required": ["kind", "value", "source"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {
+          "enum": ["rest-namespace", "dom-marker", "rest-endpoint"]
+        },
+        "value": {
+          "description": "The literal namespace token, matched DOM marker, or endpoint url.",
+          "type": "string",
+          "minLength": 1
+        },
+        "source": {
+          "description": "Where it was observed, e.g. `/wp-json/` or the route the marker was found on.",
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "securityFinding": {
+      "description": "A security observation about the source site. Recorded honestly rather than dropped, and never invented.",
+      "type": "object",
+      "required": ["id", "kind", "detail", "blocking"],
+      "additionalProperties": false,
+      "properties": {
+        "id": { "$ref": "#/$defs/slug" },
+        "kind": {
+          "description": "Stable finding class, e.g. `public-user-enumeration`, `exposed-debug`, `verbose-error`.",
+          "type": "string",
+          "pattern": "^[a-z][a-z0-9-]*$"
+        },
+        "detail": { "type": "string", "minLength": 1 },
+        "blocking": {
+          "description": "True when the site must not be published from this IR until the finding is resolved.",
+          "type": "boolean"
+        },
+        "where": {
+          "description": "Affected urls, when the finding is page-scoped. Omit for site-wide findings.",
           "type": "array",
           "items": { "$ref": "#/$defs/routePath" }
         }

@@ -1,4 +1,4 @@
-//! Site IR v1 — the frozen intermediate representation.
+//! Site IR v1.1 — the frozen intermediate representation.
 //!
 //! Every source adapter produces this; every emitter consumes it. The JSON
 //! Schema at `schemas/site-ir.schema.json` is the source of truth and these
@@ -11,10 +11,16 @@
 //!    preserved byte-for-byte**. It is the fidelity carrier. Never re-author it
 //!    into a component tree.
 //! 2. [`Style`] entries are **ordered and verbatim**. There is no pruning field
-//!    and no "cleaned" variant; emitters link them in [`Style::order`].
+//!    and no "cleaned" variant; emitters emit them in [`Style::order`].
 //!
 //! Markdown is never the IR. [`Page::prose_markdown`] is an optional projection
 //! for search or editing and no emitter may read it.
+//!
+//! v1.1 is **additive**: [`Style::origin`], [`UnsupportedCapability::evidence`]
+//! and [`SiteIr::security_findings`] are all optional, so every v1.0 document is
+//! still a valid v1.1 document. Inline CSS (Divi emits 5-14 `<style>` blocks per
+//! page) needs no `href`, so [`Style::href`] is required only for linked entries;
+//! [`SiteIr::validate`] enforces that, because serde cannot.
 
 use std::collections::BTreeMap;
 use std::fmt;
@@ -23,7 +29,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::{Map, Value};
 
 /// Semver of the IR shape these types describe.
-pub const IR_VERSION: &str = "1.0.0";
+pub const IR_VERSION: &str = "1.1.0";
 
 /// Opaque JSON data: island props, wire shapes.
 pub type JsonObject = Map<String, Value>;
@@ -82,6 +88,9 @@ pub struct SiteIr {
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub api_contracts: Vec<ApiContract>,
     pub capabilities: Capabilities,
+    /// Security observations about the source site. Additive in v1.1.
+    #[serde(default, skip_serializing_if = "Vec::is_empty")]
+    pub security_findings: Vec<SecurityFinding>,
     #[serde(default, skip_serializing_if = "Vec::is_empty")]
     pub redirects: Vec<Redirect>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
@@ -146,6 +155,14 @@ impl SiteIr {
         for style in &self.styles {
             if !style_orders.insert(style.order) {
                 errors.push(format!("duplicate style order `{}`", style.order));
+            }
+            // The schema states this as `if origin == inline then ... else href`,
+            // which serde cannot express.
+            if !style.is_inline() && style.href.is_none() {
+                errors.push(format!(
+                    "style at order {} has no `href`; only an `origin: \"inline\"` style may omit it",
+                    style.order
+                ));
             }
         }
 
@@ -353,21 +370,48 @@ pub enum AssetKind {
     Other,
 }
 
+/// Where a stylesheet entry came from. Absent means [`StyleOrigin::Linked`],
+/// which is the v1.0 shape.
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "lowercase")]
+pub enum StyleOrigin {
+    #[default]
+    Linked,
+    Inline,
+}
+
 /// Ordered, verbatim stylesheet entry. There is deliberately no pruning or
 /// cleaned variant.
+///
+/// [`Style::order`] is the position in the chain counted across **both** linked
+/// and inline entries, in captured document order.
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
 #[serde(rename_all = "camelCase", deny_unknown_fields)]
 pub struct Style {
-    pub href: String,
+    /// Absent means `linked`. Skipped on serialize, so a v1.0 entry round-trips
+    /// byte-identically.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub origin: Option<StyleOrigin>,
+    /// The captured url. Required unless [`Style::origin`] is
+    /// [`StyleOrigin::Inline`]; [`SiteIr::validate`] enforces that.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub href: Option<String>,
     pub local_path: String,
     /// Hash of the shipped bytes: proves verbatim hand-off.
     pub sha256: String,
-    /// 0-based cascade order. Emitters link ascending and never reorder.
+    /// 0-based position in the chain. Emitters emit ascending and never reorder.
     pub order: u32,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub media: Option<String>,
     #[serde(default, skip_serializing_if = "Option::is_none")]
     pub subsite: Option<String>,
+}
+
+impl Style {
+    /// True when this entry is an inline `<style>` block rather than a link.
+    pub fn is_inline(&self) -> bool {
+        self.origin == Some(StyleOrigin::Inline)
+    }
 }
 
 // ---------------------------------------------------------------------------
@@ -641,6 +685,45 @@ pub struct UnsupportedCapability {
     /// Page urls affected by this capability gap.
     #[serde(default, rename = "where", skip_serializing_if = "Option::is_none")]
     pub where_pages: Option<Vec<String>>,
+    /// What proved this finding. Prose in `detail` is not evidence.
+    #[serde(default, skip_serializing_if = "Option::is_none")]
+    pub evidence: Option<Vec<CapabilityEvidence>>,
+}
+
+/// How a capability finding was proven.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Serialize, Deserialize)]
+#[serde(rename_all = "kebab-case")]
+pub enum CapabilityEvidenceKind {
+    RestNamespace,
+    DomMarker,
+    RestEndpoint,
+}
+
+/// Machine-checkable proof of a capability finding.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct CapabilityEvidence {
+    pub kind: CapabilityEvidenceKind,
+    /// The literal namespace token, matched DOM marker, or endpoint url.
+    pub value: String,
+    /// Where it was observed, e.g. `/wp-json/` or the route the marker was on.
+    pub source: String,
+}
+
+/// A security observation about the **source** site. Not a conversion blocker
+/// unless `blocking` is true, and never a reason to drop the finding silently.
+#[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
+#[serde(rename_all = "camelCase", deny_unknown_fields)]
+pub struct SecurityFinding {
+    pub id: String,
+    /// Stable finding class, e.g. `public-user-enumeration`.
+    pub kind: String,
+    pub detail: String,
+    /// True when the site must not be published from this IR until resolved.
+    pub blocking: bool,
+    /// Affected urls when page-scoped; absent for site-wide findings.
+    #[serde(default, rename = "where", skip_serializing_if = "Option::is_none")]
+    pub where_pages: Option<Vec<String>>,
 }
 
 #[derive(Debug, Clone, PartialEq, Serialize, Deserialize)]
@@ -735,6 +818,12 @@ mod tests {
         include_str!("../../../tests/fixtures/site-ir/invalid-redirect-code.json");
     const DANGLING_CONTRACT: &str =
         include_str!("../../../tests/fixtures/site-ir/invalid-dangling-api-contract.json");
+    const INLINE_STYLES: &str =
+        include_str!("../../../tests/fixtures/site-ir/inline-styles.valid.json");
+    const INLINE_STYLE_NO_SHA256: &str =
+        include_str!("../../../tests/fixtures/site-ir/invalid-inline-style-missing-sha256.json");
+    const BAD_STYLE_ORIGIN: &str =
+        include_str!("../../../tests/fixtures/site-ir/invalid-style-origin.json");
 
     fn parse(json: &str) -> Result<SiteIr, serde_json::Error> {
         serde_json::from_str(json)
@@ -840,5 +929,117 @@ mod tests {
             .expect_err("referential checks must reject this IR");
         assert!(errors.iter().any(|e| e.contains("no-such-contract")));
         assert!(errors.iter().any(|e| e.contains("/missing-page/")));
+    }
+
+    // -- v1.1: additive, so a v1.0 document must still parse and validate ------
+
+    #[test]
+    fn supported_versions_cover_the_1x_family() {
+        assert!(is_supported_ir_version("1.0.0"));
+        assert!(is_supported_ir_version("1.1.0"));
+        assert!(!is_supported_ir_version("2.0.0"));
+    }
+
+    #[test]
+    fn v1_0_style_entry_still_parses_and_gains_nothing() {
+        let ir = parse(WORDPRESS).expect("a v1.0 document must still parse");
+        assert_eq!(ir.ir_version, "1.0.0");
+        assert_eq!(ir.styles.len(), 3);
+        for style in &ir.styles {
+            assert_eq!(style.origin, None, "a v1.0 entry carries no `origin`");
+            assert!(!style.is_inline());
+            assert!(style.href.as_deref().is_some_and(|href| !href.is_empty()));
+        }
+        assert!(ir.security_findings.is_empty());
+        assert!(ir.validate().is_ok(), "{:?}", ir.validate());
+
+        // Round-tripping must not invent an `origin: "linked"`, which would
+        // rewrite a committed v1.0 artifact on a load/save cycle.
+        let json = serde_json::to_string(&ir).expect("serialize");
+        assert!(!json.contains("\"origin\""));
+        assert_eq!(parse(&json).expect("re-parse").styles, ir.styles);
+    }
+
+    #[test]
+    fn v1_1_inline_style_entry_parses_without_href() {
+        let ir = parse(INLINE_STYLES).expect("the v1.1 fixture must parse");
+        assert_eq!(ir.ir_version, "1.1.0");
+
+        // `order` is document position across both linked and inline entries.
+        assert_eq!(
+            ir.styles
+                .iter()
+                .map(|style| style.order)
+                .collect::<Vec<_>>(),
+            vec![0, 1]
+        );
+        assert!(!ir.styles[0].is_inline());
+        assert!(ir.styles[0].href.is_some());
+
+        let inline = &ir.styles[1];
+        assert!(inline.is_inline());
+        assert!(inline.href.is_none(), "inline CSS has no url");
+        assert!(!inline.sha256.is_empty(), "the bytes are still hashed");
+        assert!(
+            !inline.local_path.is_empty(),
+            "the bytes still land somewhere"
+        );
+
+        ir.validate().expect("the fixture is referentially valid");
+    }
+
+    #[test]
+    fn v1_1_evidence_and_security_findings_parse() {
+        let ir = parse(INLINE_STYLES).expect("the v1.1 fixture must parse");
+
+        let capability = ir
+            .capabilities
+            .unsupported
+            .first()
+            .expect("one unsupported capability");
+        let evidence = capability
+            .evidence
+            .as_ref()
+            .and_then(|evidence| evidence.first())
+            .expect("the finding carries proof");
+        assert_eq!(evidence.kind, CapabilityEvidenceKind::RestNamespace);
+        assert_eq!(evidence.value, "litespeed/v1");
+        assert_eq!(evidence.source, "/wp-json/");
+
+        let finding = ir.security_findings.first().expect("one security finding");
+        assert_eq!(finding.id, "public-user-endpoint");
+        assert_eq!(finding.kind, "public-user-enumeration");
+        assert!(finding.detail.contains("/wp-json/wp/v2/users"));
+        assert!(!finding.blocking);
+        assert!(
+            finding.where_pages.is_none(),
+            "a site-wide finding names no page"
+        );
+
+        assert_eq!(
+            parse(&serde_json::to_string(&ir).expect("serialize")).expect("re-parse"),
+            ir
+        );
+    }
+
+    #[test]
+    fn inline_style_without_sha256_is_rejected() {
+        // Inline only relaxes `href`; the shipped bytes are still hashed.
+        assert!(parse(INLINE_STYLE_NO_SHA256).is_err());
+    }
+
+    #[test]
+    fn unknown_style_origin_is_rejected() {
+        assert!(parse(BAD_STYLE_ORIGIN).is_err());
+    }
+
+    #[test]
+    fn linked_style_without_href_fails_validation() {
+        // serde cannot express the schema's `if origin == inline ... else href`,
+        // so `validate` is the enforcement point.
+        let mut ir = parse(WORDPRESS).expect("v1.0 fixture must parse");
+        ir.styles[0].href = None;
+        let errors = ir.validate().expect_err("a linked style needs its href");
+        assert!(errors.iter().any(|error| error.contains("href")));
     }
 }
