@@ -1,0 +1,12 @@
+{
+  "pages": [
+    {
+      "path": "/",
+      "html": "<!DOCTYPE html><html lang=\"en-CA\"><body class=\"et_divi_theme et-db\"><div id=\"et-boc\" class=\"et-boc\"><div class=\"et_pb_section et_pb_section_0 et_section_regular\"><div class=\"et_pb_row et_pb_row_0\"><h1 class=\"et_pb_module_header\">Intentional homes</h1></div></div></div></body></html>"
+    },
+    {
+      "path": "/tmh/",
+      "html": "<!DOCTYPE html><html><body class=\"et_divi_theme\"><div class=\"et_pb_section et_pb_section_1\"><p>Two properties.</p></div></body></html>"
+    }
+  ]
+}

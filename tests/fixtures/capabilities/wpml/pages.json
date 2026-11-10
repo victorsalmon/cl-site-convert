@@ -1,0 +1,8 @@
+{
+  "pages": [
+    {
+      "path": "/",
+      "html": "<!DOCTYPE html><html lang=\"en-CA\"><head><link rel=\"alternate\" hreflang=\"fr-CA\" href=\"https://example.test/fr/\"></head><body><div class=\"wpml-ls-statics-shortcode_actions wpml-ls\"><a href=\"https://example.test/fr/\">Français</a></div></body></html>"
+    }
+  ]
+}

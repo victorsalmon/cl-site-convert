@@ -1,7 +1,7 @@
 <#
 .SYNOPSIS
-    The repository gate: lint, typecheck, validate:ir, validate:plugins, test,
-    cargo test.
+    The repository gate: lint, typecheck, validate:ir, validate:capabilities,
+    validate:plugins, test, cargo test.
 
 .DESCRIPTION
     Fail-closed. Every step must genuinely pass for the gate to exit 0.
@@ -75,6 +75,7 @@ try {
     Invoke-NativeStep -Name 'lint' -Exe 'pnpm' -Arguments @('run', 'lint') | Out-Null
     Invoke-NativeStep -Name 'typecheck' -Exe 'pnpm' -Arguments @('run', 'typecheck') | Out-Null
     Invoke-NativeStep -Name 'validate:ir' -Exe 'pnpm' -Arguments @('run', 'validate:ir') | Out-Null
+    Invoke-NativeStep -Name 'validate:capabilities' -Exe 'pnpm' -Arguments @('run', 'validate:capabilities') | Out-Null
     Invoke-NativeStep -Name 'validate:plugins' -Exe 'pnpm' -Arguments @('run', 'validate:plugins') | Out-Null
     Invoke-NativeStep -Name 'test' -Exe 'pnpm' -Arguments @('run', 'test') | Out-Null
 
@@ -83,6 +84,18 @@ try {
     # pins the exact channel and wasm target, and rustup installs both automatically.
     # A missing toolchain is therefore a FAIL with remediation, never a silent skip
     # (cl-common ADR 0012: a gate that cannot pass is a defect).
+    #
+    # rustup installs to %USERPROFILE%\.cargo\bin. If that directory exists but is
+    # not on PATH (a Windows PATH never updated after rustup, which is the state of
+    # this machine on 2026-11-11), the toolchain is provisioned but undiscoverable.
+    # Find it rather than fail a satisfiable gate; a genuinely missing toolchain
+    # still fails below with the same remediation.
+    $cargoBin = Join-Path $env:USERPROFILE '.cargo\bin'
+    if ($null -eq (Get-Command 'cargo' -ErrorAction SilentlyContinue) -and (Test-Path (Join-Path $cargoBin 'cargo.exe'))) {
+        $env:PATH = "$cargoBin;$env:PATH"
+        Write-Host "note: cargo is not on PATH; using rustup's install location $cargoBin" -ForegroundColor Yellow
+    }
+
     $cargo = Get-Command 'cargo' -ErrorAction SilentlyContinue
     if ($null -eq $cargo) {
         $failures.Add('toolchain: cargo is not on PATH. Install rustup from https://rustup.rs then re-open the shell.')

@@ -1,0 +1,5 @@
+{
+  "name": "WPML fixture",
+  "_fixtureNote": "Multilingual install. WPML's REST namespace is `wpml/v1` on current versions; the DOM language switcher is what leaks onto the page.",
+  "namespaces": ["oembed/1.0", "wpml/v1", "sitepress-multilingual-cms/v1", "wp/v2"]
+}
