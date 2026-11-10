@@ -69,6 +69,51 @@ agent does not re-litigate it.
   slower than static for production. FrankenWasm runs Wasm plugins *inside* PHP.
   The only mature automated path is WP → static HTML, which this repo extends.
 
+## 2026-11-10 — Scope: WordPress only
+
+- This tool converts **WordPress** sites. It is not a general static-site
+  converter. No generic `source/scrape` adapter as a primary path.
+- Consequence: `source/` is WordPress-specific; Playwright is reserved for
+  **telemetry** (B1.4) and **verification** (B5.1), not primary capture.
+
+## 2026-11-10 — Static-export plugins: adopt Simply Static as an adapter, reject WP2Static
+
+Research findings (docs.simplystatic.com; `elementor/wp2static` + Wayback):
+
+| | Simply Static | WP2Static |
+| :--- | :--- | :--- |
+| Maintenance | **Active** — 3.8.24 (Nov 2026), live docs, 30k+ installs | **Abandoned** — last release 7.2 (Jan 2023), last commit Feb 2024, delisted from wp.org since 2020 |
+| Free artifact | ZIP (Activity Log) or a **Local Directory** path you set | Fixed path `wp-content/uploads/wp2static-processed-site` |
+| Scriptable CLI | **WP-CLI is Pro-only ($99/yr)** | **WP-CLI in free core** (`detect`/`crawl`/`post_process`/`deploy`) |
+| Structured metadata (IR) | **No** — flat HTML + assets | **No** — flat HTML + assets |
+| Cloudflare-native output | `_redirects` + `_headers` | none |
+| Forms | Pro: webhook `/wp-json/simplystatic/v1/entries`, supports **Fluent Forms** | none |
+
+**Decision.** Neither plugin emits a Site IR, so neither can be the architecture —
+their export is flat HTML and loses template identity, taxonomies and form
+definitions. But Simply Static is genuinely useful as **one adapter plus a
+free fidelity baseline**:
+
+1. `source/simply-static` — consume its Local Directory export for the **HTML
+   mirror, assets and CSS verbatim** (B1.3), plus its `_redirects`/`_headers`
+   for the `cf-pages` deployer.
+2. **Golden visual baseline** — its mirror is a pixel-accurate reference our own
+   emitter is diffed against (B5.1) from day one, before any Rust exists.
+3. **Feasibility probe** — if the site cannot static-export cleanly, dynamic
+   blockers surface immediately.
+
+Structured metadata comes from **`source/wp-rest`**, not from the export.
+
+**Use the free tier, triggered manually, reading the Local Directory.** The
+$99/yr Pro tier buys WP-CLI automation we do not need for a one-site migration.
+Simply Static Pro's forms webhook is noted as a *reference implementation* only —
+our sink must replicate the WP Webhooks→Pabbly envelope, which is a different
+contract.
+
+**WP2Static is rejected.** Its only advantage (free WP-CLI) does not justify
+depending on a project that is delisted, Elementor-owned and untouched since
+early 2024.
+
 ## 2026-11-11 — Open operator questions (blocking specific beads)
 
 1. Is WP Webhooks used **only** for the form → Pabbly hop, or other triggers too?
