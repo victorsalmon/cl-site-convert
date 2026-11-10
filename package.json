@@ -16,6 +16,7 @@
     "format": "prettier --write .",
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "validate:ir": "node scripts/validate-ir.mjs",
+    "validate:plugins": "pnpm run build && node scripts/validate-plugins.mjs",
     "test": "vitest run",
     "test:watch": "vitest",
     "gate": "pwsh -NoProfile -File scripts/gate.ps1"

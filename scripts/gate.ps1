@@ -1,6 +1,7 @@
 <#
 .SYNOPSIS
-    The repository gate: lint, typecheck, test, cargo test.
+    The repository gate: lint, typecheck, validate:ir, validate:plugins, test,
+    cargo test.
 
 .DESCRIPTION
     Fail-closed. Every step must genuinely pass for the gate to exit 0.
@@ -74,6 +75,7 @@ try {
     Invoke-NativeStep -Name 'lint' -Exe 'pnpm' -Arguments @('run', 'lint') | Out-Null
     Invoke-NativeStep -Name 'typecheck' -Exe 'pnpm' -Arguments @('run', 'typecheck') | Out-Null
     Invoke-NativeStep -Name 'validate:ir' -Exe 'pnpm' -Arguments @('run', 'validate:ir') | Out-Null
+    Invoke-NativeStep -Name 'validate:plugins' -Exe 'pnpm' -Arguments @('run', 'validate:plugins') | Out-Null
     Invoke-NativeStep -Name 'test' -Exe 'pnpm' -Arguments @('run', 'test') | Out-Null
 
     # --- Rust -----------------------------------------------------------------

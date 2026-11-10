@@ -1,0 +1,8 @@
+{
+  "url": "/",
+  "slug": "home",
+  "title": "Home",
+  "status": "publish",
+  "template": "page-home",
+  "html": "<div class=\"site-wrapper\"><h1 class=\"hero-title\">Home</h1></div>"
+}

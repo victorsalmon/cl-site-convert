@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://schemas.cl-site-convert.dev/plugins/plugin-template/config-0.1.0.schema.json",
+  "title": "plugin-template configuration",
+  "description": "Shape of the per-plugin config block. Referenced by `configSchema` in plugin.json.",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "timeoutMs": {
+      "description": "Per-request timeout while capturing.",
+      "type": "integer",
+      "minimum": 1000
+    },
+    "userAgent": {
+      "description": "User-Agent sent while capturing.",
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

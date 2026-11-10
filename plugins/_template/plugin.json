@@ -1,0 +1,15 @@
+{
+  "name": "plugin-template",
+  "version": "0.1.0",
+  "irRange": "^1.0.0",
+  "emits": ["site-ir", "capability-report"],
+  "hooks": ["capture:start", "capture:page", "capture:end"],
+  "assets": [
+    { "path": "config.example.json", "kind": "config" },
+    { "path": "fixtures/golden-page.json", "kind": "fixture" },
+    { "path": "fixtures/golden-form.json", "kind": "fixture", "optional": true }
+  ],
+  "runbook": "runbook.md",
+  "configSchema": "config.schema.json",
+  "entrypoint": "index.mjs"
+}
