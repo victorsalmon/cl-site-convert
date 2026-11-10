@@ -165,6 +165,13 @@ the bytes on disk:
 base URLs, meta images, the allowlist equality and its composition, external references
 and the mutation probe.
 
+Both suites are unit-level evidence. The **gate-level** proof is separate and stricter:
+`pnpm validate:parity` (`src/verify/parity/`) treats `capture/site-ir.json` as the
+authority and proves the whole emitted tree is *equivalent* to it — body and head trees,
+CSS bytes in the captured cascade order, asset hashes, residual allowlist equality, the
+zero-script rule and a cross-page leak check. It is a deterministic equivalence, not a
+screenshot diff; what that does and does not cover is `docs/fidelity-gate.md`.
+
 ## Known gaps, reported not hidden
 
 - **Deferred CSS.** Divi emits `<link rel="preload" as="style"

@@ -749,3 +749,39 @@ B4.1a measured the form surface instead of assuming it. Contract and evidence:
   Forms, no Divi contact form, no empty code module, no iframe form. The bead's
   acceptance criterion assumed those pages held forms; the capture says they do
   not, so there is nothing to extract there and nothing was invented to satisfy it.
+
+## 2026-11-10 - B5.1 fidelity gate: equivalence is the primary proof, the pixel diff is opt-in
+
+B5.1 was specified as a Playwright pixel diff across a viewport x interaction-state
+matrix. Measured against what the emitter actually does, that is the weaker instrument,
+and it contradicts a decision already taken (`2026-11-11 - Toolchain: ... no
+binary-downloading npm packages`). The gate is therefore an **equivalence** verifier:
+`src/verify/parity/`, documented in `docs/fidelity-gate.md`.
+
+- **The emitter replays; it does not re-implement layout.** It ships the captured DOM
+  and the captured CSS bytes in the captured cascade order. So *identical tree +
+  identical bytes + identical order* means identical rendering **by construction**.
+  That is a stronger claim than "looks the same at six widths", and it needs no
+  browser, no threshold and no sampling.
+- **A pixel diff samples and must tolerate.** Any real renderer forces a tolerance
+  (antialiasing, font availability, sub-pixel rounding), and a tolerance can hide a
+  missing rule. It is kept as a **designed, opt-in secondary stage** - viewport
+  matrix, interaction states, perceptual threshold, per-page allowlist - and is
+  deliberately **not installed**, because every real-browser driver resolves a binary
+  at install time.
+- **Each check names itself** (`artefact-set`, `document-shell`, `body-tree`,
+  `head-tree`, `cascade`, `assets`, `residuals`, `scripts`, `cross-page-leak`), and a
+  mutation suite proves each one can fail: a swapped cascade, a changed class, a
+  deleted asset, a one-byte CSS edit, a node moved between pages, an added `<script>`.
+  A gate nobody has seen fail is not evidence.
+- **The residual allowlist is reused, not re-derived.** `tests/fixtures/self-contained/allowlist.json`
+  stays the single source of truth; the gate asserts set equality and re-justifies
+  every entry independently.
+- **The gate builds what it verifies.** `pnpm validate:parity` runs `pnpm emit:static`
+  first; a missing IR or `dist/site` exits **2** (cannot-evaluate), never 0.
+- **The claim is stated with its limits.** Font rasterisation, externally hosted
+  resources, browser bugs and anything JavaScript must render are outside it. The
+  live example is the Fluent Forms conversational mount on `/tmh/apply/`: the static
+  arm ships the mount, not the questions, so the gate will report that page as
+  equivalent *and the form will still be missing*. A green gate must never be read as
+  "the form works".

@@ -1,8 +1,8 @@
 <#
 .SYNOPSIS
     The repository gate: lint, typecheck, validate:ir, validate:capabilities,
-    validate:seo, validate:plugins, validate:wasm-size, test, check-toolchain,
-    cargo fmt, cargo clippy, cargo test.
+    validate:seo, validate:plugins, validate:wasm-size, test, validate:parity,
+    check-toolchain, cargo fmt, cargo clippy, cargo test.
 
 .DESCRIPTION
     Fail-closed. Every step must genuinely pass for the gate to exit 0.
@@ -102,6 +102,13 @@ try {
     Invoke-NativeStep -Name 'validate:wasm-size' -Exe 'pnpm' -Arguments @('run', 'validate:wasm-size') | Out-Null
 
     Invoke-NativeStep -Name 'test' -Exe 'pnpm' -Arguments @('run', 'test') | Out-Null
+
+    # The fidelity gate is an EQUIVALENCE proof, not a screenshot diff: it rebuilds
+    # dist/site from the IR and then proves the emitted body tree, the CSS bytes and
+    # the cascade order are the capture's. It builds what it verifies (`emit:static`
+    # runs first), so a stale artifact cannot pass. Exit 2 (cannot-evaluate) is a
+    # failure here, never a pass — see docs/fidelity-gate.md and cl-common ADR 0012.
+    Invoke-NativeStep -Name 'validate:parity' -Exe 'pnpm' -Arguments @('run', 'validate:parity') | Out-Null
 
     # --- Rust -----------------------------------------------------------------
     # The toolchain is a documented, provisionable prerequisite: rust-toolchain.toml
