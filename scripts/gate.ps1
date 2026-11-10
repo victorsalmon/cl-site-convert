@@ -7,14 +7,13 @@
 .DESCRIPTION
     Fail-closed. Every step must genuinely pass for the gate to exit 0.
 
-    The Rust step is the one exception, and only while this machine has no Rust
-    toolchain (bead B0.6). A missing toolchain is reported as a loud, named
-    SKIP-with-waiver: visible in the output and in the summary, never a silent
-    pass and never a green tick. Pass -RequireCargo (CI with a toolchain, or
-    once B0.6 lands) to make the waiver an error.
+    The Rust toolchain is a documented, provisionable prerequisite (rust-toolchain.toml
+    pins the channel and wasm target). A missing toolchain is therefore a FAIL with
+    remediation, never a silent skip — see cl-common ADR 0012.
 
 .PARAMETER RequireCargo
-    Turn the "cargo missing" waiver into a hard failure.
+    Deprecated no-op. Cargo is always required; kept so existing invocations do not
+    break.
 
 .EXAMPLE
     pnpm gate
@@ -32,6 +31,17 @@ Set-StrictMode -Version Latest
 
 $repoRoot = Split-Path -Parent $PSScriptRoot
 Push-Location $repoRoot
+
+# rustup installs to %USERPROFILE%\.cargo\bin. If that directory exists but is not
+# on PATH — a Windows User PATH never refreshed after rustup, which was the state of
+# this machine on 2026-11-11 — the toolchain is provisioned but undiscoverable.
+# Resolve it HERE, before any step runs: validate:wasm-size shells out to cargo, so
+# discovering the toolchain later in the Rust section is too late.
+$cargoBin = Join-Path $env:USERPROFILE '.cargo\bin'
+if ($null -eq (Get-Command 'cargo' -ErrorAction SilentlyContinue) -and (Test-Path (Join-Path $cargoBin 'cargo.exe'))) {
+    $env:PATH = "$cargoBin;$env:PATH"
+    Write-Host "note: cargo is not on PATH; using rustup's install location $cargoBin" -ForegroundColor Yellow
+}
 
 $failures = [System.Collections.Generic.List[string]]::new()
 $skips = [System.Collections.Generic.List[string]]::new()
@@ -98,17 +108,7 @@ try {
     # A missing toolchain is therefore a FAIL with remediation, never a silent skip
     # (cl-common ADR 0012: a gate that cannot pass is a defect).
     #
-    # rustup installs to %USERPROFILE%\.cargo\bin. If that directory exists but is
-    # not on PATH (a Windows PATH never updated after rustup, which is the state of
-    # this machine on 2026-11-11), the toolchain is provisioned but undiscoverable.
-    # Find it rather than fail a satisfiable gate; a genuinely missing toolchain
-    # still fails below with the same remediation.
-    $cargoBin = Join-Path $env:USERPROFILE '.cargo\bin'
-    if ($null -eq (Get-Command 'cargo' -ErrorAction SilentlyContinue) -and (Test-Path (Join-Path $cargoBin 'cargo.exe'))) {
-        $env:PATH = "$cargoBin;$env:PATH"
-        Write-Host "note: cargo is not on PATH; using rustup's install location $cargoBin" -ForegroundColor Yellow
-    }
-
+    # The toolchain PATH is resolved at the top of this script, before any step.
     $cargo = Get-Command 'cargo' -ErrorAction SilentlyContinue
     if ($null -eq $cargo) {
         $failures.Add('toolchain: cargo is not on PATH. Install rustup from https://rustup.rs then re-open the shell.')
