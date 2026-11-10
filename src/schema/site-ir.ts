@@ -12,7 +12,7 @@
  */
 
 /** Version of the IR shape this file describes. */
-export const IR_VERSION = '1.0.0' as const;
+export const IR_VERSION = "1.0.0" as const;
 
 /** Semver range the v1 schema accepts (`1.x.y`). */
 export const IR_VERSION_PATTERN = /^1\.\d+\.\d+$/;
@@ -24,61 +24,38 @@ export function isSupportedIrVersion(version: string): boolean {
 /** Opaque JSON data: island props, wire shapes. Never `any`. */
 export type JsonObject = Record<string, unknown>;
 
-export type PageStatus = 'publish' | 'draft' | 'private' | 'pending' | 'future';
+export type PageStatus = "publish" | "draft" | "private" | "pending" | "future";
 
-export type AssetKind =
-  | 'image'
-  | 'font'
-  | 'script'
-  | 'document'
-  | 'media'
-  | 'other';
+export type AssetKind = "image" | "font" | "script" | "document" | "media" | "other";
 
 export type FormFieldType =
-  | 'text'
-  | 'email'
-  | 'tel'
-  | 'url'
-  | 'number'
-  | 'textarea'
-  | 'select'
-  | 'radio'
-  | 'checkbox'
-  | 'checkbox-group'
-  | 'file'
-  | 'date'
-  | 'hidden'
-  | 'honeypot'
-  | 'turnstile';
+  | "text"
+  | "email"
+  | "tel"
+  | "url"
+  | "number"
+  | "textarea"
+  | "select"
+  | "radio"
+  | "checkbox"
+  | "checkbox-group"
+  | "file"
+  | "date"
+  | "hidden"
+  | "honeypot"
+  | "turnstile";
 
-export type SinkKind =
-  | 'webhook'
-  | 'pabbly'
-  | 'email-ses'
-  | 'sheets-direct';
+export type SinkKind = "webhook" | "pabbly" | "email-ses" | "sheets-direct";
 
 export type BehaviorKind =
-  | 'toggle'
-  | 'tabs'
-  | 'accordion'
-  | 'slider'
-  | 'modal'
-  | 'ajax-form'
-  | 'scroll'
-  | 'copy'
-  | 'other';
+  "toggle" | "tabs" | "accordion" | "slider" | "modal" | "ajax-form" | "scroll" | "copy" | "other";
 
-export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'DELETE';
+export type HttpMethod = "GET" | "POST" | "PUT" | "PATCH" | "DELETE";
 
 export type RedirectCode = 301 | 302 | 307 | 308;
 
 export type ArtifactKind =
-  | 'site-ir'
-  | 'static-html'
-  | 'islands-wasm'
-  | 'api-functions'
-  | 'deployment'
-  | 'capability-report';
+  "site-ir" | "static-html" | "islands-wasm" | "api-functions" | "deployment" | "capability-report";
 
 export interface Permalinks {
   /** WordPress permalink structure, e.g. `/%postname%/`. */
@@ -243,7 +220,7 @@ export interface FormValidation {
   requiredMessage?: string;
   successMessage?: string;
   errorMessage?: string;
-  spam?: Array<'honeypot' | 'turnstile'>;
+  spam?: Array<"honeypot" | "turnstile">;
 }
 
 export interface SubmitContract {
@@ -332,24 +309,22 @@ export interface SiteIr {
   capture?: Capture;
 }
 
-export type SiteIrValidationResult =
-  | { ok: true; ir: SiteIr }
-  | { ok: false; errors: string[] };
+export type SiteIrValidationResult = { ok: true; ir: SiteIr } | { ok: false; errors: string[] };
 
 /**
  * Structural guard used by adapters and emitters at the seam. Returns the value
  * typed only when the shape is present; the JSON Schema does the deep check.
  */
 export function isSiteIr(value: unknown): value is SiteIr {
-  if (typeof value !== 'object' || value === null) return false;
+  if (typeof value !== "object" || value === null) return false;
   const candidate = value as Partial<SiteIr>;
-  if (typeof candidate.irVersion !== 'string') return false;
+  if (typeof candidate.irVersion !== "string") return false;
   if (!isSupportedIrVersion(candidate.irVersion)) return false;
-  if (typeof candidate.site !== 'object' || candidate.site === null) return false;
+  if (typeof candidate.site !== "object" || candidate.site === null) return false;
   if (!Array.isArray(candidate.pages)) return false;
   if (!Array.isArray(candidate.assets)) return false;
   if (!Array.isArray(candidate.styles)) return false;
-  if (typeof candidate.capabilities !== 'object' || candidate.capabilities === null) {
+  if (typeof candidate.capabilities !== "object" || candidate.capabilities === null) {
     return false;
   }
   return true;

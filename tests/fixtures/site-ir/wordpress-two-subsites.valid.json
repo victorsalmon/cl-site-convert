@@ -43,7 +43,9 @@
         "robots": "index,follow",
         "ogTitle": "Upscale Havens",
         "ogImage": "https://upscalehavens.ca/wp-content/uploads/hero-1600.jpg",
-        "jsonLd": [{ "@context": "https://schema.org", "@type": "Organization", "name": "Upscale Havens" }]
+        "jsonLd": [
+          { "@context": "https://schema.org", "@type": "Organization", "name": "Upscale Havens" }
+        ]
       }
     },
     {
@@ -206,7 +208,13 @@
       "title": "Apply — The Maple House",
       "page": "/tmh/apply/",
       "fields": [
-        { "name": "names[first]", "type": "text", "label": "First name", "required": true, "validation": { "maxLength": 80 } },
+        {
+          "name": "names[first]",
+          "type": "text",
+          "label": "First name",
+          "required": true,
+          "validation": { "maxLength": 80 }
+        },
         { "name": "names[last]", "type": "text", "label": "Last name", "required": true },
         { "name": "email", "type": "email", "label": "Email", "required": true },
         { "name": "phone", "type": "tel", "label": "Phone" },
@@ -277,7 +285,15 @@
     }
   ],
   "capabilities": {
-    "supported": ["pages", "posts", "menus", "taxonomies", "forms", "redirects", "shortcodes-resolved"],
+    "supported": [
+      "pages",
+      "posts",
+      "menus",
+      "taxonomies",
+      "forms",
+      "redirects",
+      "shortcodes-resolved"
+    ],
     "unsupported": [
       {
         "capability": "wp-webhooks",

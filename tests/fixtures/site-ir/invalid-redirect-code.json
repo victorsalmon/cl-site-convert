@@ -18,7 +18,5 @@
   "assets": [],
   "styles": [],
   "capabilities": { "supported": ["pages"], "unsupported": [] },
-  "redirects": [
-    { "from": "/old-home/", "to": "/", "code": 200 }
-  ]
+  "redirects": [{ "from": "/old-home/", "to": "/", "code": 200 }]
 }

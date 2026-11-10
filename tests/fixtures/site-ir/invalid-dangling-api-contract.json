@@ -26,8 +26,6 @@
       "submitContract": { "sink": "pabbly", "endpointRef": "no-such-contract" }
     }
   ],
-  "behaviors": [
-    { "page": "/missing-page/", "selector": "form", "kind": "ajax-form" }
-  ],
+  "behaviors": [{ "page": "/missing-page/", "selector": "form", "kind": "ajax-form" }],
   "capabilities": { "supported": ["pages"], "unsupported": [] }
 }
