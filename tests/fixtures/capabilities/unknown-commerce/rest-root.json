@@ -1,0 +1,5 @@
+{
+  "name": "Unrecognised commerce namespace",
+  "_fixtureNote": "Two namespaces the catalog has never heard of, both named like a shop. This is the case the fail-loudly rule exists for: nothing here is proven stateless, and `shopengine` in particular looks transactional.",
+  "namespaces": ["oembed/1.0", "shopengine/v2", "tickets/v1", "wp/v2"]
+}

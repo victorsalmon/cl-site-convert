@@ -1,0 +1,5 @@
+{
+  "name": "Unrecognised but innocuous-looking namespace",
+  "_fixtureNote": "An analytics plugin nobody catalogued. It probably carries no server state — but 'probably' is not a classification, so this must block too.",
+  "namespaces": ["acme-analytics/v1", "oembed/1.0", "wp/v2"]
+}

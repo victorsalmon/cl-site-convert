@@ -1,0 +1,5 @@
+{
+  "name": "WooCommerce fixture",
+  "_fixtureNote": "A shop site: WooCommerce's own namespace plus the blocks namespace, because a modern install publishes both.",
+  "namespaces": ["oembed/1.0", "woocommerce/v3", "wc-blocks/v1", "wc/store/v1", "wp/v2"]
+}

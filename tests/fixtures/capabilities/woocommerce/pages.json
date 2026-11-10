@@ -1,0 +1,12 @@
+{
+  "pages": [
+    {
+      "path": "/shop/",
+      "html": "<!DOCTYPE html><html><body class=\"woocommerce woocommerce-page\"><ul class=\"products\"><li class=\"product\"><a class=\"add_to_cart_button\" href=\"?add-to-cart=42\">Add to cart</a></li></ul></body></html>"
+    },
+    {
+      "path": "/cart/",
+      "html": "<!DOCTYPE html><html><body class=\"woocommerce-cart\"><table class=\"shop_table cart_totals\"><tr><td>Total</td></tr></table></body></html>"
+    }
+  ]
+}
