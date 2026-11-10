@@ -1,0 +1,34 @@
+{
+  "irVersion": "1.1.0",
+  "site": {
+    "baseUrl": "https://example.ca",
+    "title": "Example",
+    "locale": "en_CA",
+    "permalinks": {
+      "structure": "/%postname%/"
+    }
+  },
+  "pages": [
+    {
+      "url": "/",
+      "slug": "home",
+      "status": "publish",
+      "template": "",
+      "dom": {
+        "html": "<div class=\"wrap\"><h1 class=\"site-title\">Example</h1></div>"
+      }
+    }
+  ],
+  "assets": [],
+  "styles": [
+    {
+      "origin": "inline",
+      "localPath": "styles/0000-inline.css",
+      "order": 0
+    }
+  ],
+  "capabilities": {
+    "supported": [],
+    "unsupported": []
+  }
+}

@@ -1,0 +1,65 @@
+{
+  "irVersion": "1.1.0",
+  "site": {
+    "baseUrl": "https://example.ca",
+    "title": "Example",
+    "locale": "en_CA",
+    "permalinks": {
+      "structure": "/%postname%/"
+    }
+  },
+  "pages": [
+    {
+      "url": "/",
+      "slug": "home",
+      "title": "Example",
+      "status": "publish",
+      "template": "page-template-blank.php",
+      "dom": {
+        "html": "<div class=\"et_pb_section et_pb_section_0\"><h1 class=\"et_pb_module_header\">Example</h1></div>",
+        "doctype": "<!DOCTYPE html>"
+      }
+    }
+  ],
+  "assets": [],
+  "styles": [
+    {
+      "origin": "linked",
+      "href": "https://example.ca/wp-content/themes/Divi/style.css",
+      "localPath": "styles/0000-divi-style.css",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000001",
+      "order": 0
+    },
+    {
+      "origin": "inline",
+      "localPath": "styles/0001-et-critical-inline-css.css",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000002",
+      "order": 1
+    }
+  ],
+  "capabilities": {
+    "supported": ["divi", "fluent-forms"],
+    "unsupported": [
+      {
+        "capability": "litespeed-cache",
+        "detail": "Page cache cannot be bypassed from the client; freshness was proven against REST `modified`.",
+        "blocking": false,
+        "evidence": [
+          {
+            "kind": "rest-namespace",
+            "value": "litespeed/v1",
+            "source": "/wp-json/"
+          }
+        ]
+      }
+    ]
+  },
+  "securityFindings": [
+    {
+      "id": "public-user-endpoint",
+      "kind": "public-user-enumeration",
+      "detail": "`/wp-json/wp/v2/users` is publicly readable: one user is enumerable (count only; no names or emails were recorded).",
+      "blocking": false
+    }
+  ]
+}

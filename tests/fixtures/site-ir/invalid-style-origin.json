@@ -1,0 +1,36 @@
+{
+  "irVersion": "1.1.0",
+  "site": {
+    "baseUrl": "https://example.ca",
+    "title": "Example",
+    "locale": "en_CA",
+    "permalinks": {
+      "structure": "/%postname%/"
+    }
+  },
+  "pages": [
+    {
+      "url": "/",
+      "slug": "home",
+      "status": "publish",
+      "template": "",
+      "dom": {
+        "html": "<div class=\"wrap\"><h1 class=\"site-title\">Example</h1></div>"
+      }
+    }
+  ],
+  "assets": [],
+  "styles": [
+    {
+      "origin": "embedded",
+      "href": "https://example.ca/wp-content/themes/Divi/style.css",
+      "localPath": "styles/0000-divi-style.css",
+      "sha256": "0000000000000000000000000000000000000000000000000000000000000001",
+      "order": 0
+    }
+  ],
+  "capabilities": {
+    "supported": [],
+    "unsupported": []
+  }
+}
