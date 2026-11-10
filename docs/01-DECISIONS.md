@@ -219,7 +219,49 @@ TMH's form though `/mlm/applym/` exists; three pages carry a scheme-less
 Resolved and no longer open: history migration (not needed), WP Webhooks scope
 (pure glue, eliminated), Pabbly scope (pure glue, preserved).
 
-## 2026-11-11 — Capability gate: unknown is blocking, and "not evaluated" is not "clean"
+## 2026-11-11 — B1.2 capture: normalisation only deletes; inline Divi CSS is a blocking gap
+
+Measured by building the Site IR for all 19 pages (`capture/site-ir.json`,
+`capture/site-ir.capture-report.json`).
+
+- **2,320,052 B** of rendered HTML became **371,838 B** of `dom.html` — 83.9% of the
+  served bytes were script, style and comment payloads, not markup.
+- **Normalisation is string surgery, never parse-and-re-serialise.** A tree
+  round-trip rewrites attribute quoting, entity spelling and void-element syntax,
+  and any of those is visual drift. Only whole nodes are cut out (`script`, `style`,
+  HTML comments, `#wpadminbar`, telemetry pixels/hints/frames), plus CRLF→LF. Every
+  other byte stays where the server put it.
+- **The fidelity invariant is a test, not a claim:** parse5 parses the raw page,
+  prunes the removable nodes as a *tree*, and must deep-equal the parse of
+  `dom.html` — tag, attribute order, every class value and every text node — and a
+  serialize→parse round-trip must be stable. A surviving element's class attribute
+  must stay an ordered subsequence of the capture; the adapter refuses to emit if not.
+- **`styles[]` and `assets[]` stay empty in this pass.** A style entry requires the
+  `sha256` of shipped bytes, and inventing one would be a lie. Stylesheet capture is
+  B1.3; the `<link rel="stylesheet">` tags remain inside every `dom.html`.
+- **Blocking finding — inline critical CSS has no representation in v1.** Divi
+  4.27.7 inlines 5–14 `<style>` blocks per page (80–117 KB per page, ~1.77 MB in
+  total, including the whole Divi theme, `et-critical-inline-css`, global styles and
+  an `ETmodules` `@font-face`). `styles[]` requires an `href`, so inline CSS cannot
+  be expressed. The capture drops those blocks and records each one's `sha256` and
+  byte length in the capture report, which makes recovery provable. **B1.3 must
+  materialise them as ordered stylesheet files (synthesised `localPath`, capture
+  order preserved), or v1.1 needs an inline-CSS field.** Until then, emitted pages
+  render without their critical CSS and visual parity is not achievable.
+- **LiteSpeed cannot be bypassed from the client.** All 19 pages returned
+  `x-litespeed-cache: hit`, and `Cache-Control: no-cache` returned byte-identical
+  HTML (still a hit). Freshness is therefore evidenced per page by comparing
+  LiteSpeed's embedded cache stamp with REST `modified` — on this capture all 19 are
+  cache-newer-than-content, so the golden baseline is not stale.
+- **Divi's closing comments are gone.** `<!-- #main-header -->`, `<!-- .container -->`
+  and friends are comments and are stripped by rule. Template clustering (B1.3)
+  must derive section boundaries from `et_pb_section`/`et_pb_row`/`et_pb_column`
+  classes instead of the marker comments.
+- **Public contact data is captured as public page content:** three business email
+  addresses and four `tel:` links appear in the DOM. They are published on the live
+  site; the capture report lists them so a human can confirm before the IR is used.
+
+## 2026-11-11 - Capability gate: unknown is blocking, and "not evaluated" is not "clean"
 
 B1.5 detects capability from two evidence sources — `/wp-json/` namespaces and
 rendered DOM markers — and reports **which evidence proved each finding** (the
