@@ -492,3 +492,48 @@ the site-level list is the intersection, not a vote.
 - **Exit contract.** `capture:seo` exits 1 on any unreachable page, canonical/route
   mismatch, redirect chain, redirect loop, arrival mismatch or 404 destination; 2 when
   it cannot evaluate (missing inputs, or `--base-url` disagreeing with the manifest).
+## 2026-11-11 - Template clustering: 19 pages are 15 shapes, and WP `template` is a shell key not a layout key
+
+B2.2 measures page-builder structure instead of guessing effort. Contract and
+evidence: `docs/template-clustering.md`, `src/analysis/cluster.ts`,
+`capture/template-registry.json`.
+
+- **The signature is section/row/column shape, and site chrome is excluded.** A
+  Divi Theme Builder footer is a real `et_pb_section` on 16 of the 19 pages;
+  counting it would make every page resemble every other page and collapse the
+  measurement to "1 template". Sections marked `_tb_footer`/`_tb_header` are
+  recorded as `siteChrome` and not compared. The marker is corroborated by the
+  capture: the only three pages without it are exactly the three
+  `page-template-blank.php` pages (19/19).
+- **Content cannot enter the signature.** Text, `src`/`href`, module type and
+  instance class numbers (`et_pb_heading_12`, `page-id-557`, `wp-image-662`) are
+  stripped. `et_pb_column_1_3` survives: two trailing integers are a column
+  fraction, one is an instance index.
+- **Measured 19 pages -> 15 templates.** Four shapes are shared by two pages each
+  (sweepy/ttlock, `/mlm/`+`/tmh/`, the two onboard pages, the two chrome-only
+  `/ush/` pages); eleven pages have their own shape. Divi here is hand-built page
+  by page, so per-template work is 15 units, not 2.
+- **Complete-link, threshold 0.85, chosen from the data.** Similarity is a
+  weighted LCS over sections with LCS-ratio row matching. Measured pairs: 3 at
+  `1.000`, 1 at `0.875` (one row's column count differs), 2 at `0.800` (a shared
+  prefix, genuinely different blocks), 12 at `0.667`. `0.800` is a false positive
+  and `0.875` the cheapest real match, so every threshold in `(0.800, 0.875]`
+  yields the same partition; 0.85 is its midpoint. Tests re-cluster across the
+  whole band and assert 14 below and 16 above, so the number cannot drift into
+  arbitrariness.
+- **The WP `template` field is reported, not folded in.** Folding
+  `page-template-*` into the similarity would make the cross-check circular.
+  Measured: `template` predicts the shell 19/19 but not the layout - 16 default
+  pages span 12 clusters, and the 3 blank-template pages are 3 different shapes
+  (10, 7 and 2 sections; pairwise similarity 0.333-0.569). Consequence for the
+  emitter: key per-template fixtures, QA matrices and parity baselines on the
+  cluster id, key shell/chrome decisions on `template`, and take form islands
+  from the extracted form records rather than from either.
+- **Two pages are chrome and nothing else.** `/ush/owner/` and
+  `/ush/privacy-policy/` have an empty `div.entry-content` and no page-builder
+  section; they are reported as `chromeOnlyRoutes` rather than measuring as an
+  anonymous "0 sections".
+- **An empty capture is `cannot-evaluate`, never "0 templates".** The CLI exits 2
+  and the registry carries a reason (ADR 0012). A test asserts the committed
+  registry is reproduced byte-for-byte from `capture/site-ir.json`, so the
+  artifact cannot go stale silently.

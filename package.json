@@ -28,6 +28,7 @@
     "capture:capabilities": "node dist/source/capabilities/detect.js",
     "capture:seo": "pnpm run build && node dist/source/seo/capture.js",
     "validate:seo": "node scripts/validate-seo.mjs",
+    "analyze:templates": "pnpm run build && node dist/analysis/cli.js",
     "gate": "pwsh -NoProfile -File scripts/gate.ps1"
   },
   "devDependencies": {
