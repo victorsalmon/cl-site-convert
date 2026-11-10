@@ -16,10 +16,11 @@ export const PLUGIN_NAME = "plugin-template";
 
 /**
  * Site IR shape version this plugin emits. Kept in step with `IR_VERSION` in
- * `src/schema/site-ir.ts`; the conformance harness fails when `irRange` in
- * `plugin.json` stops accepting the version the repo actually speaks.
+ * `src/schema/site-ir.ts`; the conformance harness fails when `producesIrRange`
+ * in `plugin.json` stops accepting the version the repo actually speaks, and the
+ * test suite fails when this constant drifts from the emitted document.
  */
-export const IR_VERSION = "1.0.0";
+export const IR_VERSION = "1.1.0";
 
 /**
  * @typedef {object} CaptureInput

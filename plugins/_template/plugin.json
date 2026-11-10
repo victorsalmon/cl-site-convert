@@ -1,15 +1,29 @@
 {
+  "manifestVersion": "1.1.0",
   "name": "plugin-template",
-  "version": "0.1.0",
-  "irRange": "^1.0.0",
+  "version": "0.2.0",
+  "role": "source",
+  "consumes": [],
+  "producesIrRange": "^1.1.0",
   "emits": ["site-ir", "capability-report"],
   "hooks": ["capture:start", "capture:page", "capture:end"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
   "assets": [
-    { "path": "config.example.json", "kind": "config" },
-    { "path": "fixtures/golden-page.json", "kind": "fixture" },
+    {
+      "path": "config.example.json",
+      "kind": "config",
+      "sha256": "7dc94ec5bea72b6bc39d1bd7f05bb942cdb48388dfdd364eb78f888537fa69d4",
+      "bytes": 84
+    },
+    {
+      "path": "fixtures/golden-page.json",
+      "kind": "fixture",
+      "sha256": "8ebe96bb47584d4dff66b969c91122d39abaa7e10a79d9260a20e619429e85a0",
+      "bytes": 186
+    },
     { "path": "fixtures/golden-form.json", "kind": "fixture", "optional": true }
   ],
   "runbook": "runbook.md",
   "configSchema": "config.schema.json",
-  "entrypoint": "index.mjs"
+  "config": { "path": "config.example.json" }
 }

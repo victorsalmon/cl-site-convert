@@ -1,0 +1,14 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "schema-without-config",
+  "version": "0.1.0",
+  "role": "source",
+  "consumes": [],
+  "producesIrRange": "^1.1.0",
+  "emits": ["site-ir"],
+  "hooks": ["capture:start"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [],
+  "runbook": "runbook.md",
+  "configSchema": "config.schema.json"
+}

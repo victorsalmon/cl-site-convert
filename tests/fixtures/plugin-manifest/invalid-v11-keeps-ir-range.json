@@ -1,0 +1,13 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "legacy-with-role",
+  "version": "0.1.0",
+  "role": "source",
+  "consumes": [],
+  "producesIrRange": "^1.1.0",
+  "irRange": "^1.0.0",
+  "emits": ["site-ir"],
+  "hooks": [],
+  "assets": [],
+  "runbook": "runbook.md"
+}

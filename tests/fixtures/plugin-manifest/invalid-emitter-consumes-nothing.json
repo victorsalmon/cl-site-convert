@@ -1,0 +1,13 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "unroled",
+  "version": "0.1.0",
+  "role": "emitter",
+  "consumes": [],
+  "acceptsIrRange": "^1.1.0",
+  "emits": ["static-html"],
+  "hooks": ["emit:page"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [],
+  "runbook": "runbook.md"
+}

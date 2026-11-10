@@ -1,0 +1,19 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "cf-pages",
+  "version": "0.1.0",
+  "role": "deployer",
+  "consumes": ["static-html", "api-functions"],
+  "emits": ["deployment"],
+  "hooks": ["deploy:push"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [
+    {
+      "path": "_redirects",
+      "kind": "data",
+      "sha256": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "bytes": 512
+    }
+  ],
+  "runbook": "runbook.md"
+}

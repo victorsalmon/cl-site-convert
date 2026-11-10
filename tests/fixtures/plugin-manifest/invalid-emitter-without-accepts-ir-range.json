@@ -1,0 +1,12 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "broken-emitter",
+  "version": "0.1.0",
+  "role": "emitter",
+  "consumes": ["site-ir"],
+  "emits": ["static-html"],
+  "hooks": ["emit:page"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [],
+  "runbook": "runbook.md"
+}

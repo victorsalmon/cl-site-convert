@@ -1,0 +1,13 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "wasm-without-integrity",
+  "version": "0.1.0",
+  "role": "emitter",
+  "consumes": ["site-ir"],
+  "acceptsIrRange": "^1.1.0",
+  "emits": ["islands-wasm"],
+  "hooks": ["emit:page"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [{ "path": "pkg/island.wasm", "kind": "wasm" }],
+  "runbook": "runbook.md"
+}

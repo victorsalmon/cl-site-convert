@@ -1,0 +1,14 @@
+{
+  "manifestVersion": "1.1.0",
+  "name": "broken-sink",
+  "version": "0.1.0",
+  "role": "sink",
+  "consumes": ["form-submission"],
+  "acceptsIrRange": "^1.1.0",
+  "emits": ["static-html"],
+  "sinks": ["pabbly"],
+  "hooks": ["sink:submit"],
+  "entrypoint": { "module": "index.mjs", "hooksExport": "hooks" },
+  "assets": [],
+  "runbook": "runbook.md"
+}
