@@ -1,0 +1,24 @@
+# Normalise line endings so a fresh checkout is identical on every platform.
+# Without this, committed LF blobs check out as CRLF when core.autocrlf=true and
+# `prettier --check` (endOfLine: lf) fails on a pristine worktree — a gate that
+# cannot pass on a clean checkout, which ADR 0012 classifies as a defect.
+* text=auto eol=lf
+
+# Windows-only tooling keeps CRLF if it ever exists.
+*.ps1 text eol=crlf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Binary — never touched.
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.webp binary
+*.ico binary
+*.woff binary
+*.woff2 binary
+*.ttf binary
+*.wasm binary
+*.zip binary
+*.pdf binary
