@@ -1,0 +1,3217 @@
+{
+  "generatedAt": "2026-11-10T06:03:49.780Z",
+  "baseUrl": "https://upscalehavens.ca",
+  "tool": {
+    "name": "cl-site-convert",
+    "version": "0.1.0",
+    "minIntervalMs": 600,
+    "requests": 22
+  },
+  "totals": {
+    "pages": 19,
+    "requested": 22,
+    "failed": 0,
+    "inputBytes": 2320052,
+    "domBytes": 371838,
+    "strippedBytes": 1946561
+  },
+  "cache": {
+    "hits": 19,
+    "misses": 0,
+    "bypassAttempted": true,
+    "bypassNote": "Cache-Control: no-cache did not bypass LiteSpeed Cache; the served bytes are the site's own cache output."
+  },
+  "pages": [
+    {
+      "url": "/",
+      "status": 200,
+      "bytes": 111796,
+      "domBytes": 12720,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "222e19ba45d0d366bd408835d383549683cd69675ef4149670874ea872541f7e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "bbb8f62a193f8c7634589a27c7dd40ad4715ff3c59237e10372d6fcfeac8ca44"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 45715,
+          "sha256": "9b7753d9b859bcccc1fb7a6967abbf9308d68298f71c69b514d701e24ce4bfa3"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 9594,
+          "sha256": "750527cebb30e7a7ddb2dee53493dde31b8b8a0f816ba1a5a914b0343ecd5abb"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (92721 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"28-1793832363;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-04 14:46:03"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-11-27T02:07:02",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/care/",
+      "status": 200,
+      "bytes": 136162,
+      "domBytes": 19834,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 867,
+          "sha256": "6a1166b3652a6f9567746ca922e9d8a8d84b4c3e7b8da006cafa620308da134d"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "1580c566fd97235fe591ef3f4237979202794d4fdf4fd5393b7c14b41f5a5923"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#fitvids-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids.js?ver=4.27.7",
+          "bytes": 166,
+          "sha256": "4e1d5f0a851d144a55a63b6715b8fb9f334f69745f803643f840f66e30d325c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-mobile-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.mobile.js?ver=4.27.7",
+          "bytes": 171,
+          "sha256": "5f1a7037f2308072457da78506cd274abc37eed0c24cc2f0dba7e8ca5c09d6a7"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "e517c38b20db997ba43d51dbbe7f3a818372489d5cf4275272ded9499cfb66a2"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 60621,
+          "sha256": "dd1fa8a904d1f60975175f32010f69d07483eb4599d8962ba7f00ef52c89a466"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 10736,
+          "sha256": "6bfb7fc43cbe515e62481cdde71abd2ebf7c57d998c92ab1773378f05b8cbd9e"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "15 script (7405 B), 5 style (108769 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"79-1793919608;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-05 15:00:08"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2026-02-03T09:31:13",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/care/showings/",
+      "status": 200,
+      "bytes": 108980,
+      "domBytes": 14595,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "a91a48f8313246dc37fc98eef14c77e072cce45def73d35c405277064bb530b8"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "b8768abe9d99e646a83c7b94b75eedbf626dd33bd99c32083a6ce84f17134814"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 43504,
+          "sha256": "3dc1580056963579584c7b93a7976b3a39ce012256e567fc7ffe4e5cc8e148d2"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 7114,
+          "sha256": "8996a0c1c73a03e2f1b274a5aea612ef57ef11b1e4675ed37ee3b0f99627424d"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (88030 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"43-1793838363;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-04 16:26:03"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-08-20T11:36:43",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/care/signal-admin/",
+      "status": 200,
+      "bytes": 110913,
+      "domBytes": 19139,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "193bde27936489b0ea91d311db87e51516b7b6dacc8a3969ba796ca1c96fb08e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "c4e645e58468ecd24d000eb3e9e3b04bb1481ab902fc0143c2258e8e5eb24e2c"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 43344,
+          "sha256": "19cdadae30ea101ba01f28f492e0ee27e3d0f253bca102ba075f7309b7e8b1ab"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 4663,
+          "sha256": "a68716585914c47dbaa09293ebc8b164f11f88bff4432915ed3fe2d9830b4954"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (85419 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"89-1793933862;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-05 18:57:42"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-10-17T12:47:55",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/care/sweepy-admin/",
+      "status": 200,
+      "bytes": 118226,
+      "domBytes": 24840,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "ec7529bac97ec0dc10f0ec8b253ecab277d0faa0da52b5116f0e11dc0858abcf"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "5e023f01af2355e84717025ab711d844ee7b393a6d4ac8ed8b32bd29ab08b7c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 43344,
+          "sha256": "19cdadae30ea101ba01f28f492e0ee27e3d0f253bca102ba075f7309b7e8b1ab"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 6275,
+          "sha256": "70c37618061b2378d5671a54a1aab5636f24ed196d70accb2e908ce3e9c47994"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (87031 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"66-1793883904;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-05 05:05:04"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-08-20T11:39:37",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/care/ttlock-admin/",
+      "status": 200,
+      "bytes": 121991,
+      "domBytes": 29018,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "8bff16b41c7f947c1a6bef0ff64631c2a20328df59036436e65147a1b1b00a24"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "0a969a031efcf1c1d037f099328c2f60b0269292052b37f168abb75790fea774"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 43344,
+          "sha256": "19cdadae30ea101ba01f28f492e0ee27e3d0f253bca102ba075f7309b7e8b1ab"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 5862,
+          "sha256": "9102c48fc84af3d78f5caeb325eb938fd686f656a3012f3b3730592110ef74c3"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (86618 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"78-1793918974;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-05 14:49:34"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2026-05-06T22:32:41",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/mlm/",
+      "status": 200,
+      "bytes": 134032,
+      "domBytes": 20547,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "type=application/javascript",
+          "bytes": 587,
+          "sha256": "ff1e48d312f7da290cbbe0be3aee766c1afeaf8eaa78cd15f138b342949e48a4"
+        },
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 238,
+          "sha256": "b1cc88df68d01264757a0d16ed609d3834064743023ca33883eb329cede41b25"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "adb321c68d61e5105095046bebd7d658486d28edd761eec7f4fc5d6f6598496c"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#fitvids-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids.js?ver=4.27.7",
+          "bytes": 166,
+          "sha256": "4e1d5f0a851d144a55a63b6715b8fb9f334f69745f803643f840f66e30d325c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-mobile-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.mobile.js?ver=4.27.7",
+          "bytes": 171,
+          "sha256": "5f1a7037f2308072457da78506cd274abc37eed0c24cc2f0dba7e8ca5c09d6a7"
+        },
+        {
+          "kind": "script",
+          "detail": "#magnific-popup-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/magnific-popup.js?ver=4.27.7",
+          "bytes": 173,
+          "sha256": "051b2226f8501525e654339fb854896530d7a1f7a0e68a0ee1c39426e8c1a398"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "bbcdffdc00e1b52b4052b1d358d922038892cd714ef387a5fb49bf0b764c74af"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 67363,
+          "sha256": "a986e0cb7268b22a7668b5b48757d025c7a9560e54db5f403cb2583e22b680ef"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 1020,
+          "sha256": "a5fb1af574a7bf362b27731de239e8e63fdebdc192e63a835eaf815c6a491edb"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "17 script (7536 B), 5 style (105795 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"113-1793993143;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-06 11:25:43"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-09-03T15:34:49",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/mlm/applym/",
+      "status": 200,
+      "bytes": 155675,
+      "domBytes": 36373,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "35ae09feb185bedd92bcf6cda93dc03463226fe033afdff5d70059c1944faf2a"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#fitvids-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids.js?ver=4.27.7",
+          "bytes": 166,
+          "sha256": "4e1d5f0a851d144a55a63b6715b8fb9f334f69745f803643f840f66e30d325c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#magnific-popup-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/magnific-popup.js?ver=4.27.7",
+          "bytes": 173,
+          "sha256": "051b2226f8501525e654339fb854896530d7a1f7a0e68a0ee1c39426e8c1a398"
+        },
+        {
+          "kind": "script",
+          "detail": "#salvattore-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/salvattore.js?ver=4.27.7",
+          "bytes": 165,
+          "sha256": "65c3abb69479a6b84c232216abd14fc485a90e3c4360414f3634738a79f96f6d"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "b9d8885170c7316dea1b2d70888515113c0a7989315a62d5cf9b30782461a4d4"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 60748,
+          "sha256": "7fee98c6553b87d0f132b8d0c01f3ad8c1ce4292ecb6fac910116d8642954ae6"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 9996,
+          "sha256": "36b97a4d98ef24f2ff6083762c745099c82c6f5ae36f8423b125533e0cd9e996"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-library-inline-css",
+          "bytes": 4354,
+          "sha256": "f10b4ae7e5730db9201cb71b6d289a0159197d0b23f624fa88566d603bde4ae0"
+        }
+      ],
+      "strippedSummary": "15 script (6705 B), 6 style (112510 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"167-1794199997;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-08 20:53:17"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-06-04T15:26:25",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/mlm/onboard-mlm/",
+      "status": 200,
+      "bytes": 129667,
+      "domBytes": 23003,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "f50ff1aed8c371fb56cce69b3549dd0547f089c0c982c1bc097c3766e5d0d845"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#fitvids-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids.js?ver=4.27.7",
+          "bytes": 166,
+          "sha256": "4e1d5f0a851d144a55a63b6715b8fb9f334f69745f803643f840f66e30d325c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "f175449fcae511c8b9278235e03bdc93f508207cce7b6ef5c6cbb032499ae317"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 46749,
+          "sha256": "0b4085834fb8f03d4b84d66c7c3d487657c461688d9e71be1711a8082ec4ccc7"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 15982,
+          "sha256": "48a900c0293b08605043ca6befcd0a8dd7da5acefc878f5e7b7abc30075dede8"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "13 script (6367 B), 5 style (100143 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"53-1793865824;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-05 00:03:44"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2026-05-06T22:34:14",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/resources/",
+      "status": 200,
+      "bytes": 97026,
+      "domBytes": 9758,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "3d8532f91dfa6286649a1f86de1c0c6cc5603ec98054cd2a66b7b87f62e0371c"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "bb7bbed1c63134c825c7d23778a707b014f255e53ba825846a7232fe36fa8580"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 40389,
+          "sha256": "b2dcbbdb8b82b4095cbeb784d08929e3e45c0c81b541bb989aa2dca60a130f24"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 3112,
+          "sha256": "1176775cb10accf498b5189c1359093a0a1c8644ee968e0b5e66e8a3974d536e"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (80913 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"121-1794014456;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-06 17:20:56"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-06-26T10:50:41",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/resources/checklists/",
+      "status": 200,
+      "bytes": 110997,
+      "domBytes": 15372,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1654,
+          "sha256": "e6c79b2dce52418a0fe1074e0fdf61b82ae419f03e75366cb75aaf9d51524b54"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "b9d8885170c7316dea1b2d70888515113c0a7989315a62d5cf9b30782461a4d4"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 43430,
+          "sha256": "c4d83e56c2e17b2f705fc191b50baa69dd7b5ee7fdd41f05324a510a7a46b3c7"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 8429,
+          "sha256": "3d087d3fb32d8506c262ca63978de32008be5cc7fcbd6d59eaf481f8c2f2df80"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6200 B), 5 style (89271 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"165-1794199995;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-08 20:53:15"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-11-13T01:55:56",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/resources/sweepy/",
+      "status": 200,
+      "bytes": 107052,
+      "domBytes": 13550,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "01b9a3f783467ae2de3c4f235af90c6ee3bbb233fe38e043d2a35407ee302c63"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "b9d8885170c7316dea1b2d70888515113c0a7989315a62d5cf9b30782461a4d4"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 43504,
+          "sha256": "9b86efd3f2dc54ae8dd4f46c3f4f211736c83b1dd6e53c85249d0279b1b6813a"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 6231,
+          "sha256": "11bcb5d3e1a45ad245647f01f076539423f214730fc23cbe4f0f429fa0e13d1c"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (87147 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"169-1794200006;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-08 20:53:26"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-08-20T11:41:23",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/tmh/",
+      "status": 200,
+      "bytes": 132394,
+      "domBytes": 21016,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "type=application/javascript",
+          "bytes": 585,
+          "sha256": "3e2dac60d0ba42929474f0ea99bbde3c4a78f82afa1ef86c3dc1655b1bdf9d54"
+        },
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 238,
+          "sha256": "b1cc88df68d01264757a0d16ed609d3834064743023ca33883eb329cede41b25"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1654,
+          "sha256": "d2d8549bb1672354f7a31034d71127f7b4254e99df568f1c0b54498af84689d8"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#fitvids-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids.js?ver=4.27.7",
+          "bytes": 166,
+          "sha256": "4e1d5f0a851d144a55a63b6715b8fb9f334f69745f803643f840f66e30d325c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-mobile-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.mobile.js?ver=4.27.7",
+          "bytes": 171,
+          "sha256": "5f1a7037f2308072457da78506cd274abc37eed0c24cc2f0dba7e8ca5c09d6a7"
+        },
+        {
+          "kind": "script",
+          "detail": "#magnific-popup-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/magnific-popup.js?ver=4.27.7",
+          "bytes": 173,
+          "sha256": "051b2226f8501525e654339fb854896530d7a1f7a0e68a0ee1c39426e8c1a398"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "4a24f528e351b62fa58f1dcf148a28d8bdaa5b7746e3caad1dd0b7e5edcef272"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 65259,
+          "sha256": "24b514afb5f62cd8f429866480e0351dfb2268f17eefc6ef8122b7a1751a6756"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 1020,
+          "sha256": "a5fb1af574a7bf362b27731de239e8e63fdebdc192e63a835eaf815c6a491edb"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "17 script (7533 B), 5 style (103691 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"110-1793977167;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-06 06:59:27"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-08-20T12:06:57",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/tmh/apply/",
+      "status": 200,
+      "bytes": 175358,
+      "domBytes": 31583,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "e2a99c0ee4461c0daf9815d38675d5345ac8efd3cc5dfb07a9bcfe69526b8646"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#fitvids-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids.js?ver=4.27.7",
+          "bytes": 166,
+          "sha256": "4e1d5f0a851d144a55a63b6715b8fb9f334f69745f803643f840f66e30d325c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#magnific-popup-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/magnific-popup.js?ver=4.27.7",
+          "bytes": 173,
+          "sha256": "051b2226f8501525e654339fb854896530d7a1f7a0e68a0ee1c39426e8c1a398"
+        },
+        {
+          "kind": "script",
+          "detail": "#salvattore-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/salvattore.js?ver=4.27.7",
+          "bytes": 165,
+          "sha256": "65c3abb69479a6b84c232216abd14fc485a90e3c4360414f3634738a79f96f6d"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "28509b0c5e385bae1902ff83b112da61410c696f39c9fb4e13a641ac508826c4"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "script",
+          "detail": "#flatpickr-js https://upscalehavens.ca/wp-content/plugins/fluentform/assets/libs/flatpickr/flatpickr.min.js?ver=4.6.9",
+          "bytes": 145,
+          "sha256": "82bae3597cce1e3c89f0b35d4829fdba40d842cff61ee88071cb53346dc16355"
+        },
+        {
+          "kind": "script",
+          "detail": "#fluent_forms_conversational_form-js-extra",
+          "bytes": 19433,
+          "sha256": "0ab03870f0e9706996e818d2a3a67febff2c446cf7f849ea4239386f2411ac88"
+        },
+        {
+          "kind": "script",
+          "detail": "#fluent_forms_conversational_form-js https://upscalehavens.ca/wp-content/plugins/fluentform/app/Services/FluentConversational/public/js/conversationalForm.js?ver=6.2.17",
+          "bytes": 196,
+          "sha256": "96c198872f83a4924bf56cd8c7e8dd397a5ac18a2c5ce1257d15e7e8691a3d39"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 60362,
+          "sha256": "89011ef0a542fba467c7e79233483e917bcbbc17ca7a94509935f85221ceb3d7"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 8927,
+          "sha256": "3101d5676abeb326d87d1e1f78642b1662c968f3c0ceb64007f0b8b9e8cc342d"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-library-inline-css",
+          "bytes": 4354,
+          "sha256": "3bd0d168d3efe66c6854d06d8da0a90988596e54f2240b2584ce1c9f3975996b"
+        },
+        {
+          "kind": "style",
+          "detail": "<style>",
+          "bytes": 6154,
+          "sha256": "c6e6502b05ad2be8b35524a7919d6e070cc140ed8a4691b7856288a50e672387"
+        }
+      ],
+      "strippedSummary": "18 script (26479 B), 7 style (117209 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"91-1793950398;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-05 23:33:18"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-10-14T16:49:58",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/fluentform/assets/libs/flatpickr/flatpickr.min.css?ver=4.6.9",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/fluentform/app/Services/FluentConversational/public/css/conversationalForm.css?ver=6.2.17",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/tmh/offboard/",
+      "status": 200,
+      "bytes": 115960,
+      "domBytes": 22647,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "27393f3497f225fa910232add9b404f3557f0bb7e0755955c7eafa6eb7c18d46"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "09016e1c776f0b2ade20a1669c4eb5cae3b006f7a93fc94f50a6a1b91b1136be"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 41530,
+          "sha256": "5664800cb4d18a683c5087bbb6d2dca4043c225ce7e9bc5d3e399b4f69160d9f"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 8016,
+          "sha256": "d634089632d40aba2c50e22c1e4b0da1e95f64d89fc82f329e82d16e90965599"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 5 style (86958 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"54-1793870961;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-05 01:29:20"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-12-10T13:35:04",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/tmh/onboard-tmh/",
+      "status": 200,
+      "bytes": 130199,
+      "domBytes": 23535,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "c4ae421947a9e2f909f50d41b55d70fbeff262ace617e91b2d801917e330734c"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#fitvids-js https://upscalehavens.ca/wp-content/themes/Divi/includes/builder/feature/dynamic-assets/assets/js/jquery.fitvids.js?ver=4.27.7",
+          "bytes": 166,
+          "sha256": "4e1d5f0a851d144a55a63b6715b8fb9f334f69745f803643f840f66e30d325c3"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "272720272ce849da1030027dad0ce02258005b71d3bf86beaa0c89388a2194aa"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 46749,
+          "sha256": "0b4085834fb8f03d4b84d66c7c3d487657c461688d9e71be1711a8082ec4ccc7"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 15982,
+          "sha256": "48a900c0293b08605043ca6befcd0a8dd7da5acefc878f5e7b7abc30075dede8"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "13 script (6367 B), 5 style (100143 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"92-1793954728;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-06 00:45:28"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-10-14T16:50:06",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/ush/owner/",
+      "status": 200,
+      "bytes": 118294,
+      "domBytes": 10876,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "c502ab021dd64e3e9df5d832b2a273a3951898462acae2ea9b30b2544890028d"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "b9d8885170c7316dea1b2d70888515113c0a7989315a62d5cf9b30782461a4d4"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-library-inline-css",
+          "bytes": 4322,
+          "sha256": "f1753943d3d0ed5d9425439cc5859ef1e530b3f305a81498becaeb4b7f309a92"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-heading-inline-css",
+          "bytes": 1298,
+          "sha256": "5257333ed6bdba9d98682663f3179803383766c724953687dcfa422484debfb3"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-latest-comments-inline-css",
+          "bytes": 1433,
+          "sha256": "c50af6afecc2e600c82c0e735701ddd83af63a3d163a458e2f810aebdba278c8"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-latest-posts-inline-css",
+          "bytes": 2372,
+          "sha256": "305a62c6bb7f38a5fec0c88139879e4d8f2d3f53aefce2a1e33af739f33804bf"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-search-inline-css",
+          "bytes": 2571,
+          "sha256": "3730ab141a431c5c352c2c6174cc35875a734cf927f96d33711e3471fbd2d3cc"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-search-theme-inline-css",
+          "bytes": 263,
+          "sha256": "a1bd4964bf197d750af828304c7ec85e2d6fe25f4dcf6a6c142bfde4dcac54c5"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-group-inline-css",
+          "bytes": 246,
+          "sha256": "8a575e88e6f7f835d4fe769ab05ba8cc84cfca5a1089ef1c09e29f6186857e84"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-group-theme-inline-css",
+          "bytes": 197,
+          "sha256": "7c90cfc7a56f643a47e9692cbbf832eb3c498af8cfe87857d6a33fcfad668f9d"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10652,
+          "sha256": "eb4a84e8681ff2bb8681ee7fe42949c6ba912da7de39fae60bc1e71812656332"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 48695,
+          "sha256": "db97945a6d496857d6ab00b6c2cc41ce767fca65bea073796fd6d9c3bb78a36e"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 2135,
+          "sha256": "d2338a9226a578cf2c7f5f33b4d933b1b4fb6363611edfce415e5879e8192107"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 13 style (101063 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"170-1794200008;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-08 20:53:28"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-08-20T11:34:38",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/et-cache/global/et-divi-customizer-global.min.css?ver=1786007200",
+          "media": null
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/ush/privacy-policy/",
+      "status": 200,
+      "bytes": 124252,
+      "domBytes": 16042,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "89875b644a24573da092778deb257fdbf420cb4c179693ccc1b02bc148916c10"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "b9d8885170c7316dea1b2d70888515113c0a7989315a62d5cf9b30782461a4d4"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-library-inline-css",
+          "bytes": 4322,
+          "sha256": "f1753943d3d0ed5d9425439cc5859ef1e530b3f305a81498becaeb4b7f309a92"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-heading-inline-css",
+          "bytes": 1298,
+          "sha256": "5257333ed6bdba9d98682663f3179803383766c724953687dcfa422484debfb3"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-latest-comments-inline-css",
+          "bytes": 1433,
+          "sha256": "c50af6afecc2e600c82c0e735701ddd83af63a3d163a458e2f810aebdba278c8"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-latest-posts-inline-css",
+          "bytes": 2372,
+          "sha256": "305a62c6bb7f38a5fec0c88139879e4d8f2d3f53aefce2a1e33af739f33804bf"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-paragraph-inline-css",
+          "bytes": 792,
+          "sha256": "0506ea7ab86498baaa9ce95748b9fefb9c107a6e64a81fe6c8a19f7856c9d622"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-search-inline-css",
+          "bytes": 2571,
+          "sha256": "3730ab141a431c5c352c2c6174cc35875a734cf927f96d33711e3471fbd2d3cc"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-search-theme-inline-css",
+          "bytes": 263,
+          "sha256": "a1bd4964bf197d750af828304c7ec85e2d6fe25f4dcf6a6c142bfde4dcac54c5"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-group-inline-css",
+          "bytes": 246,
+          "sha256": "8a575e88e6f7f835d4fe769ab05ba8cc84cfca5a1089ef1c09e29f6186857e84"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-group-theme-inline-css",
+          "bytes": 197,
+          "sha256": "7c90cfc7a56f643a47e9692cbbf832eb3c498af8cfe87857d6a33fcfad668f9d"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10652,
+          "sha256": "eb4a84e8681ff2bb8681ee7fe42949c6ba912da7de39fae60bc1e71812656332"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 48695,
+          "sha256": "db97945a6d496857d6ab00b6c2cc41ce767fca65bea073796fd6d9c3bb78a36e"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 2135,
+          "sha256": "d2338a9226a578cf2c7f5f33b4d933b1b4fb6363611edfce415e5879e8192107"
+        },
+        {
+          "kind": "comment",
+          "detail": "#et-top-navigation",
+          "bytes": 27
+        },
+        {
+          "kind": "comment",
+          "detail": ".container",
+          "bytes": 19
+        },
+        {
+          "kind": "comment",
+          "detail": "#main-header",
+          "bytes": 21
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 14 style (101855 B), 3 comment (67 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"166-1794199995;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-08 20:53:15"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-06-04T15:32:04",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/et-cache/global/et-divi-customizer-global.min.css?ver=1786007200",
+          "media": null
+        }
+      ],
+      "notes": []
+    },
+    {
+      "url": "/ush/thanks/",
+      "status": 200,
+      "bytes": 81078,
+      "domBytes": 7390,
+      "stripped": [
+        {
+          "kind": "script",
+          "detail": "type=text/javascript",
+          "bytes": 87,
+          "sha256": "3fa75fcc69a465dd498445a12bc9e397ad39d552caa2375b0edfe69e6a0af9e4"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-core-js https://upscalehavens.ca/wp-includes/js/jquery/jquery.min.js?ver=3.7.1",
+          "bytes": 114,
+          "sha256": "4dcd0d1185d8d1bb36f71fb77a49dad25e8fbef24044ded12fbfd353920710f5"
+        },
+        {
+          "kind": "script",
+          "detail": "#jquery-migrate-js https://upscalehavens.ca/wp-includes/js/jquery/jquery-migrate.min.js?ver=3.4.1",
+          "bytes": 125,
+          "sha256": "8d56b1d309c93a0cb8a4348b8ef990eb16398209be3cfed50c29e4b532315208"
+        },
+        {
+          "kind": "script",
+          "detail": "type=speculationrules",
+          "bytes": 415,
+          "sha256": "caf2ffd58a3354f572a95f0b9c2838726a940841abefb48bbd76e29eebaae772"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js-extra",
+          "bytes": 1655,
+          "sha256": "5bba8f9c75e0d68ab4fd2c59a2349dce47654fb736eb317a3d3dbfcb6814a984"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-custom-script-js https://upscalehavens.ca/wp-content/themes/Divi/js/scripts.min.js?ver=4.27.7",
+          "bytes": 127,
+          "sha256": "8a7bd2b658f04659c0e7ef2cc26fe3cc199fbcb38bbf786d7698ae20d53f4957"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-hooks-js https://upscalehavens.ca/wp-includes/js/dist/hooks.min.js?ver=f0f188028580e8dc1255",
+          "bytes": 123,
+          "sha256": "d8146c044f761f3849c02c35b4fa3dcc891d4636e1bd86a34e72b4514b5e9d41"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js https://upscalehavens.ca/wp-includes/js/dist/i18n.min.js?ver=1dfe7db3940c23ea9216",
+          "bytes": 121,
+          "sha256": "02778feffd9422ff3fdf14453b6e40dc1595a3f69484ed85f2346e141cf70d02"
+        },
+        {
+          "kind": "script",
+          "detail": "#wp-i18n-js-after",
+          "bytes": 138,
+          "sha256": "b34f0ecb7aa55c833d4e955e160eec872687867f5d40739908614b9d8ec7d66e"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js-extra",
+          "bytes": 3004,
+          "sha256": "b9d8885170c7316dea1b2d70888515113c0a7989315a62d5cf9b30782461a4d4"
+        },
+        {
+          "kind": "script",
+          "detail": "#divi-contact-form-helper-js https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.js?ver=2.0.0",
+          "bytes": 163,
+          "sha256": "d200f39f78e3e4ff3f38202fa471fd6adf7afda4f4cf36860e0a4e45e05f359c"
+        },
+        {
+          "kind": "script",
+          "detail": "#et-core-common-js https://upscalehavens.ca/wp-content/themes/Divi/core/admin/js/common.js?ver=4.27.7",
+          "bytes": 129,
+          "sha256": "96be1577a75909f7eed91ef52e466b7859be6f923f11028a96dfa3fa570ebcdb"
+        },
+        {
+          "kind": "style",
+          "detail": "#global-styles-inline-css",
+          "bytes": 10533,
+          "sha256": "8e7f80d723d8ad297e46ef4843f796342c0cb54b3885c4058e56c6ad2405756b"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-style-inline-inline-css",
+          "bytes": 26782,
+          "sha256": "4c0010c72f43044d5c1b24c687582af86b27df87b1eb9182b6a27bc255101fa2"
+        },
+        {
+          "kind": "style",
+          "detail": "#divi-dynamic-critical-inline-css",
+          "bytes": 19276,
+          "sha256": "14abf0f09084c9ba46b13a90fbbf2b06acca35c875ce4b048b76e151022fdf91"
+        },
+        {
+          "kind": "style",
+          "detail": "#custom-background-css",
+          "bytes": 97,
+          "sha256": "13b57d955d6f1ffce3670bf618e6f3554d3273f4a303c6cf57098cf37f6afc79"
+        },
+        {
+          "kind": "style",
+          "detail": "#et-critical-inline-css",
+          "bytes": 6358,
+          "sha256": "25a3e35145d6c0c2d8a1382c6956d2b347614fbaec91395e9f03768b7ac99854"
+        },
+        {
+          "kind": "style",
+          "detail": "#wp-block-library-inline-css",
+          "bytes": 4354,
+          "sha256": "56682bca1725fada2e3d4595f0ffac2b72429222dc4b90024d9e598860948f3f"
+        }
+      ],
+      "strippedSummary": "12 script (6201 B), 6 style (67400 B)",
+      "cache": {
+        "litespeed": "hit",
+        "age": null,
+        "etag": "\"168-1794200003;br\"",
+        "cacheControl": null,
+        "stamp": {
+          "version": "7.9.3",
+          "renderedAt": "2026-11-08 20:53:23"
+        },
+        "freshness": "cache-newer-than-content"
+      },
+      "restModified": "2025-07-24T19:52:38",
+      "stylesheetRefs": [
+        {
+          "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        },
+        {
+          "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+          "media": "all"
+        },
+        {
+          "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+          "media": "all"
+        }
+      ],
+      "notes": []
+    }
+  ],
+  "stylesheets": [
+    {
+      "href": "https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&#038;subset=latin,latin-ext&#038;display=swap",
+      "media": "all",
+      "pages": 19
+    },
+    {
+      "href": "https://upscalehavens.ca/wp-content/plugins/divi-contact-form-helper/d4/assets/public/app.min.css?ver=2.0.0",
+      "media": "all",
+      "pages": 19
+    },
+    {
+      "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic&#038;subset=latin,latin-ext&#038;display=swap",
+      "media": "all",
+      "pages": 6
+    },
+    {
+      "href": "https://fonts.googleapis.com/css?family=Arimo:regular,500,600,700,italic,500italic,600italic,700italic|Inter:100,200,300,regular,500,600,700,800,900&#038;subset=latin,latin-ext&#038;display=swap",
+      "media": "all",
+      "pages": 10
+    },
+    {
+      "href": "https://upscalehavens.ca/wp-content/plugins/fluentform/assets/libs/flatpickr/flatpickr.min.css?ver=4.6.9",
+      "media": "all",
+      "pages": 1
+    },
+    {
+      "href": "https://upscalehavens.ca/wp-content/plugins/fluentform/app/Services/FluentConversational/public/css/conversationalForm.css?ver=6.2.17",
+      "media": "all",
+      "pages": 1
+    },
+    {
+      "href": "https://upscalehavens.ca/wp-content/et-cache/global/et-divi-customizer-global.min.css?ver=1786007200",
+      "media": null,
+      "pages": 2
+    }
+  ],
+  "contactScan": {
+    "emails": [
+      "mill.lake@upscalehavens.ca",
+      "turtle.mountain.home@gmail.com",
+      "victorsalmon@hotmail.com"
+    ],
+    "telLinks": [
+      "16043636234",
+      "16044821190",
+      "2505421533",
+      "6048587368"
+    ],
+    "note": "Extracted from the rendered HTML before normalisation. Every entry must be a published business contact before capture/site-ir.json is committed; anything personal is a finding, not a fixture."
+  },
+  "notes": [
+    "Cache bypass could not be forced: sending `Cache-Control: no-cache` to /care/ returned byte-identical HTML with x-litespeed-cache: hit.",
+    "Freshness is therefore evidenced per page by comparing LiteSpeed's embedded cache stamp with the REST `modified` timestamp; both are naive site-local times."
+  ]
+}

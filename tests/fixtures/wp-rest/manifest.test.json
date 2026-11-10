@@ -1,0 +1,52 @@
+{
+  "_fixtureNote": "Minimal route manifest used by tests/wp-rest-content.test.ts. Hand-trimmed from capture/routes.manifest.json: two 200 routes that have page fixtures, one route that redirects and must not be captured.",
+  "manifestVersion": "1",
+  "generatedAt": "2026-11-10T00:00:00.000Z",
+  "baseUrl": "https://upscalehavens.ca",
+  "counts": { "total": 3, "byType": { "page": 3 }, "bySource": { "both": 3 }, "byStatus": { "publish": 3 } },
+  "routes": [
+    {
+      "url": "https://upscalehavens.ca/",
+      "path": "/",
+      "slug": "ush",
+      "status": "publish",
+      "type": "page",
+      "parent": null,
+      "parentId": 0,
+      "modified": "2025-11-27T02:07:02",
+      "template": null,
+      "source": "both",
+      "http": { "status": 200, "location": null, "contentType": "text/html; charset=UTF-8" }
+    },
+    {
+      "url": "https://upscalehavens.ca/tmh/apply/",
+      "path": "/tmh/apply/",
+      "slug": "apply",
+      "status": "publish",
+      "type": "page",
+      "parent": "/tmh/",
+      "parentId": 72,
+      "modified": "2025-10-14T16:49:58",
+      "template": "page-template-blank.php",
+      "source": "both",
+      "http": { "status": 200, "location": null, "contentType": "text/html; charset=UTF-8" }
+    },
+    {
+      "url": "https://upscalehavens.ca/mlm/apply/",
+      "path": "/mlm/apply/",
+      "slug": "apply",
+      "status": "publish",
+      "type": "page",
+      "parent": "/mlm/",
+      "parentId": 548,
+      "modified": "2025-06-04T15:26:25",
+      "template": "page-template-blank.php",
+      "source": "both",
+      "http": {
+        "status": 301,
+        "location": "https://upscalehavens.ca/?fluent-form=3",
+        "contentType": "text/html; charset=UTF-8"
+      }
+    }
+  ]
+}

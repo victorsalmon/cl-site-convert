@@ -43,6 +43,21 @@ const SUITES = [
   },
 ];
 
+/**
+ * Real artifacts, not fixtures. These are the pipeline's own output and they must
+ * validate too — a schema that only ever sees hand-written fixtures proves nothing
+ * about the capture. A missing artifact is a failure: after B1.2 lands,
+ * `capture/site-ir.json` is part of the tree, and its absence means the capture was
+ * deleted or never committed, not that there was nothing to check.
+ */
+const ARTIFACTS = [
+  {
+    name: "capture/site-ir.json",
+    schemaPath: join(REPO_ROOT, "schemas", "site-ir.schema.json"),
+    referential: true,
+  },
+];
+
 function cannotEvaluate(message) {
   console.error(`cannot-evaluate: ${message}`);
   process.exit(2);
@@ -217,6 +232,49 @@ async function main() {
         problems,
       });
     }
+  }
+
+  // Real captured artifacts. A missing one is a failure, never a skip.
+  // A separate ajv instance: the site-ir schema is already registered (same `$id`)
+  // on the instance that validated the fixtures, and ajv refuses a duplicate id.
+  const artifactAjv = new Ajv2020({ allErrors: true, strict: true });
+  for (const artifact of ARTIFACTS) {
+    cases += 1;
+    const artifactPath = join(REPO_ROOT, artifact.name);
+    const schema = JSON.parse(readFileSync(artifact.schemaPath, "utf8"));
+    const validate = artifactAjv.compile(schema);
+
+    if (!existsSync(artifactPath)) {
+      failures += 1;
+      rows.push({
+        suite: "artifact",
+        file: artifact.name,
+        expected: "valid",
+        actual: "missing",
+        pass: false,
+        schemaErrors: [
+          "artifact is missing from the tree (run the capture, do not delete the evidence)",
+        ],
+        problems: [],
+      });
+      continue;
+    }
+
+    const document = JSON.parse(readFileSync(artifactPath, "utf8"));
+    const schemaOk = validate(document);
+    const schemaErrors = formatErrors(validate.errors);
+    const problems = schemaOk && artifact.referential ? referentialProblems(document) : [];
+    const isValid = schemaOk && problems.length === 0;
+    if (!isValid) failures += 1;
+    rows.push({
+      suite: "artifact",
+      file: artifact.name,
+      expected: "valid",
+      actual: isValid ? "valid" : "invalid",
+      pass: isValid,
+      schemaErrors,
+      problems,
+    });
   }
 
   const width = Math.max(...rows.map((row) => `${row.suite}/${row.file}`.length));
