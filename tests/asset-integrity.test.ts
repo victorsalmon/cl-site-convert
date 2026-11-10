@@ -22,6 +22,7 @@ import {
 } from "../src/source/wp-rest/assets.js";
 import type { StyleChain, RewriteMap } from "../src/source/wp-rest/assets.js";
 import type { AssetCaptureReport } from "../src/source/wp-rest/assets.js";
+import { isLinkedStyle } from "../src/schema/site-ir.js";
 import type { SiteIr } from "../src/schema/site-ir.js";
 
 const ROOT = process.cwd();
@@ -63,7 +64,9 @@ describe("captured assets", () => {
     // styles[] is the linked subset of the chain: the linked styles are exactly
     // the entries that carry an href, and no inline block is given a fake one.
     expect(ir.styles.length).toBe(chain.styleChain.filter((e) => e.origin === "linked").length);
-    expect(ir.styles.every((style) => style.href.startsWith("http"))).toBe(true);
+    expect(ir.styles.filter(isLinkedStyle).every((style) => style.href.startsWith("http"))).toBe(
+      true,
+    );
 
     const mapAssets = new Map(map.assets.map((asset) => [asset.sourceUrl, asset]));
     for (const asset of ir.assets) {

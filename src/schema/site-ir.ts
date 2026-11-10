@@ -181,6 +181,15 @@ export interface InlineStyle extends StyleBase {
 
 export type Style = LinkedStyle | InlineStyle;
 
+/**
+ * Narrows a `Style` to `LinkedStyle`, the only variant with a guaranteed `href`.
+ * Callers that need the url must narrow rather than assume, because IR v1.1 made
+ * `href` optional on inline blocks.
+ */
+export function isLinkedStyle(style: Style): style is LinkedStyle {
+  return style.origin !== "inline";
+}
+
 export interface MenuItem {
   label: string;
   href: string;

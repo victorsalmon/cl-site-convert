@@ -35,6 +35,7 @@ import {
 import type { RewriteMap } from "../src/source/wp-rest/assets.js";
 import { elementPayloads, normaliseDocument } from "../src/source/wp-rest/dom.js";
 import { PoliteFetcher } from "../src/source/wp-rest/http.js";
+import { isLinkedStyle } from "../src/schema/site-ir.js";
 import type { SiteIr } from "../src/schema/site-ir.js";
 
 const FIXTURES = join(import.meta.dirname, "fixtures", "assets");
@@ -436,7 +437,7 @@ describe("captureAssets (recorded fixtures)", () => {
     const chainEntries = (chain as { styleChain: { origin: string; localPath: string }[] })
       .styleChain;
     expect(chainEntries.some((entry) => entry.origin === "inline")).toBe(true);
-    expect(ir.styles.every((style) => style.href.length > 0)).toBe(true);
+    expect(ir.styles.filter(isLinkedStyle).every((style) => style.href.length > 0)).toBe(true);
     expect(ir.styles.some((style) => style.localPath.startsWith("assets/inline/"))).toBe(false);
   });
 });
