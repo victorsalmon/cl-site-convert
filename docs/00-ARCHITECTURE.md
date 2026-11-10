@@ -47,21 +47,27 @@ Frozen at v1 before any plugin agent starts. Shape (indicative):
 ```jsonc
 {
   "irVersion": "1.0.0",
-  "site":   { "baseUrl", "title", "locale", "permalinks" },
+  "site":   { "baseUrl", "title", "locale", "permalinks", "subsites" },
+  "capture":{ "source", "capturedAt", "tool" },
   "pages":  [{ "url", "slug", "status", "template", "dom", "meta", "seo", "islands" }],
   "assets": [{ "sourceUrl", "localPath", "sha256", "kind" }],
-  "styles": [{ "href", "localPath", "order" }],      // VERBATIM, ordered
+  "styles": [{ "href", "localPath", "order", "sha256" }],   // VERBATIM, ordered
   "menus":  [...], "taxonomies": [...], "authors": [...],
   "forms":  [{ "id", "source", "fields", "validation", "submitContract" }],
   "behaviors": [{ "page", "selector", "kind", "endpointRef" }],
-  "apiContracts": [{ "method", "url", "requestShape", "responseShape" }],
+  "apiContracts": [{ "id", "method", "url", "requestShape", "responseShape" }],
   "capabilities": { "supported": [], "unsupported": [] },
   "redirects": [{ "from", "to", "code" }]
 }
 ```
 
-`dom` is a normalized HTML skeleton with **class names preserved**. It is the
-fidelity carrier. Markdown exists only as an optional prose projection.
+`dom` is an object — `{ "html", "doctype"? }` — a normalized HTML skeleton with
+**class names preserved**. It is the fidelity carrier. Markdown exists only as
+an optional prose projection.
+
+Frozen schema: `schemas/site-ir.schema.json`. Field-by-field reference:
+`docs/site-ir.md`. Plugin contract: `schemas/plugin-manifest.schema.json`.
+Both are enforced by `pnpm validate:ir` inside the repo gate.
 
 ## Islands
 
